@@ -1,17 +1,25 @@
+#pragma once
 #include <tensor.h>
 
 namespace tinytorch {
-    Tensor add(const Tensor& a, Tensor& b);
+    template <typename T>
+    Tensor<T> add(const Tensor<T>& a, const Tensor<T>& b);
 
-    Tensor mul(const Tensor& a, Tensor& b);
+    template <typename T>
+    Tensor<T> mul(const Tensor<T>& a, const Tensor<T>& b);
 
-    Tensor matmul(const Tensor& a, Tensor& b);
+    template <typename T>
+    Tensor<T> matmul(const Tensor<T>& a, const Tensor<T>& b); // a_1,..,a_k x a_k, b_1, b_m -> a_1, .., a_k-1, b_2,...
 
-    Tensor relu(const Tensor& a);
+    template <typename T>
+    Tensor<T> relu(const Tensor<T>& a);
 
-    Tensor sigmoid(const Tensor& a);
+    template <typename T>
+    Tensor<T> sigmoid(const Tensor<T>& a);
 
-    Tensor softmax(const Tensor& a);
+    template <typename T>
+    Tensor<T> softmax(const Tensor<T>& a);
 
-    Tensor cross_entropy(const Tensor& logits, const Tensor& target);
+    template <typename T>
+    Tensor<T> cross_entropy(const Tensor<T>& logits, const Tensor<T>& target);
 }
