@@ -1,9 +1,9 @@
 #pragma once
 
-#include <tensor.h>
+#include "../include/tensor.h"
+#include "../include/functional.h"
 #include <vector>
 #include <memory>
-#include <functional.h>
 
 namespace tinytorch{
 

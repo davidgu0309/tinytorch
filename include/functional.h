@@ -1,5 +1,7 @@
 #pragma once
-#include <tensor.h>
+#include "../include/tensor.h"
+#include "../include/utils.h"
+#include <cassert>
 
 namespace tinytorch {
     template <typename T>
