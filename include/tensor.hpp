@@ -6,6 +6,7 @@
 #include <iostream>
 #include <vector>
 #include <memory>
+#include <queue>
 
 namespace tinytorch {
 
@@ -13,24 +14,6 @@ namespace tinytorch {
     typedef std::vector<size_t> MultiIndex; // 0-based multiindexes
 
     bool multiIndexTest(const Shape shape, const MultiIndex multi_index);
-
- /*  TO DELETE
-     
-
-    std::vector<Multiindex> stack;
- 
-    for(int d : shape){
-        for(int i = 0; i < d; ++i){
-            for(auto mi : stack){
-                stack.push_back()
-            }
-        }
-    }
-
-    shape von matmul(a, b) a.shap[0:-1] + b.shape[1:]
-
-    shape von transpose(a) ist a.shape.reverse
-    */
 
     template <typename T>
     class Tensor {
@@ -78,6 +61,9 @@ namespace tinytorch {
 
     template <typename T>
     Tensor<T>& ones(const std::vector<size_t> shape);
+
+    template <typename T>
+    Tensor<T>& iota(const std::vector<size_t> shape);
 
 }
 

@@ -123,10 +123,26 @@ namespace tinytorch {
         return *(new Tensor(zero_vector, shape)); 
     }
 
+    template <typename T>
+    Tensor<T>& iota(const Shape shape) {
+        // TO DO: implement iota, maybe recursively
+    }
 
-    // Prints 1D and 2D tensors
+
+    /**
+     * Writes tensor to output stream out. This enables std::cout << tensor ...
+     *
+     * @tparam U Tensor entry type.
+     * 
+     * @param out Output stream.
+     * @param tensor Tensor to print.
+     * 
+     * @return Updated output stream.
+     * 
+     **/
     template<typename U>
     std::ostream& operator << (std::ostream& out, const Tensor<U>& tensor){
+        /* // Old version: only works for 1D and 2D
         if(tensor.shape_.size() == 1){
             for(U entry : *tensor.data()){
                 out << entry << " ";
@@ -139,6 +155,42 @@ namespace tinytorch {
                     out << (*tensor.data())[i * m + j] << " ";
                 }
                 out << std::endl;
+            }
+        }
+        return out;
+        */
+
+        /* // Generate multiindexes. COMPLETELY UNNECESSARY
+        std::queue<MultiIndex> indexes; // Multiindexes in "row-major" order
+        indexes.push({});
+        Shape shape = tensor.shape();
+        size_t n = shape.size();
+        for(size_t d = 0; d < n; ++d){
+            size_t m = indexes.size();
+            // Iterate over all multiindexes of the previous dimension
+            for(size_t i = 0; i < m; ++i){
+                // For each one, add all possible indexes for the current dimension
+                for(size_t j = 0; j < shape[d]; ++j){
+                    MultiIndex index = indexes.front();
+                    index.push_back(j);
+                    indexes.push(index);
+                }
+                indexes.pop();
+            }
+        }
+        */
+        
+        // Iterate over all indexes and print
+        Shape shape = tensor.shape();
+        size_t n = shape.size(), m = tensor.size();
+        for(size_t i = 0; i < m; ++i){
+            out << (*tensor.data())[i] << " ";
+            // Inefficient but doesn't matter
+            size_t j = 0, temp = i + 1;
+            while(j < n && !(temp % shape[n - 1 - j])){
+                out << std::endl;
+                temp /= shape[n - 1 - j];
+                ++j;
             }
         }
         return out;

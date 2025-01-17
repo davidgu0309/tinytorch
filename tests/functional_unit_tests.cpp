@@ -5,6 +5,18 @@
 
 namespace tinytorch {
 
+    template<typename T>
+    void consoleLog(const T& result, const T& correct){
+        bool passed = result == correct;
+        std::cout << (passed ? "Passed" : "Failed") << std::endl;
+        if(!passed){
+            std::cout << "Result:" << std::endl;
+            std::cout << result << std::endl;
+            std::cout << "Correct:" << std::endl;
+            std::cout << result << std::endl;
+        }
+    }
+
     // struct Test{}; // Maybe think about this
 
     template<typename T, typename U>
@@ -17,9 +29,10 @@ namespace tinytorch {
     bool unaryOpTest(const UnaryOpTest<T, U>& test_data) {
         // TO DO: actually test tensor ops instead of applyUnaryOp
         Tensor<int> result = applyUnaryOp<T, U, unaryOp>(test_data.t);
-        std::cout << result << std::endl;
+        // std::cout << result << std::endl;
         bool test_passed = result == test_data.result;
-        std::cout << (test_passed ? "Passed" : "Failed") << std::endl;
+        // std::cout << (test_passed ? "Passed" : "Failed") << std::endl;
+        consoleLog(result, test_data.result);
         return test_passed;
     }
 
@@ -34,7 +47,8 @@ namespace tinytorch {
     bool binaryOpTest(const BinaryOpTest<T, U, V>& test_data) {
         Tensor<int> result = applyBinaryOp<T, U, V, binaryOp>(test_data.t1, test_data.t2);
         bool test_passed = result == test_data.result;
-        std::cout << (test_passed ? "Passed" : "Failed") << std::endl;
+        // std::cout << (test_passed ? "Passed" : "Failed") << std::endl;
+        consoleLog(result, test_data.result);
         return test_passed;
     }
 
@@ -64,13 +78,13 @@ namespace tinytorch {
 
     void functionalUnitTests() {
 
-        Tensor<int> t1 = Tensor<int>(std::vector<int>(210, -1), {7, 6, 5});
+        Tensor<int> t1 = Tensor<int>(std::vector<int>(24, -1), {3, 2, 4});
         Tensor<int> t2 = Tensor<int>(std::vector<int>(10, -1), {10});
         Tensor<int> t3 = Tensor<int>(std::vector<int>(9, -1), {3, 3});
         
         UnaryOpTestSuite<int, int> neg_tests = {
             {zeros<int>({3, 4, 5}), zeros<int>({3, 4, 5})},
-            {ones<int>({7, 6, 5}), t1},
+            {ones<int>({3, 2, 4}), t1},
             {ones<int>({10}), t2},
             {ones<int>({3, 3}), t3},
         };

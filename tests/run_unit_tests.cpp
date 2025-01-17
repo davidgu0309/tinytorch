@@ -2,6 +2,7 @@
 #include <iostream>
 
 int main() {
-    std::cout << "Functional unit tests." << std::endl;
+    std::cout << "Running functional unit tests." << std::endl;
     tinytorch::functionalUnitTests();
+    
 }
