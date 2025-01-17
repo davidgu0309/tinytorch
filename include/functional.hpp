@@ -7,6 +7,32 @@
 
 namespace tinytorch {
 
+    /**
+     *
+     * @tparam T Operand type.
+     * @tparam U Result type.
+     * 
+     **/
+    template<typename T, typename U, U (*unaryOp)(T)>
+    Tensor<U> applyUnaryOp(const Tensor<T>& a);
+
+    template <typename T>
+    Tensor<T> neg(const Tensor<T>& a);
+
+    template <typename T>
+    Tensor<T> inv(const Tensor<T>& a);
+
+
+    /**
+     *
+     * @tparam T First operand type.
+     * @tparam U Second operand type.
+     * @tparam V Result type.
+     * 
+     **/
+    template<typename T, typename U, typename V, V (*binaryOp)(T, U)>
+    Tensor<U> applyBinaryOp(const Tensor<T>& a, const Tensor<U>& b);
+
     template <typename T>
     Tensor<T> add(const Tensor<T>& a, const Tensor<T>& b);
 

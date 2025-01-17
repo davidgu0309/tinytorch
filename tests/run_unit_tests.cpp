@@ -2,7 +2,6 @@
 #include <iostream>
 
 int main() {
-    std::cout << "Starting unit tests. \n";
-    if (tinytorch::additionTest1()) std::cout << "Test passed. \n";
-    else std::cout << "Test failed \n";
+    std::cout << "Functional unit tests." << std::endl;
+    tinytorch::functionalUnitTests();
 }

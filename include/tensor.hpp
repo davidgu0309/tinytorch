@@ -8,6 +8,24 @@
 
 namespace tinytorch {
 
+ /*  TO DELETE
+    typedef std::vector<size_t> Multiindex 
+
+    std::vector<Multiindex> stack;
+    stack
+    for(int d : shape){
+        for(int i = 0; i < d; ++i){
+            for(auto mi : stack){
+                stack.push_back()
+            }
+        }
+    }
+
+    shape von matmua(a, b) a.shap[0:-1] + b.shape[1:]
+
+    shape von transpose(a) ist a.shape.reverse
+    */
+
     template <typename T>
     class Tensor {
 
@@ -44,10 +62,10 @@ namespace tinytorch {
 
     // Common tensors
     template <typename T>
-    Tensor<T> zeros(const std::vector<size_t> shape);
+    Tensor<T>& zeros(const std::vector<size_t> shape);
 
     template <typename T>
-    Tensor<T> ones(const std::vector<size_t> shape);
+    Tensor<T>& ones(const std::vector<size_t> shape);
 
 }
 

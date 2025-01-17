@@ -72,15 +72,15 @@ namespace tinytorch {
 
     // Common tensors
     template <typename T>
-    Tensor<T> zeros(const std::vector<size_t> shape) {
+    Tensor<T>& zeros(const std::vector<size_t> shape) {
         std::vector<T> zero_vector(numEntries(shape), 0);
-        return Tensor(zero_vector, shape); 
+        return *(new Tensor(zero_vector, shape)); 
     }
 
     template <typename T>
-    Tensor<T> ones(const std::vector<size_t> shape) {
+    Tensor<T>& ones(const std::vector<size_t> shape) {
         std::vector<T> zero_vector(numEntries(shape), 1);
-        return Tensor(zero_vector, shape); 
+        return *(new Tensor(zero_vector, shape)); 
     }
 
 
