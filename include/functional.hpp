@@ -17,12 +17,21 @@ namespace tinytorch {
     template<typename T, typename U, U (*unaryOp)(T)>
     Tensor<U> applyUnaryOp(const Tensor<T>& a);
 
+    /**
+     *
+     * @tparam T Operand type.
+     * 
+     **/
     template <typename T>
     Tensor<T> neg(const Tensor<T>& a);
 
+    /**
+     *
+     * @tparam T Operand type.
+     * 
+     **/
     template <typename T>
     Tensor<T> inv(const Tensor<T>& a);
-
 
     /**
      *
@@ -34,18 +43,43 @@ namespace tinytorch {
     template<typename T, typename U, typename V, V (*binaryOp)(T, U)>
     Tensor<U> applyBinaryOp(const Tensor<T>& a, const Tensor<U>& b);
 
+    /**
+     *
+     * @tparam T Operand type.
+     * 
+     **/
     template <typename T>
     Tensor<T> add(const Tensor<T>& a, const Tensor<T>& b);
 
+    /**
+     *
+     * @tparam T Operand type.
+     * 
+     **/
     template <typename T>
     Tensor<T> mul(const Tensor<T>& a, const Tensor<T>& b);
 
+    /**
+     *
+     * @tparam T Operand type.
+     * 
+     **/
     template <typename T>
     Tensor<T> matmul(const Tensor<T>& a, const Tensor<T>& b); // a_1,..,a_k x a_k, b_1, b_m -> a_1, .., a_k-1, b_2,...
 
+    /**
+     *
+     * @tparam T Operand type.
+     * 
+     **/
     template <typename T>
     Tensor<T> relu(const Tensor<T>& a);
 
+    /**
+     *
+     * @tparam T Operand type.
+     * 
+     **/
     template <typename T>
     Tensor<T> sigmoid(const Tensor<T>& a);
 

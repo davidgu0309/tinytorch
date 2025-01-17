@@ -18,7 +18,7 @@ namespace tinytorch {
      
 
     std::vector<Multiindex> stack;
-    stack
+ 
     for(int d : shape){
         for(int i = 0; i < d; ++i){
             for(auto mi : stack){
@@ -27,7 +27,7 @@ namespace tinytorch {
         }
     }
 
-    shape von matmua(a, b) a.shap[0:-1] + b.shape[1:]
+    shape von matmul(a, b) a.shap[0:-1] + b.shape[1:]
 
     shape von transpose(a) ist a.shape.reverse
     */

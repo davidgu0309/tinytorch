@@ -22,6 +22,16 @@ namespace tinytorch {
         return applyUnaryOp<T, T, inv>(a);
     }
 
+    template <typename T>
+    Tensor<T> relu(const Tensor<T>& a){
+        return applyUnaryOp<T, T, relu>(a);
+    }
+
+    template <typename T>
+    Tensor<T> sigmoid(const Tensor<T>& a){
+        return applyUnaryOp<T, T, sigmoid>(a);
+    }
+
     // Binary operations
     template<typename T, typename U, typename V, V (*binaryOp)(T, U)>
     Tensor<V> applyBinaryOp(const Tensor<T>& a, const Tensor<U>& b){

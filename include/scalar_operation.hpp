@@ -1,20 +1,28 @@
 #pragma once
 
+#include <cmath>
+
 namespace tinytorch{
 
     // Unary operations
     template <typename T>
-    T neg(const T& a);
+    T neg(const T& x);
 
     template <typename T>
-    T inv(const T& a);
+    T inv(const T& x);
+
+    template <typename T>
+    T relu(const T& x);
+
+    template <typename T>
+    T sigmoid(const T& x);
 
     // Binary operations
     template <typename T>
-    T sum(const T& a, const T& b);
+    T sum(const T& x, const T& y);
 
     template <typename T>
-    T product(const T& a, const T& b);
+    T product(const T& x, const T& y);
 
 }
 
