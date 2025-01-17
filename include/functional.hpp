@@ -1,9 +1,12 @@
 #pragma once
-#include "../include/tensor.h"
-#include "../include/utils.h"
+
+#include "../include/tensor.hpp"
+#include "../include/utils.hpp"
+
 #include <cassert>
 
 namespace tinytorch {
+
     template <typename T>
     Tensor<T> add(const Tensor<T>& a, const Tensor<T>& b);
 
@@ -25,3 +28,5 @@ namespace tinytorch {
     template <typename T>
     Tensor<T> cross_entropy(const Tensor<T>& logits, const Tensor<T>& target);
 }
+
+#include "../src/functional.tpp"

@@ -1,5 +1,5 @@
 test: 
-	g++ -o test -g src/functional.cpp src/utils.cpp tests/test_main.cpp
+	g++ -o test -g src/utils.cpp tests/run_unit_tests.cpp
 
 clean:
 	rm -f run && rm -f test

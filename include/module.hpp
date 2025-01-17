@@ -1,5 +1,6 @@
 #pragma once
-#include "../include/layer.h"
+
+#include "../include/layer.hpp"
 
 namespace tinytorch {
 

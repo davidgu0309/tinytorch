@@ -1,7 +1,8 @@
 #pragma once
 
-#include "../include/tensor.h"
-#include "../include/functional.h"
+#include "../include/tensor.hpp"
+#include "../include/functional.hpp"
+
 #include <vector>
 #include <memory>
 
