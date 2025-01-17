@@ -1,7 +1,6 @@
-#include "../include/utils.hpp"
-
 namespace tinytorch {
 
+    // Unary operations
     template<typename T, typename U, U (*unaryOp)(T)>
     Tensor<U> applyUnaryOp(const Tensor<T>& a){
         std::vector<T> data_a = *a.data();  
@@ -14,18 +13,8 @@ namespace tinytorch {
     }
 
     template <typename T>
-    T scalarNeg(const T& a){
-        return -a;
-    }
-
-    template <typename T>
     Tensor<T> neg(const Tensor<T>& a){
-        return applyUnaryOp<T, T, scalarNeg>(a);
-    }
-
-    template <typename T>
-    T inv(const T& a){
-        return 1 / a;
+        return applyUnaryOp<T, T, neg>(a);
     }
 
     template <typename T>
@@ -33,6 +22,7 @@ namespace tinytorch {
         return applyUnaryOp<T, T, inv>(a);
     }
 
+    // Binary operations
     template<typename T, typename U, typename V, V (*binaryOp)(T, U)>
     Tensor<V> applyBinaryOp(const Tensor<T>& a, const Tensor<U>& b){
         assert(a.shapeEqual(b));
@@ -47,11 +37,6 @@ namespace tinytorch {
     }
 
     template <typename T>
-    T sum(const T& a, const T& b){
-        return a + b;
-    }
-    
-    template <typename T>
     Tensor<T> add(const Tensor<T>& a, const Tensor<T>& b) {
         // assert(a.shapeEqual(b));
         // Tensor<T> result(a.shape());    // Do we need new? No, as long as we return a copy and not a reference!
@@ -65,10 +50,7 @@ namespace tinytorch {
         return applyBinaryOp<T, T, T, sum>(a, b);
     }
 
-    template <typename T>
-    T product(const T& a, const T& b){
-        return a * b;
-    }
+    
 
     template <typename T>
     Tensor<T> mul(const Tensor<T>& a, const Tensor<T>& b) {

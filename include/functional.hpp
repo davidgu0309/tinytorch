@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../include/scalar_operation.hpp"
 #include "../include/tensor.hpp"
 #include "../include/utils.hpp"
 
