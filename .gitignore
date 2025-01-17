@@ -1,4 +1,5 @@
 .vscode
 
-main
+# We don't want to track platform specific executables
+run
 test
