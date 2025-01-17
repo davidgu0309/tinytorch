@@ -1,15 +1,23 @@
 namespace tinytorch {
 
+    bool multiIndexTest(const Shape shape, const MultiIndex index){
+        if(shape.size() != index.size()) return false;
+        for(int i = 0; i < shape.size(); ++i){
+            if(index[i] >= shape[i]) return false;
+        }
+        return true;
+    }
+
     // Constructors
     template <typename T>
-    Tensor<T>::Tensor(const std::vector<size_t> shape) : shape_(shape) {
+    Tensor<T>::Tensor(const Shape shape) : shape_(shape) {
         std::vector<T>* empty_data = new std::vector<T>(numEntries(shape));
         data_ = std::unique_ptr<std::vector<T>>(empty_data);
     }
 
     template <typename T>
     Tensor<T>::Tensor(const std::vector<T>& data, 
-        const std::vector<size_t> shape) : shape_(shape)
+        const Shape shape) : shape_(shape)
     {
         //std::vector<T>* new_data = malloc(numElements * sizeof(T));
         std::vector<T>* new_data = new std::vector(data);
@@ -29,7 +37,7 @@ namespace tinytorch {
     }
 
     template <typename T>
-    std::vector<size_t> Tensor<T>::shape() const {
+    Shape Tensor<T>::shape() const {
         return shape_;
     }
         
@@ -56,6 +64,38 @@ namespace tinytorch {
         return grad_.get();
     }
 
+    template <typename T>
+    T& Tensor<T>::get_entry_unsafe(MultiIndex index){
+        size_t data_pos = 0;
+        for(size_t d = 0; d < index.size(); ++d){
+            data_pos *= shape_[d];
+            data_pos += index[d];
+        }
+        return (*data())[data_pos];
+    }
+
+    template <typename T>
+    const T& Tensor<T>::get_entry_unsafe(MultiIndex index) const{
+        size_t data_pos = 0;
+        for(size_t d = 0; d < index.size(); ++d){
+            data_pos *= shape_[d];
+            data_pos += index[d];
+        }
+        return (*data())[data_pos];
+    }
+
+    template <typename T>
+    T& Tensor<T>::get_entry_safe(MultiIndex index){
+        assert(multiIndexTest(shape_, index));
+        return get_entry_unsafe(index);
+    }
+
+    template <typename T>
+    const T& Tensor<T>::get_entry_safe(MultiIndex index) const{
+        assert(multiIndexTest(shape_, index));
+        return get_entry_unsafe(index);
+    }
+
 
     // Comparison operators
     template <typename T>
@@ -72,13 +112,13 @@ namespace tinytorch {
 
     // Common tensors
     template <typename T>
-    Tensor<T>& zeros(const std::vector<size_t> shape) {
+    Tensor<T>& zeros(const Shape shape) {
         std::vector<T> zero_vector(numEntries(shape), 0);
         return *(new Tensor(zero_vector, shape)); 
     }
 
     template <typename T>
-    Tensor<T>& ones(const std::vector<size_t> shape) {
+    Tensor<T>& ones(const Shape shape) {
         std::vector<T> zero_vector(numEntries(shape), 1);
         return *(new Tensor(zero_vector, shape)); 
     }

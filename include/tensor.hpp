@@ -2,14 +2,20 @@
 
 #include "../include/utils.hpp"
 
+#include <cassert>
 #include <iostream>
 #include <vector>
 #include <memory>
 
 namespace tinytorch {
 
+    typedef std::vector<size_t> Shape;
+    typedef std::vector<size_t> MultiIndex; // 0-based multiindexes
+
+    bool multiIndexTest(const Shape shape, const MultiIndex multi_index);
+
  /*  TO DELETE
-    typedef std::vector<size_t> Multiindex 
+     
 
     std::vector<Multiindex> stack;
     stack
@@ -30,26 +36,32 @@ namespace tinytorch {
     class Tensor {
 
         // Default visibility is private
-        std::vector<size_t> shape_;
+        Shape shape_;
         std::unique_ptr<std::vector<T>> data_;
         std::unique_ptr<std::vector<T>> grad_;
         bool requires_grad;
 
     public:
 
-        Tensor();
+        // Tensor();
         Tensor(const std::vector<size_t> shape);
         Tensor(const std::vector<T>& data,
                 const std::vector<size_t> shape);        
 
         size_t size() const;
-        std::vector<size_t> shape() const;
+        Shape shape() const;
 
         std::vector<T>* data();
         std::vector<T>* grad();
 
         const std::vector<T>* data() const;
         const std::vector<T>* grad() const;
+
+        T& get_entry_unsafe(MultiIndex index);
+        const T& get_entry_unsafe(MultiIndex index) const;
+
+        T& get_entry_safe(MultiIndex index);
+        const T& get_entry_safe(MultiIndex index) const;
 
         // Comparison operators
         bool operator == (const Tensor<T>& other) const;
