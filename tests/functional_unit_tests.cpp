@@ -92,9 +92,9 @@ namespace tinytorch {
         Tensor<int> ones_10 = ones<int>({10});
         Tensor<int> ones_3x3 = ones<int>({3, 3});
         Tensor<int> ones_3x2x4 = ones<int>({3, 2, 4});
-        Tensor<int> t1 = Tensor<int>(std::vector<int>(24, -1), {3, 2, 4});
-        Tensor<int> t2 = Tensor<int>(std::vector<int>(10, -1), {10});
-        Tensor<int> t3 = Tensor<int>(std::vector<int>(9, -1), {3, 3});
+        Tensor<int> t1 = Tensor<int>({3, 2, 4}, std::vector<int>(24, -1));
+        Tensor<int> t2 = Tensor<int>({10}, std::vector<int>(10, -1));
+        Tensor<int> t3 = Tensor<int>({3, 3}, std::vector<int>(9, -1));
         Tensor<int> threes_3x3 = constant<int>({3, 3}, 3);
         Tensor<int> iota_5 = iota<int>({5});
         Tensor<int> scalar_10 = Tensor<int>(10);

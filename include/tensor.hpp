@@ -31,8 +31,8 @@ namespace tinytorch {
 
         Tensor(const T value);    // Returns scalar (shape {})
         Tensor(const std::vector<size_t> shape);
-        Tensor(const std::vector<T>& data,
-                const std::vector<size_t> shape);        
+        Tensor(const std::vector<size_t> shape,
+                    const std::vector<T>& data);        
 
         size_t size() const;
         Shape shape() const;

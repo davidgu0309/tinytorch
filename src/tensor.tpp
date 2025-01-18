@@ -30,9 +30,7 @@ namespace tinytorch {
     }
 
     template <typename T>
-    Tensor<T>::Tensor(const std::vector<T>& data, 
-        const Shape shape) : shape_(shape)
-    {
+    Tensor<T>::Tensor(const Shape shape, const std::vector<T>& data) : shape_(shape) {
         //std::vector<T>* new_data = malloc(numElements * sizeof(T));
         std::vector<T>* new_data = new std::vector(data);
         data_ = std::unique_ptr<std::vector<T>>(new_data);
@@ -141,7 +139,7 @@ namespace tinytorch {
     template <typename T>
     Tensor<T> constant(const std::vector<size_t> shape, T value){
         std::vector<T> data(numEntries(shape), value);
-        return Tensor(data, shape);
+        return Tensor(shape, data);
     }
 
     template <typename T>
@@ -158,7 +156,7 @@ namespace tinytorch {
     Tensor<T> iota(const std::vector<size_t> shape){
         std::vector<T> data(numEntries(shape));
         std::iota(data.begin(), data.end(), 1);
-        return Tensor(data, shape);
+        return Tensor(shape, data);
     }
 
     /*
