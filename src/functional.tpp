@@ -1,5 +1,7 @@
 namespace tinytorch {
 
+    // TO DO: scalar * tensor, maybe generic broadcasting
+
     // Unary operations
     template<typename T, typename U, U (*unaryOp)(T)>
     Tensor<U> applyUnaryOp(const Tensor<T>& a){
@@ -72,7 +74,7 @@ namespace tinytorch {
         size_t dim_a = a_shape.size(), dim_b = b_shape.size();
         
         // Compatibility test
-        assert(dim_a && dim_b && a_shape.back() == b_shape.front());
+        assert(dim_a && dim_b && a_shape.back() == b_shape.front());    // TO DO: return {} if one of the two is {}
 
         // Compute result_shape
         Shape result_shape = a_shape;
@@ -82,19 +84,18 @@ namespace tinytorch {
         return result_shape;
     }
 
-    // INDEXES MUST BE NON-EMPTY!
     Shape combineIndexes(const MultiIndex& i, const MultiIndex& j){
 
         size_t dim_j = j.size();
         
         MultiIndex ij = i;
-        for(size_t d = 0; d < dim_j; ++d) ij.push_back(j[d]);
+        for(size_t d = 1; d < dim_j; ++d) ij.push_back(j[d]);
 
         return ij;
     }
 
     // Unnecessary and inefficient, but nice
-    std::queue<MultiIndex> indexesRowMajor(const Shape shape){
+    std::vector<MultiIndex> indexesRowMajor(const Shape shape){
         std::queue<MultiIndex> indexes; // Multiindexes in "row-major" order
         indexes.push({});
         size_t n = shape.size();
@@ -117,17 +118,20 @@ namespace tinytorch {
                 indexes.pop();
             }
         }
-        return indexes;
+        std::vector<MultiIndex> row_major(indexes.size());
+        size_t i = 0;
+        while(indexes.size()){
+            row_major[i] = indexes.front();
+            indexes.pop();
+            ++i;
+        }
+        return row_major;
     }
 
     template <typename T>
     Tensor<T> matmul(const Tensor<T>& a, const Tensor<T>& b){
 
         Shape a_shape = a.shape(), b_shape = b.shape();
-        size_t dim_a = a_shape.size(), dim_b = b_shape.size();
-
-        // Compatibility test
-        // assert(dim_a && dim_b && a_shape.back() == b_shape.front()); // Is done in matmulShape
 
         // Compute result shape
         Shape result_shape = matmulShape(a_shape, b_shape);
@@ -136,7 +140,7 @@ namespace tinytorch {
 
         a_shape.pop_back();
         // Could replace b_indexes = indexesColumnMajor(b_shape) for cache
-        std::queue<MultiIndex> a_indexes = indexesRowMajor(a_shape), b_indexes = indexesRowMajor(b_shape);
+        std::vector<MultiIndex> a_indexes = indexesRowMajor(a_shape), b_indexes = indexesRowMajor(b_shape);
 
         /*
         a:
@@ -160,7 +164,7 @@ namespace tinytorch {
         for(const MultiIndex& i : a_indexes){
             for(const MultiIndex& j : b_indexes){
                 MultiIndex ii(i); ii.push_back(j.front());
-                result.getEntryUnsafe(combineIndexes(i, j)) += a.getEntryUnsafe(ii) * b.getEntryUnsafe(j);
+                result.getEntrySafe(combineIndexes(i, j)) += a.getEntrySafe(ii) * b.getEntrySafe(j);
             }
         }
 
