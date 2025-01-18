@@ -1,6 +1,6 @@
 namespace tinytorch {
 
-    bool multiIndexTest(const Shape shape, const MultiIndex index){
+    bool multiIndexLegalityTest(const Shape shape, const MultiIndex index){
         if(shape.size() != index.size()) return false;
         for(int i = 0; i < shape.size(); ++i){
             if(index[i] >= shape[i]) return false;
@@ -23,7 +23,6 @@ namespace tinytorch {
         std::vector<T>* new_data = new std::vector(data);
         data_ = std::unique_ptr<std::vector<T>>(new_data);
     }
-
 
 
     template <typename T>
@@ -65,9 +64,24 @@ namespace tinytorch {
     }
 
     template <typename T>
-    T& Tensor<T>::get_entry_unsafe(MultiIndex index){
-        size_t data_pos = 0;
-        for(size_t d = 0; d < index.size(); ++d){
+    T& Tensor<T>::getEntryUnsafe(MultiIndex index){
+        size_t data_pos = index[0];
+        // shape_ = {2, 2, 3}
+        // (index[0] * shape_[1] + index[1]) * shape_[2] + index[2]
+        // (index[0] * shape_[1] * shape_[2] + index[1] * shape_[2] + index[2])
+        /*
+        _ _ _
+        _ _ _
+
+        _ _ _
+        _ _ _
+
+        Horner Scheme
+
+        sum_i a_i * x ** i = (a_i * x + a_(i - 1)) * x + ...
+
+        */
+        for(size_t d = 1; d < index.size(); ++d){
             data_pos *= shape_[d];
             data_pos += index[d];
         }
@@ -75,9 +89,9 @@ namespace tinytorch {
     }
 
     template <typename T>
-    const T& Tensor<T>::get_entry_unsafe(MultiIndex index) const{
-        size_t data_pos = 0;
-        for(size_t d = 0; d < index.size(); ++d){
+    const T& Tensor<T>::getEntryUnsafe(MultiIndex index) const{
+        size_t data_pos = index[0];
+        for(size_t d = 1; d < index.size(); ++d){
             data_pos *= shape_[d];
             data_pos += index[d];
         }
@@ -85,15 +99,15 @@ namespace tinytorch {
     }
 
     template <typename T>
-    T& Tensor<T>::get_entry_safe(MultiIndex index){
-        assert(multiIndexTest(shape_, index));
-        return get_entry_unsafe(index);
+    T& Tensor<T>::getEntrySafe(MultiIndex index){
+        assert(multiIndexLegalityTest(shape_, index));
+        return getEntryUnsafe(index);
     }
 
     template <typename T>
-    const T& Tensor<T>::get_entry_safe(MultiIndex index) const{
-        assert(multiIndexTest(shape_, index));
-        return get_entry_unsafe(index);
+    const T& Tensor<T>::getEntrySafe(MultiIndex index) const{
+        assert(multiIndexLegalityTest(shape_, index));
+        return getEntryUnsafe(index);
     }
 
 
@@ -123,10 +137,11 @@ namespace tinytorch {
         return *(new Tensor(zero_vector, shape)); 
     }
 
+    /*
     template <typename T>
     Tensor<T>& iota(const Shape shape) {
         // TO DO: implement iota, maybe recursively
-    }
+    }*/
 
 
     /**
@@ -193,6 +208,7 @@ namespace tinytorch {
                 ++j;
             }
         }
+        
         return out;
     }
 

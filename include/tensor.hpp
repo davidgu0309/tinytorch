@@ -13,7 +13,7 @@ namespace tinytorch {
     typedef std::vector<size_t> Shape;
     typedef std::vector<size_t> MultiIndex; // 0-based multiindexes
 
-    bool multiIndexTest(const Shape shape, const MultiIndex multi_index);
+    bool multiIndexLegalityTest(const Shape shape, const MultiIndex multi_index);
 
     template <typename T>
     class Tensor {
@@ -40,11 +40,11 @@ namespace tinytorch {
         const std::vector<T>* data() const;
         const std::vector<T>* grad() const;
 
-        T& get_entry_unsafe(MultiIndex index);
-        const T& get_entry_unsafe(MultiIndex index) const;
+        T& getEntryUnsafe(MultiIndex index);
+        const T& getEntryUnsafe(MultiIndex index) const;
 
-        T& get_entry_safe(MultiIndex index);
-        const T& get_entry_safe(MultiIndex index) const;
+        T& getEntrySafe(MultiIndex index);
+        const T& getEntrySafe(MultiIndex index) const;
 
         // Comparison operators
         bool operator == (const Tensor<T>& other) const;
@@ -62,9 +62,10 @@ namespace tinytorch {
     template <typename T>
     Tensor<T>& ones(const std::vector<size_t> shape);
 
+    /*
     template <typename T>
     Tensor<T>& iota(const std::vector<size_t> shape);
-
+    */
 }
 
 #include "../src/tensor.tpp"
