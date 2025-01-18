@@ -1,0 +1,26 @@
+
+Basic things:
+  - clean up tests (split framework from tests, maybe put different test suites in different files)
+  - implement tests for the many small things that are not covered by the tests yet
+  - write some more serious matmul tests, including higher dimensional ones
+  - implement e_k, eye and randomly initialized (at least uniform and normal) tensors
+  - update Doxyfile and Doxygen document all the headers
+  - implementa scalar * tensor ops and maybe more generic broadcasting
+  - implement softmax and cross-entropy
+
+Other tensor things we could do (not too important for now):
+  - transposition
+  - views
+  - slicing
+  - generic broadcasting
+
+Layers and Model:
+  - implement activation layers
+  - implement fully-connected layers
+  - implement forward pass
+
+Gradients:
+  - think about how we should do this
+
+Optimizers:
+  - we are not there yet ...
