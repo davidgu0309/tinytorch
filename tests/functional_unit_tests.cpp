@@ -19,60 +19,52 @@ namespace tinytorch {
 
     // struct Test{}; // Maybe think about this
 
-    template<typename T, typename U>
+    template<typename T, typename U, U (*unaryOp)(const T&)>
     struct UnaryOpTest {
-        Tensor<T>& t;
-        Tensor<U>& result;
+        T& t;
+        U& correct;
+        bool run() const {
+            U result = unaryOp(t);
+            bool test_passed = result == correct;
+            consoleLog<U>(result, correct);
+            return test_passed;
+        }
     };
 
-    template<typename T, typename U, U (*unaryOp)(T)>
-    bool unaryOpTest(const UnaryOpTest<T, U>& test_data) {
-        // TO DO: actually test tensor ops instead of applyUnaryOp
-        Tensor<int> result = applyUnaryOp<T, U, unaryOp>(test_data.t);
-        // std::cout << result << std::endl;
-        bool test_passed = result == test_data.result;
-        // std::cout << (test_passed ? "Passed" : "Failed") << std::endl;
-        consoleLog(result, test_data.result);
-        return test_passed;
-    }
-
-    template<typename T, typename U, typename V>
+    template<typename T, typename U, typename V, V (*binaryOp)(const T&, const U&)>
     struct BinaryOpTest {
-        Tensor<T>& t1;
-        Tensor<U>& t2;
-        Tensor<V>& result;
+        T& t1;
+        U& t2;
+        V& correct;
+        bool run() const {
+            V result = binaryOp(t1, t2);
+            bool test_passed = result == correct;
+            consoleLog<V>(result, correct);
+            return test_passed;
+        }
     };
 
-    template<typename T, typename U, typename V, V (*binaryOp)(T, U)>
-    bool binaryOpTest(const BinaryOpTest<T, U, V>& test_data) {
-        Tensor<int> result = applyBinaryOp<T, U, V, binaryOp>(test_data.t1, test_data.t2);
-        bool test_passed = result == test_data.result;
-        // std::cout << (test_passed ? "Passed" : "Failed") << std::endl;
-        consoleLog(result, test_data.result);
-        return test_passed;
-    }
+    template<typename T, typename U, U (*unaryOp)(const T&)>
+    using UnaryOpTestSuite = std::vector<UnaryOpTest<T, U, unaryOp> >;
 
-    template<typename T, typename U>
-    using UnaryOpTestSuite = std::vector<UnaryOpTest<T, U> >;
-
-    template<typename T, typename U, U (*unaryOp)(T)>
-    void runUnaryOpTestSuite(UnaryOpTestSuite<T, U> tests){
-        for(const UnaryOpTest<T, U>& test : tests){
-            unaryOpTest<T, U, unaryOp>(test);
+    template<typename T, typename U, T (*unaryOp)(const T&)>
+    void runUnaryOpTestSuite(UnaryOpTestSuite<T, U, unaryOp> tests){
+        for(const UnaryOpTest<T, U, unaryOp>& test : tests){
+            test.run();
         }
     }
 
-    template<typename T, typename U, typename V>
-    using BinaryOpTestSuite = std::vector<BinaryOpTest<T, U, V> >;
+    template<typename T, typename U, typename V, V (*binaryOp)(const T&, const U&)>
+    using BinaryOpTestSuite = std::vector<BinaryOpTest<T, U, V, binaryOp> >;
 
-    template<typename T, typename U, typename V, V (*binaryOp)(T, U)>
-    void runBinaryOpTestSuite(BinaryOpTestSuite<T, U, V> tests){
-        for(const BinaryOpTest<T, U, V>& test : tests){
-            binaryOpTest<T, U, V, binaryOp>(test);
+    template<typename T, typename U, typename V, V (*binaryOp)(const T&, const U&)>
+    void runBinaryOpTestSuite(BinaryOpTestSuite<T, U, V, binaryOp> tests){
+        for(const BinaryOpTest<T, U, V, binaryOp>& test : tests){
+            test.run();
         }
     }
 
-    int negInt(int a){
+    Tensor<int> negInt(const Tensor<int>& a){
         return neg<int>(a);
     }
 
@@ -82,7 +74,7 @@ namespace tinytorch {
         Tensor<int> t2 = Tensor<int>(std::vector<int>(10, -1), {10});
         Tensor<int> t3 = Tensor<int>(std::vector<int>(9, -1), {3, 3});
         
-        UnaryOpTestSuite<int, int> neg_tests = {
+        UnaryOpTestSuite<Tensor<int>, Tensor<int>, negInt> neg_tests = {
             {zeros<int>({3, 4, 5}), zeros<int>({3, 4, 5})},
             {ones<int>({3, 2, 4}), t1},
             {ones<int>({10}), t2},
@@ -90,7 +82,7 @@ namespace tinytorch {
         };
 
         std::cout << "Neg Tests" << std::endl;
-        runUnaryOpTestSuite<int, int, negInt>(neg_tests);
+        runUnaryOpTestSuite<Tensor<int>, Tensor<int>, negInt>(neg_tests);
 
     }
 

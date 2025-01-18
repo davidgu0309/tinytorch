@@ -14,7 +14,7 @@ namespace tinytorch {
 
     template <typename T>
     Tensor<T> neg(const Tensor<T>& a){
-        return applyUnaryOp<T, T, neg>(a);
+        return applyUnaryOp<T, T, neg<T>>(a);
     }
 
     template <typename T>
