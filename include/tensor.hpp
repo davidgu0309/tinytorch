@@ -4,9 +4,10 @@
 
 #include <cassert>
 #include <iostream>
-#include <vector>
 #include <memory>
+#include <numeric>
 #include <queue>
+#include <vector>
 
 namespace tinytorch {
 
@@ -14,6 +15,8 @@ namespace tinytorch {
     typedef std::vector<size_t> MultiIndex; // 0-based multiindexes
 
     bool multiIndexLegalityTest(const Shape shape, const MultiIndex multi_index);
+
+    std::ostream& operator << (std::ostream& out, const MultiIndex& index);
 
     template <typename T>
     class Tensor {
@@ -26,7 +29,7 @@ namespace tinytorch {
 
     public:
 
-        // Tensor();
+        Tensor(const T value);    // Returns scalar (shape {})
         Tensor(const std::vector<size_t> shape);
         Tensor(const std::vector<T>& data,
                 const std::vector<size_t> shape);        
@@ -57,15 +60,20 @@ namespace tinytorch {
 
     // Common tensors
     template <typename T>
-    Tensor<T>& zeros(const std::vector<size_t> shape);
+    Tensor<T> zeros(const std::vector<size_t> shape);
 
     template <typename T>
-    Tensor<T>& ones(const std::vector<size_t> shape);
+    Tensor<T> ones(const std::vector<size_t> shape);
 
-    /*
     template <typename T>
-    Tensor<T>& iota(const std::vector<size_t> shape);
-    */
+    Tensor<T> constant(const std::vector<size_t> shape, T value);
+
+    template <typename T>
+    Tensor<T> iota(const std::vector<size_t> shape);
+
+    // TO DO: identity
+
+    // TO DO: random
 }
 
 #include "../src/tensor.tpp"
