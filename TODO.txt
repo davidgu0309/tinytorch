@@ -8,6 +8,7 @@ Basic things:
   - implementa scalar * tensor ops and maybe more generic broadcasting
   - implement softmax and cross-entropy
   - maybe set up GitHub actions for automated testing
+  - make size a field
 
 Other tensor things we could do (not too important for now):
   - transposition
