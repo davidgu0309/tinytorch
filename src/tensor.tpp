@@ -18,6 +18,9 @@ namespace tinytorch {
 
     // Constructors
     template <typename T>
+    Tensor<T>::Tensor(){}
+    
+    template <typename T>
     Tensor<T>::Tensor(const T value) : shape_({}) {
         std::vector<T>* data = new std::vector<T>(1, value);
         data_ = std::unique_ptr<std::vector<T>>(data);
@@ -144,12 +147,12 @@ namespace tinytorch {
 
     template <typename T>
     Tensor<T> zeros(const Shape shape) {
-        return constant(shape, 0);
+        return constant<T>(shape, 0);
     }
 
     template <typename T>
     Tensor<T> ones(const Shape shape) {
-        return constant(shape, 1);
+        return constant<T>(shape, 1);
     }
 
     template <typename T>

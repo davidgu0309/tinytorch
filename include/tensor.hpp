@@ -31,6 +31,7 @@ namespace tinytorch {
 
     public:
 
+        Tensor();   // Doesn't do anything, but is necessary
         Tensor(const T value);    // Returns scalar (shape {})
         Tensor(const std::vector<size_t> shape);
         Tensor(const std::vector<size_t> shape,
