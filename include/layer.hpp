@@ -11,7 +11,7 @@ namespace tinytorch{
 
 template <typename T>
 class Layer {
-    virtual Tensor<T> forward(Tensor<T>& input);
+    virtual Tensor<T> forward(const Tensor<T>& input) = 0;
 };
 
 // class model { def forward(): blablabla return output}
@@ -24,32 +24,34 @@ class Layer {
 
 template <typename T>
 class Linear: Layer<T> {
-    public:
-        Linear(size_t dim_in, size_t dim_out);      //Kaiming uniform weights initialization
-        
-        Tensor<T> forward(Tensor<T>& input);
 
-        size_t num_params();
+        size_t dim_in, dim_out;
+        Tensor<T> weights_;    //maybe std::unique_ptr(Tensor<T>), shape {dim_out, dim_in}
+        Tensor<T> bias_;    //shape {dim_out}
+
+    public:
+        // Kaiming uniform weights initialization
+        Linear(const size_t dim_in, const size_t dim_out);      
+        
+        Tensor<T> forward(const Tensor<T>& input);
+
+        size_t num_params() const;
         Tensor<T>& weights();
         Tensor<T>& bias();
-
-    private:
-        size_t dim_in, dim_out;
-        Tensor<T> weights_;    //maybe std::unique_ptr(Tensor<T>), shape dim_out x dim_in
-        Tensor<T> bias_;        //shape dim_out
+               
 
 };
 
 template <typename T>
 class ReLU {
     public:
-        Tensor<T> forward(Tensor<T>& input);
+        Tensor<T> forward(const Tensor<T>& input);
 };
 
 template <typename T>
 class Conv1D {
     public:
-        Tensor<T> forward(Tensor<T>& input);
+        Tensor<T> forward(const Tensor<T>& input);
 
     // TODO -----------complete -----------
 };

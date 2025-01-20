@@ -1,32 +1,37 @@
-#include "../include/layer.hpp"
-
 namespace tinytorch {
     template <typename T>
-    Linear<T>::Linear(size_t dim_in, size_t dim_out) {
-        T bound = 1./(std::sqrt(dim_in));
+    Linear<T>::Linear(const size_t dim_in, const size_t dim_out) {
+        T bound = 1./(std::sqrt(((T)dim_in)));
         // so that out = x * W and dimensions match
         // x has shape (batch_size, dim_in), so we make W (dim_in, dim_out)
-        weights = real_uniform({dim_in, dim_out}, -bound, bound); 
-        bias = zeros({dim_out});
+        weights_ = real_uniform<T>({dim_in, dim_out}, -bound, bound); 
+        bias_ = zeros<T>({dim_out});
     }
 
     template <typename T>
-    Tensor<T> Linear<T>::forward(Tensor<T>& input) { 
+    Tensor<T> Linear<T>::forward(const Tensor<T>& input) { 
         // input has (batch size, dimension) and we assume non-batched input is (dimension), (1, dimension) will not work
-        return add(matmul(input, weights_), bias_);  //will require broadcasting for batched input
+        // TO DO: will require broadcasting for batched input
+        return add<T>(matmul<T>(input, weights_), bias_); 
     }
 
     template <typename T>
-    size_t Linear<T>::num_params() {return dim_in * dim_out;}
+    size_t Linear<T>::num_params() const {
+        return dim_in * dim_out;
+    }
 
     template <typename T>
-    Tensor<T>& Linear<T>::weights() {return weights_;}
+    Tensor<T>& Linear<T>::weights() {
+        return weights_;
+    }
 
     template <typename T>
-    Tensor<T>& Linear<T>::bias() {return bias_;}
+    Tensor<T>& Linear<T>::bias() {
+        return bias_;
+    }
 
     template <typename T>
-    Tensor<T> ReLU<T>::forward(Tensor<T>& input) {
+    Tensor<T> ReLU<T>::forward(const Tensor<T>& input) {
         return relu<T>(input);
     }
 
