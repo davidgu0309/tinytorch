@@ -41,7 +41,7 @@ namespace tinytorch {
      * 
      **/
     template<typename T, typename U, typename V, V (*binaryOp)(T, U)>
-    Tensor<U> applyBinaryOp(const Tensor<T>& a, const Tensor<U>& b);
+    Tensor<V> applyBinaryOp(const Tensor<T>& a, const Tensor<U>& b);
 
     /**
      *

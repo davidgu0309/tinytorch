@@ -21,17 +21,17 @@ namespace tinytorch {
 
     template <typename T>
     Tensor<T> inv(const Tensor<T>& a){
-        return applyUnaryOp<T, T, inv>(a);
+        return applyUnaryOp<T, T, inv<T>>(a);
     }
 
     template <typename T>
     Tensor<T> relu(const Tensor<T>& a){
-        return applyUnaryOp<T, T, relu>(a);
+        return applyUnaryOp<T, T, relu<T>>(a);
     }
 
     template <typename T>
     Tensor<T> sigmoid(const Tensor<T>& a){
-        return applyUnaryOp<T, T, sigmoid>(a);
+        return applyUnaryOp<T, T, sigmoid<T>>(a);
     }
 
     // Binary operations
@@ -50,22 +50,13 @@ namespace tinytorch {
 
     template <typename T>
     Tensor<T> add(const Tensor<T>& a, const Tensor<T>& b) {
-        // assert(a.shapeEqual(b));
-        // Tensor<T> result(a.shape());    // Do we need new? No, as long as we return a copy and not a reference!
-        // std::vector<T>& result_data = *result.data();
-        // std::vector<T> dataA = *a.data();
-        // std::vector<T> dataB = *b.data();   
-        // for (int i=0; i<dataA.size(); i++) {
-        //     result_data[i] = dataA[i] + dataB[i];
-        // }
-        // return result;
-        return applyBinaryOp<T, T, T, sum>(a, b);
+        return applyBinaryOp<T, T, T, sum<T>>(a, b);
     }
     
 
     template <typename T>
     Tensor<T> mul(const Tensor<T>& a, const Tensor<T>& b) {
-        return applyBinaryOp<T, T, T, product>(a, b);
+        return applyBinaryOp<T, T, T, product<T>>(a, b);
     }
 
     // a_shape = {a_1, ..., a_n}, b_shape = {b_1, ..., b_m}, ab_shape = {a_1, ..., a_(n - 1), b_2, ..., b_m}

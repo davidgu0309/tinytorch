@@ -76,6 +76,10 @@ namespace tinytorch {
         return neg<int>(a);
     }
 
+    Tensor<int> addInt(const Tensor<int>& a, const Tensor<int>& b){
+        return add<int>(a, b);
+    }
+
     Tensor<int> matmulInt(const Tensor<int>& a, const Tensor<int>& b){
         return matmul<int>(a, b);
     }
@@ -89,6 +93,7 @@ namespace tinytorch {
         // Define tensors for tests
         Tensor<int> zeros_3x4x5 = zeros<int>({3, 4, 5});
         Tensor<int> ones_5 = ones<int>({5});
+        Tensor<int> twos_5 = constant<int>({5}, 2);
         Tensor<int> ones_10 = ones<int>({10});
         Tensor<int> ones_3x3 = ones<int>({3, 3});
         Tensor<int> ones_3x2x4 = ones<int>({3, 2, 4});
@@ -126,6 +131,10 @@ namespace tinytorch {
             {ones_3x3, t3},
         };
 
+        BinaryOpTestSuite<Tensor<int>, Tensor<int>, Tensor<int>, addInt> add_tests = {
+            {ones_5, ones_5, twos_5}
+        };
+
         BinaryOpTestSuite<Tensor<int>, Tensor<int>, Tensor<int>, matmulInt> matmul_tests = {
             {ones_10, ones_10, scalar_10}, // 1D (dot product)
             {ones_5, iota_5, scalar_15}, // 1D (dot product)
@@ -140,6 +149,8 @@ namespace tinytorch {
         runBinaryOpTestSuite<Tensor<int>, MultiIndex, int, getEntrySafe>(unsafe_indexing_tests);
         std::cout << "Neg Tests" << std::endl;
         runUnaryOpTestSuite<Tensor<int>, Tensor<int>, negInt>(neg_tests);
+        std::cout << "Addition Tests" << std::endl;
+        runBinaryOpTestSuite<Tensor<int>, Tensor<int>, Tensor<int>, addInt>(add_tests);
         std::cout << "Matmul Tests" << std::endl;
         runBinaryOpTestSuite<Tensor<int>, Tensor<int>, Tensor<int>, matmulInt>(matmul_tests);
 
