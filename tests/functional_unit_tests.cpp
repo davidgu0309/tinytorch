@@ -100,6 +100,10 @@ namespace tinytorch {
         Tensor<int> scalar_10 = Tensor<int>(10);
         Tensor<int> scalar_15 = Tensor<int>(15);
         Tensor<int> scalar_55 = Tensor<int>(55);
+        Tensor<int> iota_3x3 = iota<int>({3,3});
+        Tensor<int> iota_2x2x3 = iota<int>({2,2,3});
+        Tensor<int> iota_3x3_squared = Tensor<int>({3,3}, std::vector<int>({30,36,42,66,81,96,102,126,150}));
+        Tensor<int> iota_3D_times_2D_result = Tensor<int>({2,2,3}, std::vector<int>{30,36,42,66,81,96,102,126,150,138,171,204});
         
         std::vector<int> data(24);
         std::iota(data.begin(), data.end(), 1);
@@ -127,6 +131,8 @@ namespace tinytorch {
             {ones_5, iota_5, scalar_15}, // 1D (dot product)
             {iota_5, iota_5, scalar_55}, // 1D (dot product)
             {ones_3x3, ones_3x3, threes_3x3}, // 2D (matrix multiplication)
+            {iota_3x3, iota_3x3, iota_3x3_squared},
+            {iota_2x2x3, iota_3x3, iota_3D_times_2D_result}
             // TO DO: test higher dimensions
         };
 

@@ -159,11 +159,25 @@ namespace tinytorch {
         return Tensor(shape, data);
     }
 
-    /*
     template <typename T>
-    Tensor<T>& iota(const Shape shape) {
-        // TO DO: implement iota
-    }*/
+    Tensor<T> initialize_using_generator(const std::vector<size_t> shape, std::function<T()> generator) {
+        std::vector<T> data(numEntries(shape));
+        for (int i=0; i<data.size(); i++) {
+            data[i] = generator();
+        }
+        return Tensor(shape, data);
+    }
+
+    template <typename T>
+    Tensor<T> real_uniform(const std::vector<size_t> shape, const T lower, const T upper) {
+        std::random_device rd;
+        std::mt19937 gen(rd());
+        return initialize_using_generator<T>(shape, [lower, upper, gen]() mutable {
+            std::uniform_real_distribution<T> dist(lower, upper);
+            return dist(gen);
+        });
+    }
+
 
 
     /**

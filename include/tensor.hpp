@@ -8,6 +8,8 @@
 #include <numeric>
 #include <queue>
 #include <vector>
+#include <functional>
+#include "distribution.hpp"
 
 namespace tinytorch {
 
@@ -74,6 +76,8 @@ namespace tinytorch {
     // TO DO: identity
 
     // TO DO: random
+    template <typename T>
+    Tensor<T> initialize_using_generator(const std::vector<size_t> shape, std::function<T()> generator);
 }
 
 #include "../src/tensor.tpp"

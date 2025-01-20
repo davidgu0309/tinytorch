@@ -5,12 +5,13 @@
 
 #include <vector>
 #include <memory>
+#include <cmath>
 
 namespace tinytorch{
 
 template <typename T>
 class Layer {
-    virtual forward(Tensor<T>& input);
+    virtual Tensor<T> forward(Tensor<T>& input);
 };
 
 // class model { def forward(): blablabla return output}
@@ -22,20 +23,20 @@ class Layer {
 // if (input.ndim() == 2) no batch  (S, T)
 
 template <typename T>
-class Linear: Layer {
+class Linear: Layer<T> {
     public:
-        Linear(size_t dim_in, size_t dim_out);
+        Linear(size_t dim_in, size_t dim_out);      //Kaiming uniform weights initialization
         
         Tensor<T> forward(Tensor<T>& input);
 
-        size_t num_params() const {return dim_in * dim_out;}
-        T* weights() {return weights_.get();}
-        const T* bias() const {return bias_.get();}
+        size_t num_params();
+        Tensor<T>& weights();
+        Tensor<T>& bias();
 
     private:
         size_t dim_in, dim_out;
-        std::unique_ptr<T> weights_;
-        std::unique_ptr<T> bias_;
+        Tensor<T> weights_;    //maybe std::unique_ptr(Tensor<T>), shape dim_out x dim_in
+        Tensor<T> bias_;        //shape dim_out
 
 };
 
@@ -54,3 +55,5 @@ class Conv1D {
 };
 
 }
+
+#include "../src/layer.tpp"
