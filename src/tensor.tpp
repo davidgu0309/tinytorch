@@ -21,28 +21,18 @@ namespace tinytorch {
     Tensor<T>::Tensor(){}
     
     template <typename T>
-    Tensor<T>::Tensor(const T value) : shape_({}){
-        std::vector<T>* data = new std::vector<T>(1, value);
-        data_ = std::unique_ptr<std::vector<T>>(data);
-    }
+    Tensor<T>::Tensor(const T value) : shape_({}), data_(std::vector<T>(1, value)){}
 
     template <typename T>
-    Tensor<T>::Tensor(const Shape shape) : shape_(shape) {
-        std::vector<T>* empty_data = new std::vector<T>(numEntries(shape));
-        data_ = std::unique_ptr<std::vector<T>>(empty_data);
-    }
+    Tensor<T>::Tensor(const Shape shape) : shape_(shape), data_(std::vector<T>(numEntries(shape))){}
 
     template <typename T>
-    Tensor<T>::Tensor(const Shape shape, const std::vector<T>& data) : shape_(shape) {
-        //std::vector<T>* new_data = malloc(numElements * sizeof(T));
-        std::vector<T>* new_data = new std::vector(data);
-        data_ = std::unique_ptr<std::vector<T>>(new_data);
-    }
+    Tensor<T>::Tensor(const Shape shape, const std::vector<T>& data) : shape_(shape), data_(data){}
 
 
     template <typename T>
     size_t Tensor<T>::size() const {
-        return data()->size();
+        return data().size();
     }
 
     template <typename T>
@@ -52,24 +42,24 @@ namespace tinytorch {
 
 
     template <typename T>
-    std::vector<T>* Tensor<T>::data() {
-        return data_.get();
+    std::vector<T>& Tensor<T>::data() {
+        return data_;
     }
 
     template <typename T>
-    std::vector<T>* Tensor<T>::grad() {
-        return grad_.get();
+    std::vector<T>& Tensor<T>::grad() {
+        return grad_;
     }
 
 
     template <typename T>
-    const std::vector<T>* Tensor<T>::data() const {
-        return data_.get();
+    const std::vector<T>& Tensor<T>::data() const {
+        return data_;
     }
 
     template <typename T>
-    const std::vector<T>* Tensor<T>::grad() const {
-        return grad_.get();
+    const std::vector<T>& Tensor<T>::grad() const {
+        return grad_;
     }
 
     template <typename T>
@@ -94,7 +84,7 @@ namespace tinytorch {
             data_pos *= shape_[d];
             data_pos += index[d];
         }
-        return (*data())[data_pos];
+        return data()[data_pos];
     }
 
     template <typename T>
@@ -104,7 +94,7 @@ namespace tinytorch {
             data_pos *= shape_[d];
             data_pos += index[d];
         }
-        return (*data())[data_pos];
+        return data()[data_pos];
     }
 
     template <typename T>
@@ -128,8 +118,8 @@ namespace tinytorch {
 
     template <typename T>
     bool Tensor<T>::operator == (const Tensor<T>& other) const {
-        std::vector<T> other_data = *other.data();
-        return shapeEqual(other) && (*data() == other_data);
+        const std::vector<T>& other_data = other.data();
+        return shapeEqual(other) && (data() == other_data);
     }
 
 
@@ -196,7 +186,7 @@ namespace tinytorch {
         // out << shape << std::endl;
         size_t n = shape.size(), m = tensor.size();
         for(size_t i = 0; i < m; ++i){
-            out << (*tensor.data())[i] << " ";
+            out << tensor.data()[i] << " ";
             // Inefficient but doesn't matter
             size_t j = 0, temp = i + 1;
             while(j < n && !(temp % shape[n - 1 - j])){

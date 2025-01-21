@@ -26,8 +26,8 @@ namespace tinytorch {
         // Default visibility is private
         size_t size_;
         Shape shape_;
-        std::unique_ptr<std::vector<T>> data_;
-        std::unique_ptr<std::vector<T>> grad_;
+        std::vector<T> data_;
+        std::vector<T> grad_;
         bool requires_grad_;
 
     public:
@@ -41,11 +41,11 @@ namespace tinytorch {
         size_t size() const;
         Shape shape() const;
 
-        std::vector<T>* data();
-        std::vector<T>* grad();
+        std::vector<T>& data();
+        std::vector<T>& grad();
 
-        const std::vector<T>* data() const;
-        const std::vector<T>* grad() const;
+        const std::vector<T>& data() const;
+        const std::vector<T>& grad() const;
 
         T& getEntryUnsafe(MultiIndex index);
         const T& getEntryUnsafe(MultiIndex index) const;

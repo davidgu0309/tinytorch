@@ -5,9 +5,9 @@ namespace tinytorch {
     // Unary operations
     template<typename T, typename U, U (*unaryOp)(T)>
     Tensor<U> applyUnaryOp(const Tensor<T>& a){
-        std::vector<T> data_a = *a.data();  
+        const std::vector<T>& data_a = a.data();  
         Tensor<U> result(a.shape());
-        std::vector<U>& result_data = *result.data();
+        std::vector<U>& result_data = result.data();
         for (int i=0; i<data_a.size(); i++) {
             result_data[i] = unaryOp(data_a[i]);
         }
@@ -38,10 +38,10 @@ namespace tinytorch {
     template<typename T, typename U, typename V, V (*binaryOp)(T, U)>
     Tensor<V> applyBinaryOp(const Tensor<T>& a, const Tensor<U>& b){
         assert(a.shapeEqual(b));
-        std::vector<T> data_a = *a.data();  
-        std::vector<U> data_b = *b.data();  
+        const std::vector<T>& data_a = a.data();  
+        const std::vector<U>& data_b = b.data();  
         Tensor<V> result(a.shape());
-        std::vector<V>& result_data = *result.data();
+        std::vector<V>& result_data = result.data();
         for (int i=0; i<data_a.size(); i++) {
             result_data[i] = binaryOp(data_a[i], data_b[i]);
         }
