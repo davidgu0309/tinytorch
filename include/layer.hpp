@@ -25,9 +25,9 @@ class Layer {
 template <typename T>
 class Linear: Layer<T> {
 
-        size_t dim_in, dim_out;
-        Tensor<T> weights_;    //maybe std::unique_ptr(Tensor<T>), shape {dim_out, dim_in}
-        Tensor<T> bias_;    //shape {dim_out}
+        size_t dim_in_, dim_out_;
+        Tensor<T> weights_;    //maybe std::unique_ptr(Tensor<T>), shape {dim_out_, dim_in_}
+        Tensor<T> bias_;    //shape {dim_out_}
 
     public:
         // Kaiming uniform weights initialization
@@ -35,7 +35,7 @@ class Linear: Layer<T> {
         
         Tensor<T> forward(const Tensor<T>& input);
 
-        size_t num_params() const;
+        size_t num_params() const; // For now does not count bias weights
         Tensor<T>& weights();
         Tensor<T>& bias();
                

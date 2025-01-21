@@ -27,7 +27,7 @@ namespace tinytorch {
         Shape shape_;
         std::unique_ptr<std::vector<T>> data_;
         std::unique_ptr<std::vector<T>> grad_;
-        bool requires_grad;
+        bool requires_grad_;
 
     public:
 

@@ -1,6 +1,6 @@
 namespace tinytorch {
     template <typename T>
-    Linear<T>::Linear(const size_t dim_in, const size_t dim_out) {
+    Linear<T>::Linear(const size_t dim_in, const size_t dim_out) : dim_in_(dim_in), dim_out_(dim_out){
         T bound = 1./(std::sqrt(((T)dim_in)));
         // so that out = x * W and dimensions match
         // x has shape (batch_size, dim_in), so we make W (dim_in, dim_out)
@@ -17,7 +17,7 @@ namespace tinytorch {
 
     template <typename T>
     size_t Linear<T>::num_params() const {
-        return dim_in * dim_out;
+        return dim_in_ * dim_out_;  // TO DO: decide if we want to count bias params
     }
 
     template <typename T>
