@@ -1,3 +1,5 @@
+.PHONY: all test clean
+
 all: src/util.cpp src/main.cpp
 	g++ -o main_binary -g src/util.cpp src/main.cpp && ./main_binary
 
