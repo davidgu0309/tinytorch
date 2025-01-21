@@ -2,7 +2,7 @@
 
 #include "../include/scalar_operation.hpp"
 #include "../include/tensor.hpp"
-#include "../include/utils.hpp"
+#include "../include/util.hpp"
 
 #include <cassert>
 

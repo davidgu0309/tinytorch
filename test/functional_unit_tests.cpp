@@ -22,8 +22,8 @@ namespace tinytorch {
 
     template<typename T, typename U, U (*unaryOp)(const T&)>
     struct UnaryOpTest {
-        T& operand;
-        U& correct;
+        T operand;
+        U correct;
         bool run() const {
             U result = unaryOp(operand);
             bool test_passed = result == correct;
@@ -35,9 +35,9 @@ namespace tinytorch {
 
     template<typename T, typename U, typename V, V (*binaryOp)(const T&, const U&)>
     struct BinaryOpTest {
-        T& operand_1;
-        U& operand_2;
-        V& correct;
+        T operand_1;
+        U operand_2;
+        V correct;
         bool run() const {
             V result = binaryOp(operand_1, operand_2);
             bool test_passed = result == correct;

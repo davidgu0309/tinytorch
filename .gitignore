@@ -1,7 +1,7 @@
 .vscode
 
 # We don't want to track platform specific executables
-run
-test
+main_binary
+test_binary
 
 documentation

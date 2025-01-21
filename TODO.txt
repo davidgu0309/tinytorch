@@ -9,6 +9,7 @@ Basic things:
   - implement softmax and cross-entropy
   - maybe set up GitHub actions for automated testing
   - make size a field
+  - improve makefile (variables for stuff etc.)
 
 Other tensor things we could do (not too important for now):
   - transposition

@@ -13,6 +13,6 @@ namespace tinytorch {
     
 }
 
-#include "../src/utils.tpp"
+#include "../src/util.tpp"
 
 

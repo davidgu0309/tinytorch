@@ -1,4 +1,4 @@
-#include "../include/utils.hpp"
+#include "../include/util.hpp"
 
 namespace tinytorch {
 

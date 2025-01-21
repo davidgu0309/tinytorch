@@ -1,9 +1,9 @@
-all: 
-	g++ -o run -g src/utils.cpp src/main.cpp && ./run
+all: src/util.cpp src/main.cpp
+	g++ -o main_binary -g src/util.cpp src/main.cpp && ./main_binary
 
-test: 
-	g++ -o test -g src/utils.cpp tests/run_unit_tests.cpp && ./test
+test: src/util.cpp test/run_unit_tests.cpp
+	g++ -o test_binary -g src/util.cpp test/run_unit_tests.cpp && ./test_binary
 
 clean:
-	rm -f run && rm -f test
+	rm -f main_binary && rm -f test_binary
 
