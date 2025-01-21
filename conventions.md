@@ -16,6 +16,8 @@ Function names: lowercase camel case, like functionName.
 
 Variable names: lowercase snake case, like variable_name.
 
+Member variable names: lowercase snake case (it is a variable), ending with a _, like data_member_.
+
 ## Mathematics
 
 i, j, k, n, m denote integers.
