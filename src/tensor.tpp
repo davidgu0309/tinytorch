@@ -21,7 +21,7 @@ namespace tinytorch {
     Tensor<T>::Tensor(){}
     
     template <typename T>
-    Tensor<T>::Tensor(const T value) : shape_({}) {
+    Tensor<T>::Tensor(const T value) : shape_({}){
         std::vector<T>* data = new std::vector<T>(1, value);
         data_ = std::unique_ptr<std::vector<T>>(data);
     }
@@ -42,18 +42,13 @@ namespace tinytorch {
 
     template <typename T>
     size_t Tensor<T>::size() const {
-        size_t result = 1;
-        for (int i=0; i<shape_.size(); i++) {
-            result = result * shape_[i];
-        }
-        return result;
+        return data()->size();
     }
 
     template <typename T>
     Shape Tensor<T>::shape() const {
         return shape_;
     }
-        
 
 
     template <typename T>

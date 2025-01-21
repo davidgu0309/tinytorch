@@ -24,6 +24,7 @@ namespace tinytorch {
     class Tensor {
 
         // Default visibility is private
+        size_t size_;
         Shape shape_;
         std::unique_ptr<std::vector<T>> data_;
         std::unique_ptr<std::vector<T>> grad_;
@@ -79,6 +80,9 @@ namespace tinytorch {
     // TO DO: random
     template <typename T>
     Tensor<T> initialize_using_generator(const std::vector<size_t> shape, std::function<T()> generator);
+
+    template <typename T>
+    Tensor<T> real_uniform(const std::vector<size_t> shape, const T lower, const T upper);
 }
 
 #include "../src/tensor.tpp"
