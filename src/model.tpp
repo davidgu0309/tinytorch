@@ -15,14 +15,11 @@
 // Node (output)
 // Node (loss)
 
+namespace tinytorch{
+
 template <typename T>
-class DAGModel {
+Tensor<T> DAGModel<T>::forward(const Tensor<T>& input) {
+    computational_graph_.evaluate(input);
+}
 
-        ComputationalDAG dag_;
-
-    public:
-        Tensor<T> forward(const Tensor<T>& input) {
-            dag_.evaluate(input);
-        }
-        
-};
+}

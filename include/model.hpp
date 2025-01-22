@@ -2,6 +2,7 @@
 
 #include "computational_dag.hpp"
 #include "layer.hpp"
+#include "tensor.hpp"
 
 
 namespace tinytorch {
