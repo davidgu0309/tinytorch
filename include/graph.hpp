@@ -20,6 +20,7 @@ class Graph {
     // NodeId entry_point_; // Moved
     std::vector<T> nodes_;
     std::vector<std::vector<NodeId>> adjacency_lists_;
+    std::vector<std::vector<NodeId>> backward_adjacency_lists_;
 
     public:
         /**
@@ -45,8 +46,52 @@ class Graph {
         
         /**
          * 
+         * @return Number of nodes in the graph.
+         * 
+         **/
+        size_t size() const;
+
+        /**
+         * 
+         * @param id Node identifier.
+         * 
+         * @return Data of node with identifier id.
+         * 
+         **/
+        T& get(const NodeId id);
+
+        /**
+         * 
+         * @param id Node identifier.
+         * 
+         * @return Data of node with identifier id.
+         * 
+         **/
+        const T& get(const NodeId id) const;
+
+        /**
+         * 
+         * @param id Node identifier.
+         * 
+         * @return Immutable reference to vector of predecessors of node with identifier id.
+         * 
+         **/
+        const std::vector<NodeId>& getPredecessors(const NodeId id) const;
+
+        /**
+         * 
+         * @param id Node identifier.
+         * 
+         * @return Immutable reference to vector of successors of node with identifier id.
+         * 
+         **/
+        const std::vector<NodeId>& getSuccessors(const NodeId id) const;
+
+        /**
+         * 
          * Adds a node with data node_data to the graph.
          * @param node_data Node data.
+         * 
          * @return Identifier of the new node.
          * 
          **/
@@ -56,6 +101,7 @@ class Graph {
          * 
          * Adds a directed edge from node from to node to.
          * @param from Source node.
+         * 
          * @param to Destination node.
          * 
          **/

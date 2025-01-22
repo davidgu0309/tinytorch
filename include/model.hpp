@@ -9,6 +9,7 @@ namespace tinytorch {
 /**
  * 
  * Model interface.
+ * 
  * @tparam T Floating point data type for numerical computations.
  * 
  **/
@@ -18,7 +19,9 @@ class ModelInterface {
         /**
          * 
          * Inference for potentially batched input data.
+         * 
          * @param input Input data of shape {dim_in} or {batch_size, dim_in}.
+         * 
          * @return Tensor of shape {dim_out} or {batch_size, dim_out} containing the predictions for the provided input data.
          * 
          **/
@@ -26,14 +29,34 @@ class ModelInterface {
 
 };
 
+/**
+ * 
+ * Model class for arbitrary computational DAGs.
+ * @tparam T Floating point data type for numerical computations.
+ * 
+ **/
 template <typename T>
 class DAGModel : ModelInterface<T>{
-    public:
-        Tensor<T> forward(const Tensor<T>& input); 
-    
-    private:
-        DAGNode<T> dagEntryPoint;
 
+        ComputationalDAG<T> computational_graph_;
+
+    public:
+
+        // TO DO: write constructors, remember to set is_topo_order_up_to_date!
+        DAGModel();
+
+        // TO DO: add functions to add (and potentially remove) nodes and edges, remember to clear is_topo_order_up_to_date!
+
+        /**
+         * 
+         * Inference for potentially batched input data.
+         * 
+         * @param input Input data of shape {dim_in} or {batch_size, dim_in}.
+         * 
+         * @return Tensor of shape {dim_out} or {batch_size, dim_out} containing the predictions for the provided input data.
+         * 
+         **/
+        Tensor<T> forward(const Tensor<T>& input); 
         
 };
 

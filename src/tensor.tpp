@@ -32,7 +32,7 @@ namespace tinytorch {
 
     template <typename T>
     size_t Tensor<T>::size() const {
-        return data().size();
+        return data_.size();
     }
 
     template <typename T>
