@@ -1,4 +1,5 @@
 #include "../include/layer.hpp"
+#include "../include/dag.hpp"
 
 #define EXAMPLE_TYPE double
 

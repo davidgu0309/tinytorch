@@ -17,7 +17,7 @@ namespace tinytorch {
 
     template <typename T>
     size_t Linear<T>::num_params() const {
-        return dim_in_ * dim_out_;  // TO DO: decide if we want to count bias params
+        return dim_in_ * dim_out_ + dim_out_;  // TO DO: decide if we want to count bias params
     }
 
     template <typename T>
