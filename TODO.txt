@@ -8,7 +8,7 @@ Basic things:
   - implementa scalar * tensor ops and maybe more generic broadcasting
   - implement softmax and cross-entropy
   - maybe set up GitHub actions for automated testing
-  - make size a field
+  - include time and space complexities in documentation
   - improve makefile (variables for stuff etc.)
 
 Other tensor things we could do (not too important for now):
@@ -16,6 +16,7 @@ Other tensor things we could do (not too important for now):
   - views
   - slicing
   - generic broadcasting
+  - support removals from computational graph
 
 Layers and Model:
   - implement activation layers
