@@ -19,7 +19,7 @@ namespace tinytorch{
 
 template <typename T>
 Tensor<T> DAGModel<T>::forward(const Tensor<T>& input) {
-    computational_graph_.evaluate(input);
+    computational_dag_.evaluate(input);
 }
 
 }

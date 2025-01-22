@@ -1,10 +1,5 @@
 namespace tinytorch{
 
-template <typename T>
-Tensor<T> TensorOperation<T>::operator()(const std::vector<const Tensor<T>&> operands) {
-    return tensorOperation_(operands);
-}
-
 template<typename T>
 const std::vector<NodeId>& ComputationalDAG<T>::topoOrder(){
     if (!is_topo_order_up_to_date){
@@ -35,7 +30,7 @@ template<typename T>
 Tensor<T> ComputationalDAG<T>::evaluate(const Tensor<T>& input) {
     topoOrder();
     for(const NodeId id : topo_order_){
-        NodeData<T> node = Graph<T>::get(id);
+        ComputationalDAGNode<T> node = Graph<T>::get(id);
         std::vector<const Tensor<T>&> operands;
         if(id == entry_point_){
             operands.push_back(input);

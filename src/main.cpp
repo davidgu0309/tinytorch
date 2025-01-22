@@ -1,5 +1,6 @@
 #include "../include/layer.hpp"
 #include "../include/computational_dag.hpp"
+#include "../include/model.hpp"
 
 #define EXAMPLE_TYPE double
 

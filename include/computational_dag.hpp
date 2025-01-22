@@ -1,35 +1,24 @@
 #pragma once
 
 #include "graph.hpp"
+#include "tensor.hpp"
 
 #include <algorithm>
+#include <functional>
 #include <stack>
 
 namespace tinytorch {
 
     /**
      * 
-     * Functor-style class for tensor operations.
+     * Structure of computational DAG nodes.
      * 
      * @tparam T Floating point data type for numerical computations.
      * 
      **/
     template <typename T>
-    struct TensorOperation {
-        std::function<Tensor<T>(const std::vector<const Tensor<T>&>)> tensorOperation_; 
-        Tensor<T> operator()(const std::vector<const Tensor<T>&> operands);
-    };
-
-    /**
-     * 
-     * Node data of computational DAG nodes.
-     * 
-     * @tparam T Floating point data type for numerical computations.
-     * 
-     **/
-    template <typename T>
-    struct NodeData {
-        TensorOperation<T> tensorOperation; 
+    struct ComputationalDAGNode {
+        std::function<Tensor<T>(const std::vector<const Tensor<T>&>)> tensorOperation; 
         Tensor<T> result_;
     };
 
@@ -42,7 +31,7 @@ namespace tinytorch {
      * 
      **/
     template<typename T>
-    class ComputationalDAG : Graph<NodeData<T>>{
+    class ComputationalDAG : Graph<ComputationalDAGNode<T>>{
 
             NodeId entry_point_;
             NodeId exit_point_;
@@ -51,7 +40,63 @@ namespace tinytorch {
             std::vector<size_t> topo_order_;
 
         public:
-            using Graph<NodeData<T>>::Graph; // Inherit all constructors from Graph
+
+            using Graph<ComputationalDAGNode<T>>::Graph; // Inherit all constructors from Graph
+
+            /**
+             * 
+             * @return Number of nodes in the graph.
+             * 
+             **/
+            using Graph<ComputationalDAGNode<T>>::size;
+
+            /**
+             * 
+             * @param id Node identifier.
+             * 
+             * @return Data of node with identifier id.
+             * 
+             **/
+            using Graph<ComputationalDAGNode<T>>::get;
+
+            /**
+             * 
+             * @param id Node identifier.
+             * 
+             * @return Immutable reference to vector of predecessors of node with identifier id.
+             * 
+             **/
+            using Graph<ComputationalDAGNode<T>>::getPredecessors;
+
+            /**
+             * 
+             * @param id Node identifier.
+             * 
+             * @return Immutable reference to vector of successors of node with identifier id.
+             * 
+             **/
+            using Graph<ComputationalDAGNode<T>>::getSuccessors;
+
+            /**
+             * 
+             * Adds a node with data node_data to the graph.
+             * @param node_data Node data.
+             * 
+             * @return Identifier of the new node.
+             * 
+             **/
+            using Graph<ComputationalDAGNode<T>>::addNode;
+
+            /**
+             * 
+             * Adds a directed edge from node from to node to.
+             * @param from Source node.
+             * 
+             * @param to Destination node.
+             * 
+             **/
+            using Graph<ComputationalDAGNode<T>>::addEdge;
+
 
             /**
              * 

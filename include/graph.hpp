@@ -1,6 +1,7 @@
 #pragma once
 
 #include <stdlib.h>
+#include <vector>
 
 /**
  * 
@@ -17,7 +18,7 @@ typedef size_t NodeId;
  **/
 template <typename T>
 class Graph {
-    // NodeId entry_point_; // Moved
+
     std::vector<T> nodes_;
     std::vector<std::vector<NodeId>> adjacency_lists_;
     std::vector<std::vector<NodeId>> backward_adjacency_lists_;

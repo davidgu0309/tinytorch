@@ -39,7 +39,7 @@ class ModelInterface {
 template <typename T>
 class DAGModel : ModelInterface<T>{
 
-        ComputationalDAG<T> computational_graph_;
+        ComputationalDAG<T> computational_dag_;
 
     public:
 
