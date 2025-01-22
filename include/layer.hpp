@@ -10,7 +10,7 @@
 namespace tinytorch{
 
 template <typename T>
-class Layer {
+class LayerInterface {
     virtual Tensor<T> forward(const Tensor<T>& input) = 0;
 };
 
@@ -23,7 +23,7 @@ class Layer {
 // if (input.ndim() == 2) no batch  (S, T)
 
 template <typename T>
-class Linear: Layer<T> {
+class Linear : LayerInterface<T> {
 
         size_t dim_in_, dim_out_;
         Tensor<T> weights_;    //maybe std::unique_ptr(Tensor<T>), shape (dim_in, dim_out)
@@ -43,13 +43,13 @@ class Linear: Layer<T> {
 };
 
 template <typename T>
-class ReLU {
+class ReLU : LayerInterface<T> {
     public:
         Tensor<T> forward(const Tensor<T>& input);
 };
 
 template <typename T>
-class Conv1D {
+class Conv1D : LayerInterface<T> {
     public:
         Tensor<T> forward(const Tensor<T>& input);
 
