@@ -17,7 +17,7 @@ ComputationalDAGNode<int> plus_2_node([](const std::vector<Tensor<int>>& operand
                                     });
 ComputationalDAGNode<int> times_3_node([](const std::vector<Tensor<int>>& operands){
                                         assert(operands.size() == 1);
-                                        Tensor<int> c3 = constant<int>(operands[0].shape(), 2);
+                                        Tensor<int> c3 = constant<int>(operands[0].shape(), 3);
                                         return mul(operands[0], c3);
                                     });
 ComputationalDAGNode<int> sum_node([](const std::vector<Tensor<int>> operands){
@@ -55,12 +55,12 @@ void computationalDAGUnitTests(){
     for(auto id : topo_order){
         std::cout << id << " ";
     }
-    std::cout << std::endl;
+    std::cout << std::endl << std::endl;
     Tensor<int> input = iota<int>({2, 2});
     std::cout << "Input" << std::endl;
-    std::cout << input << std::endl;
+    std::cout << input;
     std::cout << "Result" << std::endl;
-    std::cout << computational_dag.evaluate(input).shape() << std::endl;
+    std::cout << computational_dag.evaluate(input) << std::endl;
     std::cout << "Intermediate results" << std::endl;
     for(NodeId id = 0; id < 4; ++id){
         std::cout << "Node id " << id << std::endl;

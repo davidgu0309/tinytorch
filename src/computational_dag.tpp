@@ -73,25 +73,16 @@ template<typename T>
 Tensor<T> ComputationalDAG<T>::evaluate(const Tensor<T>& input) {
     topoOrder();
     for(const NodeId id : topo_order_){
-        ComputationalDAGNode<T> node = get(id);
+        ComputationalDAGNode<T>& node = get(id);
         std::vector<Tensor<T>> operands;
-        std::cout << "ID " << id << " - ";
         if(id == entry_point_){
             operands.push_back(input);
         }else{
             for(const NodeId operand_id : getPredecessors(id)){
-                std::cout << "operand " << operand_id << " is " << get(operand_id).result_ << std::endl;
                 operands.push_back(get(operand_id).result_);
-                std::cout << operand_id << " ";
             }
-            std::cout << std::endl;
-            
         }
-        std::cout << "ev id " << id << std::endl;
-        for(auto operand : operands) std::cout << operand;
-        std::cout << "Result "; 
         node.result_ = node.tensorOperation_(operands);
-        std::cout << node.result_ << std::endl;
     }
     return get(exit_point_).result_;
 }

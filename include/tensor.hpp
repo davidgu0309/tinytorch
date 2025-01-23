@@ -25,7 +25,6 @@ namespace tinytorch {
     class Tensor {
 
         // Default visibility is private
-        size_t size_;
         Shape shape_;
         std::vector<T> data_;
         std::vector<T> grad_;

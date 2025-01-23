@@ -130,7 +130,7 @@ namespace tinytorch {
         Tensor<T> result = zeros<T>(result_shape);
 
         a_shape.pop_back();
-        // Could replace b_indexes = indexesColumnMajor(b_shape) for cache
+        // TO DO (priority: low for now): think about performance in cache
         std::vector<MultiIndex> a_indexes = indexesRowMajor(a_shape), b_indexes = indexesRowMajor(b_shape);
 
         /*
@@ -151,7 +151,7 @@ namespace tinytorch {
         0 0
         */
 
-        // For 2D, this is O(n ** 3)
+        // Asymptotically this is optimal O(result.size() * a.shape.back())
         for(const MultiIndex& i : a_indexes){
             for(const MultiIndex& j : b_indexes){
                 MultiIndex ii(i); ii.push_back(j.front());
