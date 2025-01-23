@@ -10,6 +10,7 @@ Basic things:
   - maybe set up GitHub actions for automated testing
   - include time and space complexities in documentation
   - improve makefile (variables for stuff etc.)
+  - don't copy tensors all the time in computational DAG evaluation
 
 Other tensor things we could do (not too important for now):
   - transposition
