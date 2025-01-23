@@ -6,23 +6,24 @@
 
 namespace tinytorch {
 
-ComputationalDAGNode<int> id_node; /*([](const std::vector<const Tensor<int>&> operands){
-                                        return Tensor<int>(operands[0].shape(), operands[0].data());
-                                    });*/
-ComputationalDAGNode<int> plus_2_node; /*([](const std::vector<const Tensor<int>&> operands){
+ComputationalDAGNode<int> id_node([](const std::vector<Tensor<int>>& operands){
                                         assert(operands.size() == 1);
-                                        Tensor<int> c2 = constant(operands[0].shape(), 2);
+                                        return operands[0];
+                                    });
+ComputationalDAGNode<int> plus_2_node([](const std::vector<Tensor<int>>& operands){
+                                        assert(operands.size() == 1);
+                                        Tensor<int> c2 = constant<int>(operands[0].shape(), 2);
                                         return add(operands[0], c2);
-                                    });*/
-ComputationalDAGNode<int> times_3_node; /*([](const std::vector<const Tensor<int>&> operands){
+                                    });
+ComputationalDAGNode<int> times_3_node([](const std::vector<Tensor<int>>& operands){
                                         assert(operands.size() == 1);
-                                        Tensor<int> c3 = constant(operands[0].shape(), 2);
+                                        Tensor<int> c3 = constant<int>(operands[0].shape(), 2);
                                         return mul(operands[0], c3);
-                                    }); */
-ComputationalDAGNode<int> sum_node; /*([](const std::vector<const Tensor<int>&> operands){
+                                    });
+ComputationalDAGNode<int> sum_node([](const std::vector<Tensor<int>> operands){
                                         assert(operands.size() == 2);
                                         return add(operands[0], operands[1]);
-                                    });*/
+                                    });
 
 void computationalDAGUnitTests(){
     // TO DO: improve framework and rewrite this
@@ -51,9 +52,19 @@ void computationalDAGUnitTests(){
     }
     std::cout << "Topo order" << std::endl;
     auto topo_order = computational_dag.topoOrder();
-    std::cout << topo_order.size() << std::endl;
     for(auto id : topo_order){
         std::cout << id << " ";
+    }
+    std::cout << std::endl;
+    Tensor<int> input = iota<int>({2, 2});
+    std::cout << "Input" << std::endl;
+    std::cout << input << std::endl;
+    std::cout << "Result" << std::endl;
+    std::cout << computational_dag.evaluate(input).shape() << std::endl;
+    std::cout << "Intermediate results" << std::endl;
+    for(NodeId id = 0; id < 4; ++id){
+        std::cout << "Node id " << id << std::endl;
+        std::cout << computational_dag.get(id).result_ << std::endl;
     }
 }
     

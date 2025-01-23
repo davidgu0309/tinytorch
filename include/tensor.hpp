@@ -11,6 +11,7 @@
 #include <functional>
 #include "distribution.hpp"
 
+// TO DO: implement .copy()
 namespace tinytorch {
 
     typedef std::vector<size_t> Shape;
@@ -64,25 +65,25 @@ namespace tinytorch {
 
     // Common tensors
     template <typename T>
-    Tensor<T> zeros(const std::vector<size_t> shape);
+    Tensor<T> zeros(const Shape shape);
 
     template <typename T>
-    Tensor<T> ones(const std::vector<size_t> shape);
+    Tensor<T> ones(const Shape shape);
 
     template <typename T>
-    Tensor<T> constant(const std::vector<size_t> shape, T value);
+    Tensor<T> constant(const Shape shape, T value);
 
     template <typename T>
-    Tensor<T> iota(const std::vector<size_t> shape);
+    Tensor<T> iota(const Shape shape);
 
     // TO DO: identity
 
     // TO DO: random
     template <typename T>
-    Tensor<T> initialize_using_generator(const std::vector<size_t> shape, std::function<T()> generator);
+    Tensor<T> initialize_using_generator(const Shape shape, std::function<T()> generator);
 
     template <typename T>
-    Tensor<T> real_uniform(const std::vector<size_t> shape, const T lower, const T upper);
+    Tensor<T> real_uniform(const Shape shape, const T lower, const T upper);
 }
 
 #include "../src/tensor.tpp"

@@ -18,11 +18,11 @@ namespace tinytorch {
      **/
     template <typename T>
     struct ComputationalDAGNode {
-        std::function<Tensor<T>(const std::vector<const Tensor<T>&>)> tensorOperation_; 
+        std::function<Tensor<T>(const std::vector<Tensor<T>>&)> tensorOperation_; 
         Tensor<T> result_;
 
         ComputationalDAGNode();
-        ComputationalDAGNode(std::function<Tensor<T>(const std::vector<const Tensor<T>&>)> tensorOperation);
+        ComputationalDAGNode(std::function<Tensor<T>(const std::vector<Tensor<T>>&)> tensorOperation);
     };
 
     /**

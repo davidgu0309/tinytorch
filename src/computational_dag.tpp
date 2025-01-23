@@ -4,7 +4,7 @@ namespace tinytorch{
 ComputationalDAGNode<T>::ComputationalDAGNode(){};
 
 template<typename T>
-ComputationalDAGNode<T>::ComputationalDAGNode(std::function<Tensor<T>(const std::vector<const Tensor<T>&>)> tensorOperation) : tensorOperation_(tensorOperation) {};
+ComputationalDAGNode<T>::ComputationalDAGNode(std::function<Tensor<T>(const std::vector<Tensor<T>>&)> tensorOperation) : tensorOperation_(tensorOperation) {};
 
 template<typename T>
 ComputationalDAG<T>::ComputationalDAG() : Graph<ComputationalDAGNode<T>>::Graph(), is_topo_order_up_to_date_(false){}
@@ -73,19 +73,27 @@ template<typename T>
 Tensor<T> ComputationalDAG<T>::evaluate(const Tensor<T>& input) {
     topoOrder();
     for(const NodeId id : topo_order_){
-        ComputationalDAGNode<T> node = Graph<T>::get(id);
-        std::vector<const Tensor<T>&> operands;
+        ComputationalDAGNode<T> node = get(id);
+        std::vector<Tensor<T>> operands;
+        std::cout << "ID " << id << " - ";
         if(id == entry_point_){
             operands.push_back(input);
         }else{
-            for(const NodeId operand_id : Graph<T>::getPredecessors(id)){
-                operands.push_back(Graph<T>::get(operand_id).result);
+            for(const NodeId operand_id : getPredecessors(id)){
+                std::cout << "operand " << operand_id << " is " << get(operand_id).result_ << std::endl;
+                operands.push_back(get(operand_id).result_);
+                std::cout << operand_id << " ";
             }
+            std::cout << std::endl;
             
         }
-        node.result = node.tensorOperation_(operands);
+        std::cout << "ev id " << id << std::endl;
+        for(auto operand : operands) std::cout << operand;
+        std::cout << "Result "; 
+        node.result_ = node.tensorOperation_(operands);
+        std::cout << node.result_ << std::endl;
     }
-    return Graph<T>::get(exit_point_).result;
+    return get(exit_point_).result_;
 }
 
 }

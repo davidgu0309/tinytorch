@@ -125,7 +125,7 @@ namespace tinytorch {
 
     // Common tensors
     template <typename T>
-    Tensor<T> constant(const std::vector<size_t> shape, T value){
+    Tensor<T> constant(const Shape shape, T value){
         std::vector<T> data(numEntries(shape), value);
         return Tensor(shape, data);
     }
@@ -141,14 +141,14 @@ namespace tinytorch {
     }
 
     template <typename T>
-    Tensor<T> iota(const std::vector<size_t> shape){
+    Tensor<T> iota(const Shape shape){
         std::vector<T> data(numEntries(shape));
         std::iota(data.begin(), data.end(), 1);
         return Tensor(shape, data);
     }
 
     template <typename T>
-    Tensor<T> initialize_using_generator(const std::vector<size_t> shape, std::function<T()> generator) {
+    Tensor<T> initialize_using_generator(const Shape shape, std::function<T()> generator) {
         std::vector<T> data(numEntries(shape));
         for (int i=0; i<data.size(); i++) {
             data[i] = generator();
@@ -157,7 +157,7 @@ namespace tinytorch {
     }
 
     template <typename T>
-    Tensor<T> real_uniform(const std::vector<size_t> shape, const T lower, const T upper) {
+    Tensor<T> real_uniform(const Shape shape, const T lower, const T upper) {
         std::random_device rd;
         std::mt19937 gen(rd());
         return initialize_using_generator<T>(shape, [lower, upper, gen]() mutable {
