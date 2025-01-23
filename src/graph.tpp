@@ -5,7 +5,16 @@ template<typename T>
 Graph<T>::Graph(const size_t n) : nodes_(std::vector<T>(n)), adjacency_lists_(std::vector<std::vector<NodeId>>(n)) {}
 
 template<typename T>
-Graph<T>::Graph(std::vector<T> node_data, std::vector<std::vector<NodeId>> adjacency_lists) : nodes_(node_data), adjacency_lists_(adjacency_lists) {}
+Graph<T>::Graph(std::vector<T> node_data, std::vector<std::vector<NodeId>> adjacency_lists) : nodes_(node_data), adjacency_lists_(adjacency_lists) {
+    size_t n = node_data.size();
+    assert(n == adjacency_lists.size());
+    backward_adjacency_lists_ = std::vector<std::vector<NodeId>>(n, {});
+    for(NodeId id = 0; id < n; ++id){
+        for(NodeId succ_id : adjacency_lists[id]){
+            backward_adjacency_lists_[succ_id].push_back(id);
+        }
+    }
+}
 
 template<typename T>
 NodeId Graph<T>::size() const {

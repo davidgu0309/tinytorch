@@ -18,8 +18,11 @@ namespace tinytorch {
      **/
     template <typename T>
     struct ComputationalDAGNode {
-        std::function<Tensor<T>(const std::vector<const Tensor<T>&>)> tensorOperation; 
+        std::function<Tensor<T>(const std::vector<const Tensor<T>&>)> tensorOperation_; 
         Tensor<T> result_;
+
+        ComputationalDAGNode();
+        ComputationalDAGNode(std::function<Tensor<T>(const std::vector<const Tensor<T>&>)> tensorOperation);
     };
 
     /**
@@ -36,12 +39,36 @@ namespace tinytorch {
             NodeId entry_point_;
             NodeId exit_point_;
 
-            bool is_topo_order_up_to_date;
+            bool is_topo_order_up_to_date_;
             std::vector<size_t> topo_order_;
+
+            void DFS(NodeId id, std::vector<bool>& visited);
 
         public:
 
-            using Graph<ComputationalDAGNode<T>>::Graph; // Inherit all constructors from Graph
+            /**
+             * 
+             * Constructs an empty computational graph.
+             * 
+             **/
+            ComputationalDAG();
+
+            /**
+             * 
+             * Constructs a computational graph with n nodes, no edges and uninitialized node data.
+             * 
+             **/
+            ComputationalDAG(size_t n);
+            
+            /**
+             * 
+             * Assumes node_data.size() == adjacency_lists.size() and adjacency_lists valid DAG 
+             * that satisfies specification properties.
+             * 
+             **/
+            ComputationalDAG(std::vector<T> node_data, std::vector<std::vector<NodeId>> adjacency_lists);
+
+            // TO DO: add constructor with entry and exit
 
             /**
              * 
@@ -49,6 +76,34 @@ namespace tinytorch {
              * 
              **/
             using Graph<ComputationalDAGNode<T>>::size;
+
+            /**
+             * 
+             * @return Reference to the entry point identifier.
+             * 
+             **/
+            NodeId& getEntryPoint();
+
+            /**
+             * 
+             * @return Immutable reference to the entry point identifier.
+             * 
+             **/
+            const NodeId& getEntryPoint() const;
+
+            /**
+             * 
+             * @return Reference to the exit point identifier.
+             * 
+             **/
+            NodeId& getExitPoint();
+
+            /**
+             * 
+             * @return Immutable reference to the exit point identifier.
+             * 
+             **/
+            const NodeId& getExitPoint() const;
 
             /**
              * 
@@ -85,7 +140,7 @@ namespace tinytorch {
              * @return Identifier of the new node.
              * 
              **/
-            using Graph<ComputationalDAGNode<T>>::addNode;
+            NodeId addNode(ComputationalDAGNode<int> node_data);
 
             /**
              * 
@@ -95,7 +150,7 @@ namespace tinytorch {
              * @param to Destination node.
              * 
              **/
-            using Graph<ComputationalDAGNode<T>>::addEdge;
+            void addEdge(const NodeId from, const NodeId to);
 
 
             /**

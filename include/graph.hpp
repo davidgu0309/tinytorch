@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cassert>
 #include <stdlib.h>
 #include <vector>
 
@@ -40,7 +41,7 @@ class Graph {
 
         /**
          * 
-         * Obvious.
+         * Assumes node_data.size() == adjacency_lists.size() and adjacency_lists valid.
          * 
          **/
         Graph(std::vector<T> node_data, std::vector<std::vector<NodeId>> adjacency_lists);

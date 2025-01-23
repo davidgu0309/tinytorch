@@ -1,19 +1,60 @@
 #include "../include/computational_dag.hpp"
+#include "../include/functional.hpp"
 
+#include <cassert>
 #include <iostream>
 
 namespace tinytorch {
 
-ComputationalDAGNode<int> id_node, plus_2_node, times_3_node, sum_node;
+ComputationalDAGNode<int> id_node; /*([](const std::vector<const Tensor<int>&> operands){
+                                        return Tensor<int>(operands[0].shape(), operands[0].data());
+                                    });*/
+ComputationalDAGNode<int> plus_2_node; /*([](const std::vector<const Tensor<int>&> operands){
+                                        assert(operands.size() == 1);
+                                        Tensor<int> c2 = constant(operands[0].shape(), 2);
+                                        return add(operands[0], c2);
+                                    });*/
+ComputationalDAGNode<int> times_3_node; /*([](const std::vector<const Tensor<int>&> operands){
+                                        assert(operands.size() == 1);
+                                        Tensor<int> c3 = constant(operands[0].shape(), 2);
+                                        return mul(operands[0], c3);
+                                    }); */
+ComputationalDAGNode<int> sum_node; /*([](const std::vector<const Tensor<int>&> operands){
+                                        assert(operands.size() == 2);
+                                        return add(operands[0], operands[1]);
+                                    });*/
 
 void computationalDAGUnitTests(){
     // TO DO: improve framework and rewrite this
     ComputationalDAG<int> computational_dag;
     NodeId id_node_id = computational_dag.addNode(id_node);
+    std::cout << id_node_id << " ";
     NodeId plus_2_node_id = computational_dag.addNode(plus_2_node);
+    std::cout << plus_2_node_id << " ";
     NodeId times_3_node_id = computational_dag.addNode(times_3_node);
+    std::cout << times_3_node_id << " ";
     NodeId sum_node_id = computational_dag.addNode(sum_node);
+    std::cout << sum_node_id << std::endl;
     std::cout << "Size test 1: " << (computational_dag.size() == 4 ? "Passed" : "Failed") << std::endl;
+    computational_dag.addEdge(id_node_id, plus_2_node_id);
+    computational_dag.addEdge(id_node_id, times_3_node_id);
+    computational_dag.addEdge(plus_2_node_id, sum_node_id);
+    computational_dag.addEdge(times_3_node_id, sum_node_id);
+    computational_dag.getEntryPoint() = id_node_id;
+    computational_dag.getExitPoint() = sum_node_id;
+    std::cout << "Adjacency lists" << std::endl;
+    for(NodeId id = 0; id < 4; ++id){
+        for(auto s : computational_dag.getSuccessors(id)){
+            std::cout << s << " ";
+        }
+        std::cout << std::endl;
+    }
+    std::cout << "Topo order" << std::endl;
+    auto topo_order = computational_dag.topoOrder();
+    std::cout << topo_order.size() << std::endl;
+    for(auto id : topo_order){
+        std::cout << id << " ";
+    }
 }
     
 } // namespace tinytorch
