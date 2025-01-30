@@ -23,6 +23,7 @@
 namespace tinytorch {
 
 /**
+ * @class ModelInterface
  * 
  * Model interface.
  * 
@@ -46,6 +47,7 @@ class ModelInterface {
 };
 
 /**
+ * @class DAGModel
  * 
  * Model class for arbitrary computational DAGs.
  * @tparam T Floating point data type for numerical computations.

@@ -29,6 +29,7 @@ namespace tinytorch {
      * @tparam T Operand type.
      * @tparam U Result type.
      * 
+     * 
      **/
     template<typename T, typename U, U (*unaryOp)(T)>
     Tensor<U> applyUnaryOp(const Tensor<T>& a);

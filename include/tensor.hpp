@@ -31,21 +31,52 @@
  */
 namespace tinytorch {
 
+    /**
+     * @typedef Shape
+     * 
+     * @brief Type for tensor shapes.
+     * 
+     */
     typedef std::vector<size_t> Shape;
-    typedef std::vector<size_t> MultiIndex; // 0-based multiindexes
 
+    /**
+     * @brief Prints shape shape to outputstream out.
+     */
+    std::ostream& operator << (std::ostream& out, const Shape& shape);
+
+    /**
+     * @typedef MultiIndex
+     * 
+     * @brief 0-based tensor indexes.
+     * 
+     */
+    typedef std::vector<size_t> MultiIndex;
+
+    /**
+     * @brief Checks if multi_index is valid for shape.
+     */
     bool multiIndexLegalityTest(const Shape shape, const MultiIndex multi_index);
 
+    /**
+     * @brief Prints multiindex index to outputstream out.
+     */
     std::ostream& operator << (std::ostream& out, const MultiIndex& index);
 
+    /**
+     * @class Tensor
+     * 
+     * @brief Dynamic-size tensor.
+     * 
+     * @todo Comment members.
+     * 
+     * @tparam T Entry type.
+     */
     template <typename T>
     class Tensor {
 
         // Default visibility is private
         Shape shape_;
         std::vector<T> data_;
-        std::vector<T> grad_;
-        bool requires_grad_;
 
     public:
 
@@ -59,10 +90,8 @@ namespace tinytorch {
         Shape shape() const;
 
         std::vector<T>& data();
-        std::vector<T>& grad();
 
         const std::vector<T>& data() const;
-        const std::vector<T>& grad() const;
 
         T& getEntryUnsafe(MultiIndex index);
         const T& getEntryUnsafe(MultiIndex index) const;

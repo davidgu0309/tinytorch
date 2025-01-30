@@ -15,6 +15,7 @@
 #include <vector>
 
 /**
+ * @typedef NodeId
  * 
  * Type for node identifiers. NodeId id is the identifier for the node in Graph::nodes_[id].
  * 
@@ -22,8 +23,10 @@
 typedef size_t NodeId;
 
 /**
+ * @class Graph
  * 
  * Adjacency-lists based class for directed (multi-)graphs.
+ * 
  * @tparam T Node type.
  * 
  **/

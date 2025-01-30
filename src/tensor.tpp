@@ -8,8 +8,8 @@ namespace tinytorch {
         return true;
     }
 
-    std::ostream& operator << (std::ostream& out, const MultiIndex& index){
-        for(size_t i : index){
+    std::ostream& operator << (std::ostream& out, const Shape& shape){
+        for(size_t i : shape){
             out << i << " ";
         }
         // out << std::endl;
@@ -47,19 +47,8 @@ namespace tinytorch {
     }
 
     template <typename T>
-    std::vector<T>& Tensor<T>::grad() {
-        return grad_;
-    }
-
-
-    template <typename T>
     const std::vector<T>& Tensor<T>::data() const {
         return data_;
-    }
-
-    template <typename T>
-    const std::vector<T>& Tensor<T>::grad() const {
-        return grad_;
     }
 
     template <typename T>
