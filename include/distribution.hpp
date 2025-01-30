@@ -1,3 +1,13 @@
+/**
+ * @file distribution.hpp
+ * 
+ * @brief Distribution functions (do we actually need this file?).
+ * 
+ * @author David Gu
+ * @author Mirco Paul
+ * 
+ * @date \today
+ */
 #pragma once
 
 #include <random>

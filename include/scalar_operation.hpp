@@ -1,3 +1,13 @@
+/**
+ * @file scalar_operation.hpp
+ * 
+ * @brief Templated scalar operations.
+ * 
+ * @author David Gu
+ * @author Mirco Paul
+ * 
+ * @date \today
+ */
 #pragma once
 
 #include <cmath>

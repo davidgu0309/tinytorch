@@ -1,3 +1,13 @@
+/**
+ * @file autograd.hpp
+ * 
+ * @brief Do we even want this file?
+ * 
+ * @author David Gu
+ * @author Mirco Paul
+ * 
+ * @date \today
+ */
 #pragma once
 
 // [f(g(h(x)))]' = f'(g(h(x))) * g'(h(x)) * h'(x)

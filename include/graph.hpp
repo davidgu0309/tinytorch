@@ -1,3 +1,13 @@
+/**
+ * @file graph.hpp
+ * 
+ * @brief Templated data structure for graphs.
+ * 
+ * @author David Gu
+ * @author Mirco Paul
+ * 
+ * @date \today
+ */
 #pragma once
 
 #include <cassert>

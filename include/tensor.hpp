@@ -1,3 +1,13 @@
+/**
+ * @file tensor.hpp
+ * 
+ * @brief Dynamic size tensors templated for type.
+ * 
+ * @author David Gu
+ * @author Mirco Paul
+ * 
+ * @date \today
+ */
 #pragma once
 
 #include "../include/util.hpp"

@@ -1,3 +1,13 @@
+/**
+ * @file layer.hpp
+ * 
+ * @brief Layer interface and templates for different layers.
+ * 
+ * @author David Gu
+ * @author Mirco Paul
+ * 
+ * @date \today
+ */
 #pragma once
 
 #include "../include/tensor.hpp"

@@ -1,3 +1,13 @@
+/**
+ * @file model.hpp
+ * 
+ * @brief Model interface and template for DAG models.
+ * 
+ * @author David Gu
+ * @author Mirco Paul
+ * 
+ * @date \today
+ */
 #pragma once
 
 #include "computational_dag.hpp"

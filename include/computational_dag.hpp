@@ -1,3 +1,13 @@
+/**
+ * @file computational_dag.hpp
+ * 
+ * @brief Template for tensor operation DAG data structure.
+ * 
+ * @author David Gu
+ * @author Mirco Paul
+ * 
+ * @date \today
+ */
 #pragma once
 
 #include "graph.hpp"

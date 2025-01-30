@@ -1,3 +1,13 @@
+/**
+ * @file functional.hpp
+ * 
+ * @brief Implementation of tensor operations (maybe we can rename this file).
+ * 
+ * @author David Gu
+ * @author Mirco Paul
+ * 
+ * @date \today
+ */
 #pragma once
 
 #include "../include/scalar_operation.hpp"

@@ -1,3 +1,13 @@
+/**
+ * @file util.hpp
+ * 
+ * @brief Utility functions.
+ * 
+ * @author David Gu
+ * @author Mirco Paul
+ * 
+ * @date \today
+ */
 #pragma once
 
 #include <stddef.h>
