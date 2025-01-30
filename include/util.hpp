@@ -13,6 +13,12 @@
 #include <stddef.h>
 #include <vector>
 
+/**
+ * @namespace tinytorch
+ * 
+ * @brief Namespace of the entire framework.
+ * 
+ */
 namespace tinytorch {
 
     // shape {} models scalars

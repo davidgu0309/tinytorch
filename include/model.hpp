@@ -14,7 +14,12 @@
 #include "layer.hpp"
 #include "tensor.hpp"
 
-
+/**
+ * @namespace tinytorch
+ * 
+ * @brief Namespace of the entire framework.
+ * 
+ */
 namespace tinytorch {
 
 /**

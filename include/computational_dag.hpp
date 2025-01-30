@@ -17,28 +17,42 @@
 #include <functional>
 #include <stack>
 
+/**
+ * @namespace tinytorch
+ * 
+ * @brief Namespace of the entire framework.
+ * 
+ */
 namespace tinytorch {
 
     /**
+     * @struct ComputationalDAGNode
      * 
-     * Structure of computational DAG nodes.
+     * @brief Structure for computational DAG nodes.
+     * 
+     * A computational DAG node represents a tensor operation. An instance of this
+     * structure contains everything necessary for the forward and backward computations
+     * of the corresponding node in the computational DAG.
      * 
      * @tparam T Floating point data type for numerical computations.
      * 
      **/
     template <typename T>
     struct ComputationalDAGNode {
-        std::function<Tensor<T>(const std::vector<Tensor<T>>&)> tensorOperation_; 
-        Tensor<T> result_;
+        std::function<Tensor<T>(const std::vector<Tensor<T>>&)> tensorOperation_; /** Forward tensor operation. */
+        Tensor<T> result_;  /** Result of forward computation. */
 
         ComputationalDAGNode();
         ComputationalDAGNode(std::function<Tensor<T>(const std::vector<Tensor<T>>&)> tensorOperation);
     };
 
     /**
+     * @class ComputationalDAG
+     * 
+     * @brief Acyclic tensor operation graph.
      * 
      * Class for (connected) computational DAGs with a single entry point (node with in-degree 0) and a single exit point (node with out-degree 0).
-     * // TO DO: implement functions to check properties (acyclic, single entry, single exit, no multiple edges, ...)
+     * // @todo implement functions to check properties (acyclic, single entry, single exit, no multiple edges, ...)
      * 
      * @tparam T Floating point data type for numerical computations.
      * 
@@ -46,8 +60,8 @@ namespace tinytorch {
     template<typename T>
     class ComputationalDAG : Graph<ComputationalDAGNode<T>>{
 
-            NodeId entry_point_;
-            NodeId exit_point_;
+            NodeId entry_point_;    /** This node acts directly on the input to the DAG. */
+            NodeId exit_point_;     /** The result of this node is the result of the DAG computation. */
 
             bool is_topo_order_up_to_date_;
             std::vector<size_t> topo_order_;

@@ -12,6 +12,12 @@
 
 #include <random>
 
+/**
+ * @namespace tinytorch
+ * 
+ * @brief Namespace of the entire framework.
+ * 
+ */
 namespace tinytorch {
     std::random_device rd;
     std::mt19937 gen(rd());

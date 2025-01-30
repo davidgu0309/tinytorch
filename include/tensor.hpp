@@ -22,6 +22,13 @@
 #include "distribution.hpp"
 
 // TO DO: implement .copy()
+
+/**
+ * @namespace tinytorch
+ * 
+ * @brief Namespace of the entire framework.
+ * 
+ */
 namespace tinytorch {
 
     typedef std::vector<size_t> Shape;

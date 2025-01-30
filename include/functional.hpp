@@ -16,6 +16,12 @@
 
 #include <cassert>
 
+/**
+ * @namespace tinytorch
+ * 
+ * @brief Namespace of the entire framework.
+ * 
+ */
 namespace tinytorch {
 
     /**
