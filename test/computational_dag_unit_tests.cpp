@@ -28,13 +28,13 @@ ComputationalDAGNode<int> sum_node([](const std::vector<Tensor<int>> operands){
 void computationalDAGUnitTests(){
     // TO DO: improve framework and rewrite this
     ComputationalDAG<int> computational_dag;
-    NodeId id_node_id = computational_dag.addNode(id_node);
+    graph::NodeId id_node_id = computational_dag.addNode(id_node);
     std::cout << id_node_id << " ";
-    NodeId plus_2_node_id = computational_dag.addNode(plus_2_node);
+    graph::NodeId plus_2_node_id = computational_dag.addNode(plus_2_node);
     std::cout << plus_2_node_id << " ";
-    NodeId times_3_node_id = computational_dag.addNode(times_3_node);
+    graph::NodeId times_3_node_id = computational_dag.addNode(times_3_node);
     std::cout << times_3_node_id << " ";
-    NodeId sum_node_id = computational_dag.addNode(sum_node);
+    graph::NodeId sum_node_id = computational_dag.addNode(sum_node);
     std::cout << sum_node_id << std::endl;
     std::cout << "Size test 1: " << (computational_dag.size() == 4 ? "Passed" : "Failed") << std::endl;
     computational_dag.addEdge(id_node_id, plus_2_node_id);
@@ -44,7 +44,7 @@ void computationalDAGUnitTests(){
     computational_dag.getEntryPoint() = id_node_id;
     computational_dag.getExitPoint() = sum_node_id;
     std::cout << "Adjacency lists" << std::endl;
-    for(NodeId id = 0; id < 4; ++id){
+    for(graph::NodeId id = 0; id < 4; ++id){
         for(auto s : computational_dag.getSuccessors(id)){
             std::cout << s << " ";
         }
@@ -62,7 +62,7 @@ void computationalDAGUnitTests(){
     std::cout << "Result" << std::endl;
     std::cout << computational_dag.evaluate(input) << std::endl;
     std::cout << "Intermediate results" << std::endl;
-    for(NodeId id = 0; id < 4; ++id){
+    for(graph::NodeId id = 0; id < 4; ++id){
         std::cout << "Node id " << id << std::endl;
         std::cout << computational_dag.get(id).result_ << std::endl;
     }

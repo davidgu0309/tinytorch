@@ -58,15 +58,15 @@ namespace tinytorch {
      * 
      **/
     template<typename T>
-    class ComputationalDAG : Graph<ComputationalDAGNode<T>>{
+    class ComputationalDAG : graph::Graph<ComputationalDAGNode<T>>{
 
-            NodeId entry_point_;    /** This node acts directly on the input to the DAG. */
-            NodeId exit_point_;     /** The result of this node is the result of the DAG computation. */
+            graph::NodeId entry_point_;    /** This node acts directly on the input to the DAG. */
+            graph::NodeId exit_point_;     /** The result of this node is the result of the DAG computation. */
 
             bool is_topo_order_up_to_date_;
             std::vector<size_t> topo_order_;
 
-            void DFS(NodeId id, std::vector<bool>& visited);
+            void DFS(graph::NodeId id, std::vector<bool>& visited);
 
         public:
 
@@ -90,7 +90,7 @@ namespace tinytorch {
              * that satisfies specification properties.
              * 
              **/
-            ComputationalDAG(std::vector<T> node_data, std::vector<std::vector<NodeId>> adjacency_lists);
+            ComputationalDAG(std::vector<T> node_data, std::vector<std::vector<graph::NodeId>> adjacency_lists);
 
             // TO DO: add constructor with entry and exit
 
@@ -99,35 +99,35 @@ namespace tinytorch {
              * @return Number of nodes in the graph.
              * 
              **/
-            using Graph<ComputationalDAGNode<T>>::size;
+            using graph::Graph<ComputationalDAGNode<T>>::size;
 
             /**
              * 
              * @return Reference to the entry point identifier.
              * 
              **/
-            NodeId& getEntryPoint();
+            graph::NodeId& getEntryPoint();
 
             /**
              * 
              * @return Immutable reference to the entry point identifier.
              * 
              **/
-            const NodeId& getEntryPoint() const;
+            const graph::NodeId& getEntryPoint() const;
 
             /**
              * 
              * @return Reference to the exit point identifier.
              * 
              **/
-            NodeId& getExitPoint();
+            graph::NodeId& getExitPoint();
 
             /**
              * 
              * @return Immutable reference to the exit point identifier.
              * 
              **/
-            const NodeId& getExitPoint() const;
+            const graph::NodeId& getExitPoint() const;
 
             /**
              * 
@@ -136,7 +136,7 @@ namespace tinytorch {
              * @return Data of node with identifier id.
              * 
              **/
-            using Graph<ComputationalDAGNode<T>>::get;
+            using graph::Graph<ComputationalDAGNode<T>>::get;
 
             /**
              * 
@@ -145,7 +145,7 @@ namespace tinytorch {
              * @return Immutable reference to vector of predecessors of node with identifier id.
              * 
              **/
-            using Graph<ComputationalDAGNode<T>>::getPredecessors;
+            using graph::Graph<ComputationalDAGNode<T>>::getPredecessors;
 
             /**
              * 
@@ -154,7 +154,7 @@ namespace tinytorch {
              * @return Immutable reference to vector of successors of node with identifier id.
              * 
              **/
-            using Graph<ComputationalDAGNode<T>>::getSuccessors;
+            using graph::Graph<ComputationalDAGNode<T>>::getSuccessors;
 
             /**
              * 
@@ -164,7 +164,7 @@ namespace tinytorch {
              * @return Identifier of the new node.
              * 
              **/
-            NodeId addNode(ComputationalDAGNode<int> node_data);
+            graph::NodeId addNode(ComputationalDAGNode<int> node_data);
 
             /**
              * 
@@ -174,7 +174,7 @@ namespace tinytorch {
              * @param to Destination node.
              * 
              **/
-            void addEdge(const NodeId from, const NodeId to);
+            void addEdge(const graph::NodeId from, const graph::NodeId to);
 
 
             /**
@@ -189,7 +189,7 @@ namespace tinytorch {
              * @return A vector of node identifiers in topological order.
              * 
              **/
-            const std::vector<NodeId>& topoOrder();
+            const std::vector<graph::NodeId>& topoOrder();
 
             // ASSUMES ORDER OF OPERANDS EQUAL TO ORDER OF EDGES IN BACKWARD ADJACENCY LIST
             Tensor<T> evaluate(const Tensor<T>& input);
