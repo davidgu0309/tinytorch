@@ -1,13 +1,12 @@
 
 Basic things:
-  - clean up tests (split framework from tests, maybe put different test suites in different files)
+  - rewrite tests with testing framework
   - implement tests for the many small things that are not covered by the tests yet
   - write some more serious matmul tests, including higher dimensional ones
   - implement e_k, eye and randomly initialized (at least uniform and normal) tensors
-  - update Doxyfile and Doxygen document all the headers
+  - clean up documentation
   - implementa scalar * tensor ops and maybe more generic broadcasting
   - implement softmax and cross-entropy
-  - maybe set up GitHub actions for automated testing
   - include time and space complexities in documentation
   - improve makefile (variables for stuff etc.)
   - don't copy tensors all the time in computational DAG evaluation
