@@ -8,9 +8,9 @@ namespace tinytorch {
     }
 
     void scalarOpUnitTests(){
-        test::TestSuite<decltype(scalarNegInt)> negIntTests;
-        negIntTests.addTest({{0}, 0});
-        negIntTests.addTest({{-1}, 1});
+        test::TestSuite<&scalarNegInt> negIntTests;
+        negIntTests.addTest({0});
+        negIntTests.addTest({1});
         negIntTests.run();
     }
 

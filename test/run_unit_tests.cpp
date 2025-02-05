@@ -12,8 +12,7 @@ int main() {
     tinytorch::graphUnitTests();
     std::cout << "Running computational DAG unit tests." << std::endl;
     tinytorch::computationalDAGUnitTests();
-    /* Based on improved testing framework, doesn't work yet.
-    std::cout << "Running scalar operation unit tests" << std::endl;
-    tinytorch::scalarOpUnitTests();
-    */
+    // Based on improved testing framework, doesn't work yet.
+    // std::cout << "Running scalar operation unit tests" << std::endl;
+    // tinytorch::scalarOpUnitTests();
 }
