@@ -13,8 +13,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - name: List files in the repository
-      run: ls -R
+      with:
+        submodules: true
     - name: make
       run: make
     - name: make test
