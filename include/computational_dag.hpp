@@ -10,7 +10,7 @@
  */
 #pragma once
 
-#include "graph.hpp"
+#include "../graph/graph.hpp"
 #include "tensor.hpp"
 
 #include <algorithm>
