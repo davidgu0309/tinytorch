@@ -10,12 +10,11 @@
  */
 #pragma once
 
-#include "../graph/graph.hpp"
+#include "../DAG/dag.hpp"
 #include "tensor.hpp"
 
 #include <algorithm>
 #include <functional>
-#include <stack>
 
 /**
  * @namespace tinytorch
@@ -58,15 +57,10 @@ namespace tinytorch {
      * 
      **/
     template<typename T>
-    class ComputationalDAG : graph::Graph<ComputationalDAGNode<T>>{
+    class ComputationalDAG : dag::DAG<ComputationalDAGNode<T>>{
 
             graph::NodeId entry_point_;    /** This node acts directly on the input to the DAG. */
             graph::NodeId exit_point_;     /** The result of this node is the result of the DAG computation. */
-
-            bool is_topo_order_up_to_date_;
-            std::vector<size_t> topo_order_;
-
-            void DFS(graph::NodeId id, std::vector<bool>& visited);
 
         public:
 
@@ -99,7 +93,7 @@ namespace tinytorch {
              * @return Number of nodes in the graph.
              * 
              **/
-            using graph::Graph<ComputationalDAGNode<T>>::size;
+            using dag::DAG<ComputationalDAGNode<T>>::size;
 
             /**
              * 
@@ -136,7 +130,7 @@ namespace tinytorch {
              * @return Data of node with identifier id.
              * 
              **/
-            using graph::Graph<ComputationalDAGNode<T>>::get;
+            using dag::DAG<ComputationalDAGNode<T>>::get;
 
             /**
              * 
@@ -145,7 +139,7 @@ namespace tinytorch {
              * @return Immutable reference to vector of predecessors of node with identifier id.
              * 
              **/
-            using graph::Graph<ComputationalDAGNode<T>>::getPredecessors;
+            using dag::DAG<ComputationalDAGNode<T>>::getPredecessors;
 
             /**
              * 
@@ -154,7 +148,7 @@ namespace tinytorch {
              * @return Immutable reference to vector of successors of node with identifier id.
              * 
              **/
-            using graph::Graph<ComputationalDAGNode<T>>::getSuccessors;
+            using dag::DAG<ComputationalDAGNode<T>>::getSuccessors;
 
             /**
              * 
@@ -164,7 +158,7 @@ namespace tinytorch {
              * @return Identifier of the new node.
              * 
              **/
-            graph::NodeId addNode(ComputationalDAGNode<int> node_data);
+            using dag::DAG<ComputationalDAGNode<T>>::addNode;
 
             /**
              * 
@@ -174,7 +168,7 @@ namespace tinytorch {
              * @param to Destination node.
              * 
              **/
-            void addEdge(const graph::NodeId from, const graph::NodeId to);
+            using dag::DAG<ComputationalDAGNode<T>>::addEdge;
 
 
             /**
@@ -189,7 +183,7 @@ namespace tinytorch {
              * @return A vector of node identifiers in topological order.
              * 
              **/
-            const std::vector<graph::NodeId>& topoOrder();
+            using dag::DAG<ComputationalDAGNode<T>>::topoOrder;
 
             // ASSUMES ORDER OF OPERANDS EQUAL TO ORDER OF EDGES IN BACKWARD ADJACENCY LIST
             Tensor<T> evaluate(const Tensor<T>& input);
