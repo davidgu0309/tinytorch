@@ -4,3 +4,6 @@
 [submodule "test/framework"]
 	path = test/framework
 	url = https://github.com/mirco-paul/test
+[submodule "DAG"]
+	path = DAG
+	url = https://github.com/mirco-paul/DAG
