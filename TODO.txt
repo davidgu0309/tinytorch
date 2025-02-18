@@ -10,6 +10,8 @@ Basic things:
   - include time and space complexities in documentation
   - improve makefile (variables for stuff etc.)
   - don't copy tensors all the time in computational DAG evaluation
+  - make struct for tensor operations without parameters
+  - pass tensor operation via template
 
 Other tensor things we could do (not too important for now):
   - transposition
