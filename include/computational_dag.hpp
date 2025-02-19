@@ -11,8 +11,9 @@
 #pragma once
 
 #include "../DAG/dag.hpp"
-#include "tensor.hpp"
 #include "functional.hpp"
+#include "tensor.hpp"
+#include "tensor_operation.hpp"
 
 #include <algorithm>
 #include <functional>
@@ -25,33 +26,7 @@
  * 
  */
 namespace tinytorch {
-    /**
-     * @struct ComputationalDAGNode
-     * 
-     * @brief Structure for computational DAG nodes.
-     * 
-     * A computational DAG node represents a tensor operation. An instance of this
-     * structure contains everything necessary for the forward and backward computations
-     * of the corresponding node in the computational DAG.
-     * 
-     * @tparam T Floating point data type for numerical computations.
-     * 
-     **/
-    template <typename T>
-    struct TensorOperation {
-        virtual Tensor<T> operator()(std::vector<Tensor<T>>& operands) const = 0;
-
-        std::vector<Tensor<T>> weights_;
-        bool requires_grad_;
-
-
-        TensorOperation();
-        TensorOperation(std::function<Tensor<T>(const std::vector<Tensor<T>>&)> tensorOperation);
-
-        virtual std::vector<Tensor<T>> backward_wrt_weights(std::vector<Tensor<T>>& operands, size_t idx) const = 0;
-        virtual std::vector<Tensor<T>> backward_wrt_operands(std::vector<Tensor<T>>& operands, size_t idx) const = 0;
-
-    };
+    
 
     /**
      * @struct ComputationalDAGNode
@@ -67,17 +42,17 @@ namespace tinytorch {
      **/
     template <typename T>
     struct ComputationalDAGNode {
-        TensorOperation<T> tensorOperation_; /** Forward tensor operation. */
+        TensorOperation<T> tensorOperation_; /** Forward tensor operation. */   // TO DO: pass this via template
         Tensor<T> result_;  /** Result of forward computation. */
-        std::vector<Tensor<T>> gradients_wrt_weights;
-        std::vector<Tensor<T>> gradients_wrt_operands;
-        std::vector<graph::NodeId> operand_nodeid; /** Stores the node id for each operand */
-        std::map<graph::NodeId, size_t> operand_idx; /** inverse lookup of the above */
+        std::vector<Tensor<T>> gradients_wrt_parameters_;
+        std::vector<Tensor<T>> gradients_wrt_inputs_;
+        std::vector<graph::NodeId> operand_node_id_; /** Stores the node id for each operand */
+        std::map<graph::NodeId, size_t> operand_idx_; /** Inverse lookup of the above */
 
-        bool requires_grad_;
+        // bool requires_grad_;
 
         ComputationalDAGNode();
-        ComputationalDAGNode(std::function<Tensor<T>(const std::vector<Tensor<T>>&)> tensorOperation);
+        ComputationalDAGNode(TensorOperation<T> tensor_operation, std::vector<graph::NodeId> operand_node_id);
     };
 
     /**
@@ -224,7 +199,7 @@ namespace tinytorch {
 
 
             // ASSUMES ORDER OF OPERANDS EQUAL TO ORDER OF EDGES IN BACKWARD ADJACENCY LIST
-            Tensor<T> evaluate(const Tensor<T>& input);
+            Tensor<T> forward(const Tensor<T>& input);
             // ASSUMES EVALUATE HAS BEEN CALLED
             void backward(const Tensor<T>& input);
 
