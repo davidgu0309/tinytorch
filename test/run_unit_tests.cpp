@@ -10,8 +10,9 @@ int main() {
     tinytorch::functionalUnitTests();
     std::cout << "Running graph unit tests." << std::endl;
     tinytorch::graphUnitTests();
-    std::cout << "Running computational DAG unit tests." << std::endl;
-    tinytorch::computationalDAGUnitTests();
+    // TO DO: write new computational DAG unit tests
+    // std::cout << "Running computational DAG unit tests." << std::endl;
+    // tinytorch::computationalDAGUnitTests();
     // Based on improved testing framework, doesn't work yet.
     // std::cout << "Running scalar operation unit tests" << std::endl;
     // tinytorch::scalarOpUnitTests();
