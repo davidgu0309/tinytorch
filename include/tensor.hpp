@@ -129,6 +129,9 @@ namespace tinytorch {
 
     template <typename T>
     Tensor<T> real_uniform(const Shape shape, const T lower, const T upper);
+
+    std::vector<MultiIndex> indexesRowMajor(const Shape shape);
+    Shape combineIndexes(const MultiIndex& i, const MultiIndex& j);
 }
 
 #include "../src/tensor.tpp"

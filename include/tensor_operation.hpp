@@ -111,14 +111,50 @@ namespace tinytorch{
          * @return Gradient of tensor addition with respect to input input_idx.
          * 
          **/
-        std::vector<Tensor<T>> backwardWRTInputs(size_t input_idx, std::vector<Tensor<T>>& operands, size_t idx) const;
+        Tensor<T> backwardWRTInputs(size_t input_idx, std::vector<Tensor<T>>& operands) const;
 
         /**
          * 
          * Useless, might want to implement struct for tensor operations without params.
          * 
          **/
-        std::vector<Tensor<T>> backwardWRTParameters(size_t weight_idx, std::vector<Tensor<T>>& operands) const;
+        Tensor<T> backwardWRTParameters(size_t parameter_idx, std::vector<Tensor<T>>& operands) const;
+    };
+
+    template <typename T>
+    struct Matmul : TensorOperation<T> {
+
+        /**
+         * 
+         * Entrywise addition of tensors of identical shape. 
+         * 
+         * @param operands Non-empty vector of addends.
+         * 
+         * @return Entrywise sum of all operand tensors.
+         * 
+         * @pre The operand vector must contain at least one operand. All operand tensors must have identical shape.
+         * 
+         **/
+        Tensor<T> operator()(std::vector<Tensor<T>>& operands) const;
+
+        /**
+         * 
+         * Gradient of tensor addition with respect to input input_idx.
+         * 
+         * @param input_idx Index of input with respect to which the gradient is computed.
+         * @param operands Operands.
+         * 
+         * @return Gradient of tensor addition with respect to input input_idx.
+         * 
+         **/
+        Tensor<T> backwardWRTInputs(size_t input_idx, std::vector<Tensor<T>>& operands) const;
+
+        /**
+         * 
+         * Useless, might want to implement struct for tensor operations without params.
+         * 
+         **/
+        Tensor<T> backwardWRTParameters(size_t parameter_idx, std::vector<Tensor<T>>& operands) const;
     };
 
 }  // namespace tinytorch

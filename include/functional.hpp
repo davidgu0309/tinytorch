@@ -83,6 +83,9 @@ namespace tinytorch {
     template <typename T>
     Tensor<T> matmul(const Tensor<T>& a, const Tensor<T>& b); // {a_1,..,a_k} x {a_k, b_1, b_m} -> {a_1, .., a_k-1, b_1, .., b_m}
 
+    template <typename T>
+    Shape matmulShape(const Shape a_shape, const Shape b_shape);
+
     /*
     _ _ _     _ _ _
     _ _ _  x  _ _ _

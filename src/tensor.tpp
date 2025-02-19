@@ -187,4 +187,48 @@ namespace tinytorch {
         return out;
     }
 
+    // Unnecessary and inefficient, but nice
+    std::vector<MultiIndex> indexesRowMajor(const Shape shape){
+        std::queue<MultiIndex> indexes; // Multiindexes in "row-major" order
+        indexes.push({});
+        size_t n = shape.size();
+        //shape = {2, 2, 3}
+        //
+        // {}
+        // {0}, {1}
+        // {0, 0}, {0, 1}, {1, 0}, {1, 1}
+        // ...
+        for(size_t d = 0; d < n; ++d){
+            size_t m = indexes.size();
+            // Iterate over all multiindexes of the previous dimension
+            for(size_t i = 0; i < m; ++i){
+                // For each one, add all possible indexes for the current dimension
+                for(size_t j = 0; j < shape[d]; ++j){
+                    MultiIndex index = indexes.front();
+                    index.push_back(j);
+                    indexes.push(index);
+                }
+                indexes.pop();
+            }
+        }
+        std::vector<MultiIndex> row_major(indexes.size());
+        size_t i = 0;
+        while(indexes.size()){
+            row_major[i] = indexes.front();
+            indexes.pop();
+            ++i;
+        }
+        return row_major;
+    }
+
+    Shape combineIndexes(const MultiIndex& i, const MultiIndex& j){
+
+        size_t dim_j = j.size();
+        
+        MultiIndex ij = i;
+        for(size_t d = 1; d < dim_j; ++d) ij.push_back(j[d]);
+
+        return ij;
+    }
+
 }
