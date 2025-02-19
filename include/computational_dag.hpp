@@ -42,7 +42,7 @@ namespace tinytorch {
      **/
     template <typename T>
     struct ComputationalDAGNode {
-        TensorOperation<T> tensorOperation_; /** Forward tensor operation. */   // TO DO: pass this via template
+        TensorOperation<T>* tensorOperation_; /** Forward tensor operation. */
         Tensor<T> result_;  /** Result of forward computation. */
         std::vector<Tensor<T>> gradients_wrt_parameters_;
         std::vector<Tensor<T>> gradients_wrt_inputs_;
@@ -52,7 +52,7 @@ namespace tinytorch {
         // bool requires_grad_;
 
         ComputationalDAGNode();
-        ComputationalDAGNode(TensorOperation<T> tensor_operation, std::vector<graph::NodeId> operand_node_id);
+        ComputationalDAGNode(TensorOperation<T>* tensor_operation, std::vector<graph::NodeId> operand_node_id);
     };
 
     /**
