@@ -42,7 +42,7 @@ namespace tinytorch {
      **/
     template <typename T>
     struct ComputationalDAGNode {
-        TensorOperation<T> tensorOperation_; /** Forward tensor operation. */   // TO DO: pass this via template
+        std::unique_ptr<TensorOperation<T>> tensorOperation_; /** Forward tensor operation. */   // TO DO: pass this via template
         Tensor<T> result_;  /** Result of forward computation. */
         std::vector<Tensor<T>> gradients_wrt_parameters_;
         std::vector<Tensor<T>> gradients_wrt_inputs_;
@@ -195,11 +195,11 @@ namespace tinytorch {
              **/
             using dag::DAG<ComputationalDAGNode<T>>::topoOrder;
 
-            std::vector<Tensor<T>> ComputationalDAG<T>::collectOperands(graph::NodeId node_id) const;
-
+            std::vector<Tensor<T>> collectOperands(const graph::NodeId node_id, const Tensor<T>& input) const;
 
             // ASSUMES ORDER OF OPERANDS EQUAL TO ORDER OF EDGES IN BACKWARD ADJACENCY LIST
             Tensor<T> forward(const Tensor<T>& input);
+
             // ASSUMES EVALUATE HAS BEEN CALLED
             void backward(const Tensor<T>& input);
 

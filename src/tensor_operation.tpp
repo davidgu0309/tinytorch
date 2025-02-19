@@ -4,7 +4,7 @@ namespace tinytorch{
     Tensor<T> TensorAddition<T>::operator()(std::vector<Tensor<T>>& operands) const {
         assert(operands.size());
         Shape shape = operands[0].shape_;
-        Tensor<T> result = zeros(shape);
+        Tensor<T> result = zeros<T>(shape);
         for(const Tensor<T>& operand : operands){
             result = add(result, operand);
         }

@@ -60,7 +60,7 @@ void computationalDAGUnitTests(){
     std::cout << "Input" << std::endl;
     std::cout << input;
     std::cout << "Result" << std::endl;
-    std::cout << computational_dag.evaluate(input) << std::endl;
+    std::cout << computational_dag.forward(input) << std::endl;
     std::cout << "Intermediate results" << std::endl;
     for(graph::NodeId id = 0; id < 4; ++id){
         std::cout << "Node id " << id << std::endl;
