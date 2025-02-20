@@ -1,9 +1,9 @@
 .PHONY: all test clean
 
-all: src/util.cpp src/main.cpp
+all: tensor/src/util.cpp src/main.cpp
 	g++ --std=c++17 -o main_binary -g src/util.cpp src/main.cpp && ./main_binary
 
-test: src/util.cpp test/run_unit_tests.cpp
+test: tensor/src/util.cpp test/run_unit_tests.cpp
 	g++ --std=c++17 -o test_binary -g src/util.cpp test/run_unit_tests.cpp && ./test_binary
 
 clean:
