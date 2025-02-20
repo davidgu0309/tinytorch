@@ -14,13 +14,15 @@ namespace tinytorch{
     template <typename T>
     Tensor<T> TensorAddition<T>::backwardWRTInputs(size_t input_idx, std::vector<Tensor<T>>& operands) const {
         Shape operand_shape = operands[input_idx].shape_;
-        Shape shape = operand_shape.insert(operand_shape.end(), operand_shape.begin(), operand_shape.end());
-        Tensor<T> result = zeros<T>(shape);
+        Shape shape = operand_shape;
+        shape.insert(shape.end(), operand_shape.begin(), operand_shape.end());
+        Tensor<T> jacobi = zeros<T>(shape);
         std::vector<MultiIndex> indices = indexesRowMajor(operand_shape);
         for (MultiIndex i: indices) {
             MultiIndex combined_index = combineIndexes(i, i);
-            result.getEntrySafe(combined_index) = 1;
+            jacobi.getEntrySafe(combined_index) = 1;
         }
+        return jacobi;
     }
 
     // a1 a2
@@ -49,13 +51,30 @@ namespace tinytorch{
     template <typename T>
     Tensor<T> Matmul<T>::backwardWRTInputs(size_t input_idx, std::vector<Tensor<T>>& operands) const {
         Shape operand_shape = operands[input_idx].shape_;
-        Shape shape = operand_shape.insert(operand_shape.end(), operand_shape.begin(), operand_shape.end());
-        Tensor<T> result = zeros<T>(shape);
-        std::vector<MultiIndex> indices = indexesRowMajor(operand_shape);
-        for (MultiIndex i: indices) {
-            MultiIndex combined_index = combineIndexes(i, i);
-            result.getEntrySafe(combined_index) = 1;
+        Shape jacobi_shape = operand_shape;
+        Shape result_shape = matmulShape(operand[0].shape_, operand[1].shape_);
+        jacobi_shape.insert(jacobi_shape.end(), result_shape.begin(), result_shape.end());
+        Tensor<T> jacobi = zeros<T>(jacobi_shape);
+        std::vector<MultiIndex> operand_indices = indexesRowMajor(operand_shape);
+        std::vector<MultiIndex> result_indices = indexesRowMajor(result_shape);
+
+        if (input_idx == 0) {
+            for (MultiIndex i: operand_indices) {
+                for (MultiIndex j: result_indices) {
+                    MultiIndex combined_index = combineIndexes(i, j);
+                    jacobi.get(combined_index) = i.back() == j.front() ? operand[1].get(j) : 0; 
+                }
+            }
         }
+        else {
+            for (MultiIndex i: operand_indices) {
+                for (MultiIndex j: result_indices) {
+                    MultiIndex combined_index = combineIndexes(i, j);
+                    jacobi.get(combined_index) = i.back() == j.front() ? operand[1].get(j) : 0; 
+                }
+            }
+        }
+        
     }
 
 
