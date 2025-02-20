@@ -1,31 +1,33 @@
 
-Basic things:
-  - rewrite tests with testing framework
-  - implement tests for the many small things that are not covered by the tests yet
+Features:
+  - implement softmax and cross-entropy
+  - make struct for tensor operations without parameters
+  - improve makefile (variables for stuff etc.)
+  - implement high-level interface for common models
+  - implement optimizers
+
+Optimizations:
+  - don't copy tensors all the time in computational DAG evaluation
+
+Tensors:
   - implement zero and one for T
   - implement e_k, eye and randomly initialized (at least uniform and normal) tensors
-  - clean up documentation
-  - implementa scalar * tensor ops and maybe more generic broadcasting
-  - implement softmax and cross-entropy
-  - include time and space complexities in documentation
-  - improve makefile (variables for stuff etc.)
-  - don't copy tensors all the time in computational DAG evaluation
-  - make struct for tensor operations without parameters
-
-Other tensor things we could do (not too important for now):
+  - implementa scalar * tensor ops
   - transposition
   - views
   - slicing
   - generic broadcasting
+  - optimize
+
+Tests:
+  - rewrite tests with testing framework
+  - implement tests for the many small things that are not covered by the tests yet
+
+Documentation:
+  - readme
+  - doxygen main page
+  - clean up documentation
+  - include time and space complexities in documentation
+
+Graph:
   - support removals from computational graph
-
-Layers and Model:
-  - implement activation layers
-  - implement fully-connected layers
-  - implement forward pass
-
-Gradients:
-  - think about how we should do this
-
-Optimizers:
-  - we are not there yet ...
