@@ -73,10 +73,10 @@ void ComputationalDAG<T>::backward(const Tensor<T>& input) {
         for(const graph::NodeId successor_id : getSuccessors(id)){
             ComputationalDAGNode<T>& successor = get(successor_id);
             for(size_t i=0; i<operands.size(); i++){ 
-                node.gradients_wrt_inputs_[i] += matmul<T>(node->tensorOperation_.backwardWRTInputs(operands, i), successor.gradients_wrt_inputs_[successor.operand_idx_[id]]); 
+                node.gradients_wrt_inputs_[i] += evaluateDifferential<T>(node->tensorOperation_.backwardWRTInputs(operands, i), successor.gradients_wrt_inputs_[successor.operand_idx_[id]]); 
             }
             for(size_t i=0; i<node.parameters_.size(); i++){ 
-                node.gradients_wrt_parameters_[i] += matmul<T>(node->tensorOperation_.backwardWRTParameters(operands, i), successor.gradients_wrt_inputs_[successor.operand_idx_[id]]); 
+                node.gradients_wrt_parameters_[i] += evaluateDifferential<T>(node->tensorOperation_.backwardWRTParameters(operands, i), successor.gradients_wrt_inputs_[successor.operand_idx_[id]]); 
             }
         }
     }

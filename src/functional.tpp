@@ -70,6 +70,26 @@ namespace tinytorch {
         return s;
     }
 
+    // TODO: implement slicing and rewrite with dot
+    template <typename T>
+    Tensor<T> evaluateDifferential(const Tensor<T>& x, const Tensor<T>& D){
+        Shape input_shape = x.shape_;
+        size_t input_dim = input_shape.size();
+        Shape D_shape = D.shape_;
+        // TODO: test input_shape is a prefix of D_shape
+        Shape output_shape(D_shape.begin() + input_dim, D_shape.end());
+        Tensor<T> diff = zeros(output_shape);
+        std::vector<MultiIndex> input_indexes = indexesRowMajor(input_shape), output_indexes = indexesRowMajor(output_shape);
+        for(const MultiIndex& i : input_indexes){
+            T& x_i = x.get(i);
+            for(const MultiIndex& j : output_indexes){
+                MultiIndex ij = combineIndexes(i, j);
+                diff.get(j) += x_i * D.get(ij);
+            }
+        }
+        return diff;
+    }
+
     // a_shape = {a_1, ..., a_n}, b_shape = {b_1, ..., b_m}, ab_shape = {a_1, ..., a_(n - 1), b_2, ..., b_m}
     Shape matmulShape(const Shape a_shape, const Shape b_shape){
         

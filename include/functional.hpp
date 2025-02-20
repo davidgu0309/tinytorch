@@ -69,6 +69,8 @@ namespace tinytorch {
 
     /**
      *
+     * TODO: maybe rename hadamard
+     * 
      * @tparam T Operand type.
      * 
      **/
@@ -85,11 +87,27 @@ namespace tinytorch {
 
     /**
      *
+     * TODO: implement
+     * 
      * @tparam T Operand type.
      * 
      **/
     template <typename T>
-    Tensor<T> evaluateDifferential(const Tensor<T>& a, const Tensor<T>& b);
+    T kronecker(const Tensor<T>& a, const Tensor<T>& b);
+
+    /**
+     *
+     * flatmul
+     * 
+     * @tparam T Operand type.
+     * 
+     * D: differential (linear approx) of shape {input_dim_1, ..., input_dim_n, output_dim_1, ..., output_dim_n} to be "flatten-multiplied" by x from the right
+     * 
+     * Evaluates D at x.
+     * 
+     **/
+    template <typename T>
+    Tensor<T> evaluateDifferential(const Tensor<T>& x, const Tensor<T>& D);
 
     /**
      *
