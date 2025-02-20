@@ -2,7 +2,7 @@
 Basic things:
   - rewrite tests with testing framework
   - implement tests for the many small things that are not covered by the tests yet
-  - write some more serious matmul tests, including higher dimensional ones
+  - implement zero and one for T
   - implement e_k, eye and randomly initialized (at least uniform and normal) tensors
   - clean up documentation
   - implementa scalar * tensor ops and maybe more generic broadcasting
