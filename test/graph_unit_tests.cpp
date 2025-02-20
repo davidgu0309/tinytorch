@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-namespace tinytorch {
+namespace test {
 
 void graphUnitTests(){
     // TO DO: improve framework and rewrite this

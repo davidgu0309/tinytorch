@@ -5,9 +5,10 @@
 #include <numeric>
 
 using namespace tensor;
+using namespace tinytorch;
 
-namespace tinytorch {
-
+namespace test{
+    
     template<typename T>
     void consoleLog(const T& result, const T& correct){
         bool passed = result == correct;
