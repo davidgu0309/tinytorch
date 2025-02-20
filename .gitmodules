@@ -4,3 +4,6 @@
 [submodule "DAG"]
 	path = DAG
 	url = https://github.com/mirco-paul/DAG
+[submodule "tensor"]
+	path = tensor
+	url = git@github.com:davidgu0309/tensor.git
