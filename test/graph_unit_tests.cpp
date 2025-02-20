@@ -2,8 +2,6 @@
 
 #include <iostream>
 
-namespace test {
-
 void graphUnitTests(){
     // TO DO: improve framework and rewrite this
     graph::Graph<int> graph;
@@ -12,4 +10,3 @@ void graphUnitTests(){
     std::cout << std::endl;
 }   
     
-} // namespace tinytorch

@@ -7,9 +7,9 @@
 
 int main() {
     std::cout << "Running functional unit tests." << std::endl;
-    test::functionalUnitTests();
+    functionalUnitTests();
     std::cout << "Running graph unit tests." << std::endl;
-    test::graphUnitTests();
+    graphUnitTests();
     // TO DO: write new computational DAG unit tests
     // std::cout << "Running computational DAG unit tests." << std::endl;
     // tinytorch::computationalDAGUnitTests();
