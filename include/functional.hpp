@@ -81,6 +81,22 @@ namespace tinytorch {
      * 
      **/
     template <typename T>
+    T dot(const Tensor<T>& a, const Tensor<T>& b);
+
+    /**
+     *
+     * @tparam T Operand type.
+     * 
+     **/
+    template <typename T>
+    Tensor<T> evaluateDifferential(const Tensor<T>& a, const Tensor<T>& b);
+
+    /**
+     *
+     * @tparam T Operand type.
+     * 
+     **/
+    template <typename T>
     Tensor<T> matmul(const Tensor<T>& a, const Tensor<T>& b); // {a_1,..,a_k} x {a_k, b_1, b_m} -> {a_1, .., a_k-1, b_1, .., b_m}
 
     template <typename T>

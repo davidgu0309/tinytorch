@@ -59,6 +59,17 @@ namespace tinytorch {
         return applyBinaryOp<T, T, T, product<T>>(a, b);
     }
 
+    template <typename T>
+    T dot(const Tensor<T>& a, const Tensor<T>& b) {
+        assert(a.shape_ == b.shape_);
+        T sum = 0;
+        std::vector<MultiIndex> indexes = indexesRowMajor(a.shape_);
+        for(const MultiIndex& i : indexes){
+            sum += a.get(i) * b.get(i);
+        }
+        return s;
+    }
+
     // a_shape = {a_1, ..., a_n}, b_shape = {b_1, ..., b_m}, ab_shape = {a_1, ..., a_(n - 1), b_2, ..., b_m}
     Shape matmulShape(const Shape a_shape, const Shape b_shape){
         
