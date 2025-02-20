@@ -10,19 +10,19 @@
  */
 #pragma once
 
-#include "../include/scalar_operation.hpp"
-#include "../include/tensor.hpp"
-#include "../include/util.hpp"
+#include "scalar_operation.hpp"
+#include "tensor.hpp"
+#include "util.hpp"
 
 #include <cassert>
 
 /**
- * @namespace tinytorch
+ * @namespace tensor
  * 
  * @brief Namespace of the entire framework.
  * 
  */
-namespace tinytorch {
+namespace tensor {
 
     /**
      *

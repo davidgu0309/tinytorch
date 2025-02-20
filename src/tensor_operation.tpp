@@ -16,7 +16,7 @@ namespace tinytorch{
         Shape operand_shape = operands[input_idx].shape_;
         Shape shape = operand_shape.insert(operand_shape.end(), operand_shape.begin(), operand_shape.end());
         Tensor<T> result = zeros<T>(shape);
-        vector<MultiIndex> indices = indexesRowMajor(operand_shape);
+        std::vector<MultiIndex> indices = indexesRowMajor(operand_shape);
         for (MultiIndex i: indices) {
             MultiIndex combined_index = combineIndexes(i, i);
             result.getEntrySafe(combined_index) = 1;
@@ -51,7 +51,7 @@ namespace tinytorch{
         Shape operand_shape = operands[input_idx].shape_;
         Shape shape = operand_shape.insert(operand_shape.end(), operand_shape.begin(), operand_shape.end());
         Tensor<T> result = zeros<T>(shape);
-        vector<MultiIndex> indices = indexesRowMajor(operand_shape);
+        std::vector<MultiIndex> indices = indexesRowMajor(operand_shape);
         for (MultiIndex i: indices) {
             MultiIndex combined_index = combineIndexes(i, i);
             result.getEntrySafe(combined_index) = 1;

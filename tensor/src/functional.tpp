@@ -1,4 +1,4 @@
-namespace tinytorch {
+namespace tensor{
 
     // TO DO: scalar * tensor, maybe generic broadcasting
 
@@ -67,7 +67,7 @@ namespace tinytorch {
         for(const MultiIndex& i : indexes){
             sum += a.get(i) * b.get(i);
         }
-        return s;
+        return sum;
     }
 
     // TODO: implement slicing and rewrite with dot
@@ -78,7 +78,7 @@ namespace tinytorch {
         Shape D_shape = D.shape_;
         // TODO: test input_shape is a prefix of D_shape
         Shape output_shape(D_shape.begin() + input_dim, D_shape.end());
-        Tensor<T> diff = zeros(output_shape);
+        Tensor<T> diff = zeros<T>(output_shape);
         std::vector<MultiIndex> input_indexes = indexesRowMajor(input_shape), output_indexes = indexesRowMajor(output_shape);
         for(const MultiIndex& i : input_indexes){
             T& x_i = x.get(i);

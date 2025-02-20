@@ -1,4 +1,4 @@
-namespace tinytorch{
+namespace tensor{
 
     // Unary operations
     template <typename T>

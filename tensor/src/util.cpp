@@ -1,6 +1,6 @@
 #include "../include/util.hpp"
 
-namespace tinytorch {
+namespace tensor{
 
     // shape {} models scalars
     size_t numEntries(const std::vector<size_t> shape) {

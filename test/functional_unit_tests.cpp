@@ -1,8 +1,10 @@
-#include "../include/functional.hpp"
-#include "../include/tensor.hpp"
+#include "../tensor/include/functional.hpp"
+#include "../tensor/include/tensor.hpp"
 
 #include <iostream>
 #include <numeric>
+
+using namespace tensor;
 
 namespace tinytorch {
 

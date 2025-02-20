@@ -10,8 +10,10 @@
  */
 #pragma once
 
-#include "functional.hpp"
-#include "tensor.hpp"
+#include "../tensor/include/functional.hpp"
+#include "../tensor/include/tensor.hpp"
+
+using namespace tensor;
 
 /**
  * @namespace tinytorch

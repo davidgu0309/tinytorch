@@ -11,13 +11,15 @@
 #pragma once
 
 #include "../DAG/dag.hpp"
-#include "functional.hpp"
-#include "tensor.hpp"
+#include "../tensor/include/functional.hpp"
+#include "../tensor/include/tensor.hpp"
 #include "tensor_operation.hpp"
 
 #include <algorithm>
 #include <functional>
 #include <map>
+
+using namespace tensor;
 
 /**
  * @namespace tinytorch

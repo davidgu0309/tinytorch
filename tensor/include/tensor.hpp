@@ -10,26 +10,27 @@
  */
 #pragma once
 
-#include "../include/util.hpp"
+#include "distribution.hpp"
+#include "util.hpp"
 
 #include <cassert>
 #include <iostream>
-#include <memory>
+// #include <memory>
 #include <numeric>
 #include <queue>
 #include <vector>
 #include <functional>
-#include "distribution.hpp"
+
 
 // TO DO: implement .copy()
 
 /**
- * @namespace tinytorch
+ * @namespace tensor
  * 
  * @brief Namespace of the entire framework.
  * 
  */
-namespace tinytorch {
+namespace tensor {
 
     /**
      * @typedef Shape

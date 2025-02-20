@@ -12,7 +12,9 @@
 
 #include "computational_dag.hpp"
 #include "layer.hpp"
-#include "tensor.hpp"
+#include "../tensor/include/tensor.hpp"
+
+using namespace tensor;
 
 /**
  * @namespace tinytorch

@@ -1,4 +1,4 @@
-namespace tinytorch {
+namespace tensor {
 
     bool multiIndexLegalityTest(const Shape shape, const MultiIndex index){
         if(shape.size() != index.size()) return false;

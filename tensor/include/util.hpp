@@ -14,12 +14,12 @@
 #include <vector>
 
 /**
- * @namespace tinytorch
+ * @namespace tensor
  * 
  * @brief Namespace of the entire framework.
  * 
  */
-namespace tinytorch {
+namespace tensor {
 
     // shape {} models scalars
     size_t numEntries(const std::vector<size_t> shape);

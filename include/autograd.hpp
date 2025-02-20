@@ -10,6 +10,10 @@
  */
 #pragma once
 
+#include "../tensor/include/tensor.hpp"
+
+using namespace tensor;
+
 // [f(g(h(x)))]' = f'(g(h(x))) * g'(h(x)) * h'(x)
 // think about equivalent to pytorch model.eval() model.train()
 // sigmoid'(x) = sigmoid(x) * (1-sigmoid(x))

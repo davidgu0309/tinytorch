@@ -10,12 +10,14 @@
  */
 #pragma once
 
-#include "../include/tensor.hpp"
-#include "../include/functional.hpp"
+#include "../tensor/include/tensor.hpp"
+#include "../tensor/include/functional.hpp"
 
 #include <vector>
 #include <memory>
 #include <cmath>
+
+using namespace tensor;
 
 /**
  * @namespace tinytorch

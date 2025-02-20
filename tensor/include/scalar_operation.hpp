@@ -13,12 +13,12 @@
 #include <cmath>
 
 /**
- * @namespace tinytorch
+ * @namespace tensor
  * 
  * @brief Namespace of the entire framework.
  * 
  */
-namespace tinytorch{
+namespace tensor{
 
     // Unary operations
     template <typename T>
