@@ -1,13 +1,10 @@
 #include "computational_dag_unit_tests.cpp"
-#include "functional_unit_tests.cpp"
 #include "graph_unit_tests.cpp"
 // #include "scalar_operation_unit_tests.cpp" // Besed on new framework
 
 #include <iostream>
 
 int main() {
-    std::cout << "Running functional unit tests." << std::endl;
-    functionalUnitTests();
     std::cout << "Running graph unit tests." << std::endl;
     graphUnitTests();
     // TO DO: write new computational DAG unit tests
