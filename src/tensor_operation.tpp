@@ -52,7 +52,7 @@ namespace tinytorch{
     Tensor<T> Matmul<T>::backwardWRTInputs(size_t input_idx, std::vector<Tensor<T>>& operands) const {
         Shape operand_shape = operands[input_idx].shape_;
         Shape jacobi_shape = operand_shape;
-        Shape result_shape = matmulShape(operand[0].shape_, operand[1].shape_);
+        Shape result_shape = matmulShape(operands[0].shape_, operands[1].shape_);
         jacobi_shape.insert(jacobi_shape.end(), result_shape.begin(), result_shape.end());
         Tensor<T> jacobi = zeros<T>(jacobi_shape);
         std::vector<MultiIndex> operand_indices = indexesRowMajor(operand_shape);
@@ -62,7 +62,7 @@ namespace tinytorch{
             for (MultiIndex i: operand_indices) {
                 for (MultiIndex j: result_indices) {
                     MultiIndex combined_index = combineIndexes(i, j);
-                    jacobi.get(combined_index) = i.back() == j.front() ? operand[1].get(j) : 0; 
+                    jacobi.get(combined_index) = i.back() == j.front() ? operands[1].get(j) : 0; 
                 }
             }
         }
@@ -70,7 +70,7 @@ namespace tinytorch{
             for (MultiIndex i: operand_indices) {
                 for (MultiIndex j: result_indices) {
                     MultiIndex combined_index = combineIndexes(i, j);
-                    jacobi.get(combined_index) = i.back() == j.front() ? operand[1].get(j) : 0; 
+                    jacobi.get(combined_index) = i.back() == j.front() ? operands[1].get(j) : 0; 
                 }
             }
         }
