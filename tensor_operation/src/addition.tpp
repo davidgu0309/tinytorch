@@ -36,7 +36,7 @@ namespace tinytorch{
         Tensor<T> jacobi = zeros<T>(shape);
         std::vector<MultiIndex> indices = indexesRowMajor(operand_shape);
         for (MultiIndex i: indices) {
-            MultiIndex combined_index = combineIndexes(i, i);
+            MultiIndex combined_index = concatIndexes(i, i);
             jacobi.getEntrySafe(combined_index) = 1;
         }
         return jacobi;

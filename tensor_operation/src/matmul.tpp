@@ -19,7 +19,7 @@ Tensor<T> Matmul<T>::backward(const size_t input_idx, const std::vector<Tensor<T
     if (input_idx == 0) {
         for (MultiIndex i: operand_indices) {
             for (MultiIndex k: result_indices) {
-                MultiIndex combined_index = combineIndexes(i, k);
+                MultiIndex combined_index = concatIndexes(i, k);
                 MultiIndex j = {i.back()};
                 size_t rightOperandDim = operands[1].shape().size();
                 for (size_t d=k.size()-rightOperandDim+1; d<k.size(); d++) {
@@ -34,7 +34,7 @@ Tensor<T> Matmul<T>::backward(const size_t input_idx, const std::vector<Tensor<T
     else {
         for (MultiIndex j: operand_indices) {
             for (MultiIndex k: result_indices) {
-                MultiIndex combined_index = combineIndexes(j, k);
+                MultiIndex combined_index = concatIndexes(j, k);
                 MultiIndex i;
                 size_t leftOperandDim = operands[0].shape().size();
                 for (size_t d=0; d<leftOperandDim-1; d++) {
