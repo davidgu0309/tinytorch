@@ -1,13 +1,13 @@
 namespace tinytorch{
 
 template <typename T>
-Tensor<T> Matmul<T>::operator()(const std::vector<Tensor<T>>& operands) const {
+Tensor<T> Matmul<T>::operator()(const std::vector<Tensor<T>> operands) const {
     assert(operands.size() == 2);
     return matmul<T>(operands[0], operands[1]);
 }
 
 template <typename T>
-Tensor<T> Matmul<T>::backward(const size_t input_idx, const std::vector<Tensor<T>>& operands) const {
+Tensor<T> Matmul<T>::backward(const size_t input_idx, const std::vector<Tensor<T>> operands) const {
     Shape operand_shape = operands[input_idx].shape();
     Shape jacobi_shape = operand_shape;
     Shape result_shape = matmulShape(operands[0].shape(), operands[1].shape());

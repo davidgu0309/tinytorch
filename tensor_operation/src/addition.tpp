@@ -18,7 +18,7 @@
 namespace tinytorch{
 
     template <typename T>
-    Tensor<T> TensorAddition<T>::operator()(const std::vector<Tensor<T>>& operands) const {
+    Tensor<T> TensorAddition<T>::operator()(const std::vector<Tensor<T>> operands) const {
         assert(operands.size());
         Shape shape = operands[0].shape();
         Tensor<T> result = zeros<T>(shape);
@@ -29,7 +29,7 @@ namespace tinytorch{
     }
 
     template <typename T>
-    Tensor<T> TensorAddition<T>::backward(const size_t input_idx, const std::vector<Tensor<T>>& operands) const {
+    Tensor<T> TensorAddition<T>::backward(const size_t input_idx, const std::vector<Tensor<T>> operands) const {
         Shape operand_shape = operands[input_idx].shape();
         Shape shape = operand_shape;
         shape.insert(shape.end(), operand_shape.begin(), operand_shape.end());

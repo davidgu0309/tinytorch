@@ -13,7 +13,7 @@
 #include "../DAG/dag.hpp"
 #include "../tensor/include/functional.hpp"
 #include "../tensor/include/tensor.hpp"
-#include "tensor_operation.hpp"
+#include "../tensor_operation/include/tensor_operation.hpp"
 
 #include <algorithm>
 #include <functional>
@@ -44,7 +44,7 @@ namespace tinytorch {
      **/
     template <typename T>
     struct ComputationalDAGNode {
-        TensorOperation<T>* tensorOperation_; /** Forward tensor operation. */
+        TensorOperation<T> tensorOperation_; /** Forward tensor operation. */
         Tensor<T> result_;  /** Result of forward computation. */
         std::vector<Tensor<T>> gradients_wrt_parameters_;
         std::vector<Tensor<T>> gradients_wrt_inputs_;

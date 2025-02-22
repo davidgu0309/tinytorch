@@ -28,7 +28,7 @@ struct Matmul : TensorOperation<T> {
      * @pre The operand vector must contain at least one operand. All operand tensors must have identical shape.
      * 
      **/
-    Tensor<T> operator()(const std::vector<Tensor<T>>& operands) const override;
+    Tensor<T> operator()(const std::vector<Tensor<T>> operands) const override;
 
     /**
      * 
@@ -40,7 +40,7 @@ struct Matmul : TensorOperation<T> {
      * @return Gradient of tensor addition with respect to input input_idx.
      * 
      **/
-    Tensor<T> backward(const size_t input_idx, const std::vector<Tensor<T>>& operands) const override;
+    Tensor<T> backward(const size_t input_idx, const std::vector<Tensor<T>> operands) const override;
     
 };
 

@@ -46,7 +46,7 @@ namespace tinytorch{
          * @return Result of the tensor operation with the passed operands.
          * 
          **/
-        virtual Tensor<T> operator()(const std::vector<Tensor<T>>& operands) const = 0;
+        virtual Tensor<T> operator()(const std::vector<Tensor<T>> operands) const = 0;
 
         /**
          * 
@@ -58,7 +58,7 @@ namespace tinytorch{
          * @return Gradient of tensor operation with respect to input input_idx.
          * 
          **/
-        virtual Tensor<T> backward(const size_t input_idx, const std::vector<Tensor<T>>& operands) const = 0;
+        virtual Tensor<T> backward(const size_t input_idx, const std::vector<Tensor<T>> operands) const = 0;
 
     };
 
