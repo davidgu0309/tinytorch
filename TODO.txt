@@ -22,6 +22,10 @@ Tensors:
 Tests:
   - rewrite tests with testing framework
   - implement tests for the many small things that are not covered by the tests yet
+  - improve testing framework
+    - epsilon comparisons
+    - fail and not fail
+    - logging
 
 Documentation:
   - readme
@@ -31,3 +35,7 @@ Documentation:
 
 Graph:
   - support removals from computational graph
+
+Other:
+  - design better directory structure for all repos
+    - include should contain only the interface exposed to the user
