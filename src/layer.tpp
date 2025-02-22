@@ -4,7 +4,7 @@ namespace tinytorch {
         T bound = 1./(std::sqrt(((T)dim_in)));
         // so that out = x * W and dimensions match
         // x has shape (batch_size, dim_in), so we make W (dim_in, dim_out)
-        weights_ = real_uniform<T>({dim_in, dim_out}, -bound, bound); 
+        weights_ = realUniform<T>({dim_in, dim_out}, -bound, bound); 
         bias_ = zeros<T>({dim_out});
     }
 
