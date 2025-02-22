@@ -49,7 +49,7 @@ namespace tinytorch{
          * @return Result of the tensor operation with the passed operands.
          * 
          **/
-        virtual Tensor<T> operator()(std::vector<Tensor<T>>& operands) const = 0;
+        virtual static Tensor<T> operator()(std::vector<Tensor<T>>& operands) const = 0;
 
         /**
          * 
@@ -101,7 +101,7 @@ namespace tinytorch{
          * @pre The operand vector must contain at least one operand. All operand tensors must have identical shape.
          * 
          **/
-        Tensor<T> operator()(std::vector<Tensor<T>>& operands) const;
+        Tensor<T> operator()(std::vector<Tensor<T>>& operands) const override;
 
         /**
          * 
@@ -113,14 +113,14 @@ namespace tinytorch{
          * @return Gradient of tensor addition with respect to input input_idx.
          * 
          **/
-        Tensor<T> backwardWRTInputs(size_t input_idx, std::vector<Tensor<T>>& operands) const;
+        Tensor<T> backwardWRTInputs(size_t input_idx, std::vector<Tensor<T>>& operands) const override;
 
         /**
          * 
          * Useless, might want to implement struct for tensor operations without params.
          * 
          **/
-        Tensor<T> backwardWRTParameters(size_t parameter_idx, std::vector<Tensor<T>>& operands) const;
+        Tensor<T> backwardWRTParameters(size_t parameter_idx, std::vector<Tensor<T>>& operands) const override;
     };
 
     template <typename T>
@@ -137,7 +137,7 @@ namespace tinytorch{
          * @pre The operand vector must contain at least one operand. All operand tensors must have identical shape.
          * 
          **/
-        Tensor<T> operator()(std::vector<Tensor<T>>& operands) const;
+        Tensor<T> operator()(std::vector<Tensor<T>>& operands) const override;
 
         /**
          * 
@@ -149,14 +149,14 @@ namespace tinytorch{
          * @return Gradient of tensor addition with respect to input input_idx.
          * 
          **/
-        Tensor<T> backwardWRTInputs(size_t input_idx, std::vector<Tensor<T>>& operands) const;
+        Tensor<T> backwardWRTInputs(size_t input_idx, std::vector<Tensor<T>>& operands) const override;
 
         /**
          * 
          * Useless, might want to implement struct for tensor operations without params.
          * 
          **/
-        Tensor<T> backwardWRTParameters(size_t parameter_idx, std::vector<Tensor<T>>& operands) const;
+        Tensor<T> backwardWRTParameters(size_t parameter_idx, std::vector<Tensor<T>>& operands) const override;
     };
 
 }  // namespace tinytorch
