@@ -6,7 +6,7 @@ using namespace tensor;
 using namespace test;
 using namespace tinytorch;
 
-namespace matmul{
+namespace matmul_tests{
 
 Matmul<int> matmul_op;
 

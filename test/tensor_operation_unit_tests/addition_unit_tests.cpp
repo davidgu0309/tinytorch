@@ -6,7 +6,7 @@ using namespace tensor;
 using namespace test;
 using namespace tinytorch;
 
-namespace addition {
+namespace addition_tests {
 
 Addition<int> addition_op;
 

@@ -2,6 +2,6 @@
 #include "matmul_unit_tests.cpp"
 
 void tensorOperationUnitTests() {
-    addition::runUnitTests();
-    matmul::runUnitTests();
+    addition_tests::runUnitTests();
+    matmul_tests::runUnitTests();
 }
