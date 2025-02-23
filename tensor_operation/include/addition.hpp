@@ -25,7 +25,7 @@ namespace tinytorch{
      * 
      **/
     template <typename T>
-    struct TensorAddition : TensorOperation<T> {
+    struct Addition : TensorOperation<T> {
 
         /**
          * 

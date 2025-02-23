@@ -27,7 +27,7 @@ Tensor<T> Matmul<T>::backward(const size_t input_idx, const std::vector<Tensor<T
                 }
                 i.pop_back();
                 while (k.size() > i.size()) k.pop_back();
-                jacobi.get(combined_index) = i == k ? operands[1].get(j) : 0; 
+                jacobi.getEntrySafe(combined_index) = i == k ? operands[1].getEntrySafe(j) : 0; 
             }
         }
     }
@@ -43,10 +43,11 @@ Tensor<T> Matmul<T>::backward(const size_t input_idx, const std::vector<Tensor<T
                 i.push_back(j.front());
                 j.pop_back();
                 while (k.size() > j.size()) k.pop_back();
-                jacobi.get(combined_index) = j == k ? operands[0].get(i) : 0; 
+                jacobi.getEntrySafe(combined_index) = j == k ? operands[0].getEntrySafe(i) : 0; 
             }
         }
     }
+    return jacobi;
     
 }
 
