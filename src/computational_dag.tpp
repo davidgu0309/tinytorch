@@ -78,7 +78,7 @@ Tensor<T>& ComputationalDAG<T>::getParameter(ParameterId id){
 template <typename T> 
 std::vector<Tensor<T>> ComputationalDAG<T>::collectOperands(const graph::NodeId node_id) const {
     std::vector<Tensor<T>> operands;
-    const std::vector<graph::NodeId>& operand_descriptors = get(node_id).operand_descriptor_;
+    const std::vector<OperandDescriptor>& operand_descriptors = get(node_id).operand_descriptor_;
     for(const OperandDescriptor desc : operand_descriptors){
         if(desc.operand_type_ == NODE) operands.push_back(get(desc.id_.node_id_).result_);
         else if(desc.operand_type_ == INPUT) operands.push_back(inputs_[desc.id_.input_id_]);
@@ -93,7 +93,7 @@ Tensor<T> ComputationalDAG<T>::forward() {
     for(const graph::NodeId id : node_ids){
         ComputationalDAGNode<T>& node = get(id);
         std::vector<Tensor<T>> operands = collectOperands(id);
-        node.result_ = (*node.tensorOperation_)(operands);
+        node.result_ = node.tensorOperation_(operands);
     }
     return get(exit_point_).result_;
 }
@@ -105,10 +105,20 @@ void ComputationalDAG<T>::backward() {
     for(const graph::NodeId id : node_ids){
         ComputationalDAGNode<T>& node = get(id);
         std::vector<Tensor<T>> operands = collectOperands(id);
-        for(const graph::NodeId successor_id : getSuccessors(id)){
-            ComputationalDAGNode<T>& successor = get(successor_id);
+        for(const Tensor<T>& operand : operands){ 
+            node.jacobi_.push_back(zeros<T>(concatIndexes(operand.shape(), node.result_.shape())));
+        }
+        std::vector<graph::NodeId> successor_ids = getSuccessors(id);
+        if(!successor_ids.size()){
             for(size_t i = 0; i < operands.size(); i++){ 
-                node.jacobi_[i] += evaluateDifferential<T>(node->tensorOperation_.backward(operands, i), successor.jacobi_[successor.operand_idx_[id]]); 
+                node.jacobi_[i] = node.tensorOperation_.backward(i, operands); 
+            }
+        }else{
+            for(const graph::NodeId successor_id : getSuccessors(id)){
+                ComputationalDAGNode<T>& successor = get(successor_id);
+                for(size_t i = 0; i < operands.size(); i++){ 
+                    node.jacobi_[i] = add<T>(node.jacobi_[i], evaluateDifferential<T>(node.tensorOperation_.backward(i, operands), successor.jacobi_[successor.operand_idx_[id]])); 
+                }
             }
         }
     }

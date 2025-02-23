@@ -1,9 +1,36 @@
-/*
 #include "../include/computational_dag.hpp"
-#include "../include/functional.hpp"
+#include "../tensor_operation/include/all.hpp"
 
-#include <cassert>
-#include <iostream>
+using namespace tinytorch;
+
+#define TYPE int
+
+// Instantiate tensor operations
+Addition<TYPE> addition;
+// Matmul<TYPE> matmul;
+
+void computationalDAGUnitTests(){
+    ComputationalDAG<TYPE> computational_dag;
+    InputId input_1 = computational_dag.addInput({3});
+    InputId input_2 = computational_dag.addInput({3});
+    ComputationalDAGNode<TYPE> addition_node(addition, {{input_1, INPUT}, {input_2, INPUT}});
+    graph::NodeId add_node = computational_dag.addNode(addition_node);
+    computational_dag.getEntryPoint() = add_node;
+    computational_dag.getExitPoint() = add_node;
+    computational_dag.getInput(input_1) = ones<TYPE>({3});
+    computational_dag.getInput(input_2) = iota<TYPE>({3});
+
+    std::cout << "Forward test" << std::endl;
+    std::cout << computational_dag.forward() << std::endl;
+
+    std::cout << "Backward test" << std::endl;
+    computational_dag.backward();
+    std::cout << computational_dag.get(add_node).jacobi_[0] << std::endl;
+    std::cout << computational_dag.get(add_node).jacobi_[1] << std::endl;
+    // computational_dag.addNode({})
+}
+
+/*
 
 namespace tinytorch {
 
