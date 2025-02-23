@@ -9,6 +9,7 @@ Features:
 
 Optimizations:
   - don't copy tensors all the time in DAG evaluation and tensor operation
+  - maybe define MultiIndexes as queues
 
 Tensors:
   - implement zero and one for T

@@ -1,16 +1,18 @@
 namespace tinytorch{
 
-template<typename T>
-ComputationalDAGNode<T>::ComputationalDAGNode(){};
+OperandDescriptor::OperandDescriptor(size_t id, OperandType type) : id_(id), operand_type_(type){}
 
 template<typename T>
-ComputationalDAGNode<T>::ComputationalDAGNode(TensorOperation<T> tensor_operation, std::vector<OperandDescriptor> operand_descriptors) : tensorOperation_(tensor_operation), operand_descriptor_(operand_descriptors) {
+ComputationalDAGNode<T>::ComputationalDAGNode(){}
+
+template<typename T>
+ComputationalDAGNode<T>::ComputationalDAGNode(TensorOperation<T>& tensor_operation, std::vector<OperandDescriptor> operand_descriptors) : tensorOperation_(tensor_operation), operand_descriptor_(operand_descriptors) {
     size_t idx = 0;
     for(const OperandDescriptor descriptor : operand_descriptors){
         if(descriptor.operand_type_ == NODE) operand_idx_[descriptor.id_.node_id_] = idx;
         idx++;
     }
-};
+}
 
 template<typename T>
 ComputationalDAG<T>::ComputationalDAG() : dag::DAG<ComputationalDAGNode<T>>::DAG(){}
@@ -39,6 +41,38 @@ graph::NodeId& ComputationalDAG<T>::getExitPoint(){
 template<typename T>
 const graph::NodeId& ComputationalDAG<T>::getExitPoint() const {
     return exit_point_;
+}
+
+template<typename T>
+InputId ComputationalDAG<T>::addInput(Shape shape){
+    inputs_.push_back(zeros<T>(shape));
+    return inputs_.size() - 1;
+}
+
+template<typename T>
+ParameterId ComputationalDAG<T>::addParameter(Shape shape){
+    parameters_.push_back(zeros<T>(shape));
+    return parameters_.size() - 1;
+}
+
+template<typename T>
+const Tensor<T>& ComputationalDAG<T>::getInput(InputId id) const {
+    return inputs_[id];
+}
+
+template<typename T>
+Tensor<T>& ComputationalDAG<T>::getInput(InputId id){
+    return inputs_[id];
+}
+
+template<typename T>
+const Tensor<T>& ComputationalDAG<T>::getParameter(ParameterId id) const {
+    return parameters_[id];
+}
+
+template<typename T>
+Tensor<T>& ComputationalDAG<T>::getParameter(ParameterId id){
+    return parameters_[id];
 }
 
 template <typename T> 

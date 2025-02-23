@@ -6,7 +6,7 @@ using namespace tensor;
 using namespace test;
 using namespace tinytorch;
 
-namespace addition {
+namespace addition_tests {
 
 Addition<int> addition_op;
 
@@ -28,6 +28,14 @@ TestSuite<backward> backwardUnitTests(){
     TestSuite<backward> backward_tests;
     backward_tests.addTest(UnitTest<backward>({0, std::vector<Tensor<int>>({scalar_10, scalar_15})}, scalar_1));
     backward_tests.addTest(UnitTest<backward>({0, std::vector<Tensor<int>>({ones_5, ones_5})}, id_5x5));
+
+    /*
+        _ _ _ _
+        x11 x12 x13     y11 y12 y13     x11+y11 x12+y12 x13+y13
+        x21 x22 x23  +  y21 y22 y23  =  x21+y21 x22+y22 x23+y23
+        x31 x32 x33     y31 y32 y33     x31+y31 x32+y32 x33+y33
+    */
+    // backward_tests.addTest(UnitTest<backward>({0, std::vector<Tensor<int>>({ones_3x3, ones_3x3})}, id_5x5));
     return backward_tests;
 }
 
