@@ -73,7 +73,7 @@ namespace tinytorch {
     template <typename T>
     struct ComputationalDAGNode {
 
-        TensorOperation<T> tensorOperation_; /** Forward tensor operation. */
+        TensorOperation<T>& tensorOperation_; /** Forward tensor operation. */
         Tensor<T> result_;  /** Result of forward computation. */
         std::vector<Tensor<T>> jacobi_; /** jacobi_[i] is used to store the Jacobi tensor wrt to the i-th input.  */
         std::vector<OperandDescriptor> operand_descriptor_; /** Stores the operand descriptor for each operand. */
