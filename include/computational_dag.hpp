@@ -45,8 +45,17 @@ namespace tinytorch {
     };
 
     struct OperandDescriptor{
+
         OperandType operand_type_;
         OperandId id_;
+
+        OperandDescriptor(size_t id, OperandType type);
+
+        /** // Is there a trick to make this work?
+        OperandDescriptor(InputId id);
+        OperandDescriptor(ParameterId id);
+        OperandDescriptor(graph::NodeId id);
+        */
     };
 
     /**

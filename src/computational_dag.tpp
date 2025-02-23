@@ -1,7 +1,9 @@
 namespace tinytorch{
 
+OperandDescriptor::OperandDescriptor(size_t id, OperandType type) : id_(id), operand_type_(type){}
+
 template<typename T>
-ComputationalDAGNode<T>::ComputationalDAGNode(){};
+ComputationalDAGNode<T>::ComputationalDAGNode(){}
 
 template<typename T>
 ComputationalDAGNode<T>::ComputationalDAGNode(TensorOperation<T>& tensor_operation, std::vector<OperandDescriptor> operand_descriptors) : tensorOperation_(tensor_operation), operand_descriptor_(operand_descriptors) {
@@ -10,7 +12,7 @@ ComputationalDAGNode<T>::ComputationalDAGNode(TensorOperation<T>& tensor_operati
         if(descriptor.operand_type_ == NODE) operand_idx_[descriptor.id_.node_id_] = idx;
         idx++;
     }
-};
+}
 
 template<typename T>
 ComputationalDAG<T>::ComputationalDAG() : dag::DAG<ComputationalDAGNode<T>>::DAG(){}
