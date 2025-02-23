@@ -28,7 +28,26 @@ using namespace tensor;
  * 
  */
 namespace tinytorch {
-    
+
+    typedef size_t InputId;
+    typedef size_t ParameterId;
+
+    union OperandId{
+        InputId input_id_;
+        ParameterId parameter_id_;
+        graph::NodeId node_id_;
+    };
+
+    enum OperandType{
+        INPUT,
+        PARAMETER,
+        NODE
+    };
+
+    struct OperandDescriptor{
+        OperandType operand_type_;
+        OperandId id_;
+    };
 
     /**
      * @struct ComputationalDAGNode
@@ -44,17 +63,15 @@ namespace tinytorch {
      **/
     template <typename T>
     struct ComputationalDAGNode {
+
         TensorOperation<T> tensorOperation_; /** Forward tensor operation. */
         Tensor<T> result_;  /** Result of forward computation. */
-        std::vector<Tensor<T>> gradients_wrt_parameters_;
-        std::vector<Tensor<T>> gradients_wrt_inputs_;
-        std::vector<graph::NodeId> operand_node_id_; /** Stores the node id for each operand */
-        std::map<graph::NodeId, size_t> operand_idx_; /** Inverse lookup of the above */
-
-        // bool requires_grad_;
+        std::vector<Tensor<T>> jacobi_; /** jacobi_[i] is used to store the Jacobi tensor wrt to the i-th input.  */
+        std::vector<OperandDescriptor> operand_descriptor_; /** Stores the operand descriptor for each operand. */
+        std::map<graph::NodeId, size_t> operand_idx_; /** Indexes of NODE operands in operand_descriptor_. */
 
         ComputationalDAGNode();
-        ComputationalDAGNode(TensorOperation<T>* tensor_operation, std::vector<graph::NodeId> operand_node_id);
+        ComputationalDAGNode(TensorOperation<T> tensor_operation, std::vector<OperandDescriptor> operand_descriptors);
     };
 
     /**
@@ -73,6 +90,9 @@ namespace tinytorch {
 
             graph::NodeId entry_point_;    /** This node acts directly on the input to the DAG. */
             graph::NodeId exit_point_;     /** The result of this node is the result of the DAG computation. */
+
+            std::vector<Tensor<T>> inputs_; /** Used to store the input values. */
+            std::vector<Tensor<T>> parameters_; /** Used to store the parameters. */
 
         public:
 
@@ -197,13 +217,14 @@ namespace tinytorch {
              **/
             using dag::DAG<ComputationalDAGNode<T>>::topoOrder;
 
-            std::vector<Tensor<T>> collectOperands(const graph::NodeId node_id, const Tensor<T>& input) const;
+            std::vector<Tensor<T>> collectOperands(const graph::NodeId node_id) const;
 
-            // ASSUMES ORDER OF OPERANDS EQUAL TO ORDER OF EDGES IN BACKWARD ADJACENCY LIST
-            Tensor<T> forward(const Tensor<T>& input);
+            // ASSUMES INPUTS AND WEIGHTS HAVE BEEN SET
+            Tensor<T> forward();
 
+            // ASSUMES INPUTS AND WEIGHTS HAVE BEEN SET
             // ASSUMES EVALUATE HAS BEEN CALLED
-            void backward(const Tensor<T>& input);
+            void backward();
 
     };
 
