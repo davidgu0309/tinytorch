@@ -71,7 +71,7 @@ namespace tinytorch {
         std::map<graph::NodeId, size_t> operand_idx_; /** Indexes of NODE operands in operand_descriptor_. */
 
         ComputationalDAGNode();
-        ComputationalDAGNode(TensorOperation<T> tensor_operation, std::vector<OperandDescriptor> operand_descriptors);
+        ComputationalDAGNode(TensorOperation<T>& tensor_operation, std::vector<OperandDescriptor> operand_descriptors);
     };
 
     /**
@@ -185,6 +185,7 @@ namespace tinytorch {
             /**
              * 
              * Adds a node with data node_data to the graph.
+             * 
              * @param node_data Node data.
              * 
              * @return Identifier of the new node.
@@ -195,12 +196,70 @@ namespace tinytorch {
             /**
              * 
              * Adds a directed edge from node from to node to.
-             * @param from Source node.
              * 
+             * @param from Source node.
              * @param to Destination node.
              * 
              **/
             using dag::DAG<ComputationalDAGNode<T>>::addEdge;
+
+            /**
+             * 
+             * Allocates an input tensor of shape shape and returns the unique InputId.
+             * 
+             * @param shape Shape of allocated input tensor.
+             * 
+             * @return Unique input identifier.
+             * 
+             **/
+            InputId addInput(Shape shape);
+
+            /**
+             * 
+             * Allocates a parameter tensor of shape shape and returns the unique ParameterId.
+             * 
+             * @param shape Shape of allocated parameter tensor.
+             * 
+             * @return Unique parameter identifier.
+             * 
+             **/
+            InputId addParameter(Shape shape);
+
+            /**
+             * 
+             * @param id Input identifier.
+             * 
+             * @return Const reference to input tensor with identifier id.
+             * 
+             **/
+            const Tensor<T>& getInput(InputId id) const;
+
+            /**
+             * 
+             * @param id Input identifier.
+             * 
+             * @return Reference to input tensor with identifier id.
+             * 
+             **/
+            Tensor<T>& getInput(InputId id);
+
+            /**
+             * 
+             * @param id Parameter identifier.
+             * 
+             * @return Const reference to parameter tensor with identifier id.
+             * 
+             **/
+            const Tensor<T>& getParameter(ParameterId id) const;
+
+            /**
+             * 
+             * @param id Parameter identifier.
+             * 
+             * @return Reference to parameter tensor with identifier id.
+             * 
+             **/
+            Tensor<T>& getParameter(ParameterId id);
 
 
             /**
