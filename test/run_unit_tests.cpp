@@ -14,7 +14,7 @@ int main() {
     
     std::cout << "Running computational DAG unit tests." << std::endl;
     computationalDAGUnitTests();
-
+    
     return 0;
     
 }

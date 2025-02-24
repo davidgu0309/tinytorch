@@ -4,6 +4,6 @@
 
 void tensorOperationUnitTests() {
     addition_tests::runUnitTests();
-    matmul_tests::runUnitTests();
     hadamard_tests::runUnitTests();
+    matmul_tests::runUnitTests();
 }
