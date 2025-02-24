@@ -1,33 +1,58 @@
 #include "../include/computational_dag.hpp"
 #include "../tensor_operation/include/all.hpp"
+#include "../tensor/test/test_tensors.hpp"
 
 using namespace tinytorch;
 
 #define TYPE int
+Shape SHAPE = {};
 
 // Instantiate tensor operations
 Addition<TYPE> addition;
+Hadamard<TYPE> hadamard;
 // Matmul<TYPE> matmul;
 
 void computationalDAGUnitTests(){
+
+    // Instantiate computational dag
     ComputationalDAG<TYPE> computational_dag;
-    InputId input_1 = computational_dag.addInput({3});
-    InputId input_2 = computational_dag.addInput({3});
+
+    // Allocate input tensors
+    InputId input_1 = computational_dag.addInput(SHAPE);
+    InputId input_2 = computational_dag.addInput(SHAPE);
+
+    // Allocate parameter tensors
+    ParameterId w_1 = computational_dag.addParameter(SHAPE);
+
+    // Define nodes (CYCLIC DEPENDENCIES ARE NOT SUPPORTED!)
     ComputationalDAGNode<TYPE> addition_node(addition, {{input_1, INPUT}, {input_2, INPUT}});
     graph::NodeId add_node = computational_dag.addNode(addition_node);
+    ComputationalDAGNode<TYPE> multiplication_node(hadamard, {{w_1, PARAMETER}, {add_node, NODE}});
+    graph::NodeId mul_node = computational_dag.addNode(multiplication_node);
+
+    // Add edges TODO: do this automatically
+    computational_dag.addEdge(add_node, mul_node);
+
+    // Set entry point and exit point
     computational_dag.getEntryPoint() = add_node;
-    computational_dag.getExitPoint() = add_node;
-    computational_dag.getInput(input_1) = ones<TYPE>({3});
-    computational_dag.getInput(input_2) = iota<TYPE>({3});
+    computational_dag.getExitPoint() = mul_node;
+
+    // Set inputs
+    computational_dag.getInput(input_1) = ones<TYPE>(SHAPE);
+    computational_dag.getInput(input_2) = iota<TYPE>(SHAPE);
+
+    // Set parameters
+    computational_dag.getParameter(w_1) = scalar_55;
 
     std::cout << "Forward test" << std::endl;
     std::cout << computational_dag.forward() << std::endl;
 
     std::cout << "Backward test" << std::endl;
     computational_dag.backward();
-    std::cout << computational_dag.get(add_node).jacobi_[0] << std::endl;
-    std::cout << computational_dag.get(add_node).jacobi_[1] << std::endl;
-    // computational_dag.addNode({})
+    std::cout << "mul_node.jacobi_[0] (param): " << computational_dag.get(mul_node).jacobi_[0] << std::endl;
+    std::cout << "mul_node.jacobi_[1] (input): " << computational_dag.get(mul_node).jacobi_[1] << std::endl;
+    std::cout << "add_node.jacobi_[0]: " << computational_dag.get(add_node).jacobi_[0] << std::endl;
+    std::cout << "add_node.jacobi_[1]: " << computational_dag.get(add_node).jacobi_[1] << std::endl;
 }
 
 /*
