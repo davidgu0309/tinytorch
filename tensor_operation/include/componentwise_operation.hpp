@@ -34,7 +34,7 @@ namespace tinytorch{
      * 
      **/
     template <typename T, ScalarOperation<T> ScalarOperation>
-    struct ComponentwiseOperation {
+    struct ComponentwiseOperation : TensorOperation<T>{
 
         ScalarOperation scalarOperation_;
 
@@ -49,7 +49,7 @@ namespace tinytorch{
          * @return Result of the componentwise tensor operation with the passed operands.
          * 
          **/
-        Tensor<T> operator()(const std::vector<Tensor<T>> operands) const;
+        Tensor<T> operator()(const std::vector<Tensor<T>> operands) const override;
 
         /**
          * 
@@ -62,7 +62,7 @@ namespace tinytorch{
          * @return Gradient of tensor operation with respect to input input_idx.
          * 
          **/
-        Tensor<T> backward(const size_t input_idx, const std::vector<Tensor<T>> operands) const;
+        Tensor<T> backward(const size_t input_idx, const std::vector<Tensor<T>> operands) const override;
 
     };
 
