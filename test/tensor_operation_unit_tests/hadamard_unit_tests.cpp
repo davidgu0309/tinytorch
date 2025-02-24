@@ -16,6 +16,7 @@ Tensor<int> hadamard(const std::vector<Tensor<int>> operands){
 
 TestSuite<hadamard> hadamardUnitTests(){
     TestSuite<hadamard> hadamard_tests;
+    hadamard_tests.addTest(UnitTest<hadamard>(std::vector<Tensor<int>>({scalar_10}), scalar_10));
     hadamard_tests.addTest(UnitTest<hadamard>(std::vector<Tensor<int>>({ones_5, twos_5}), twos_5));
     return hadamard_tests;
 }

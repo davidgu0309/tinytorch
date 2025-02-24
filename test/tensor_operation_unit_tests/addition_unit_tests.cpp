@@ -16,6 +16,8 @@ Tensor<int> addition(const std::vector<Tensor<int>> operands){
 
 TestSuite<addition> additionUnitTests(){
     TestSuite<addition> addition_tests;
+    addition_tests.addTest(UnitTest<addition>(std::vector<Tensor<int>>({scalar_10}), scalar_10));
+    addition_tests.addTest(UnitTest<addition>(std::vector<Tensor<int>>({scalar_15, scalar_15, scalar_10, scalar_15}), scalar_55));
     addition_tests.addTest(UnitTest<addition>(std::vector<Tensor<int>>({ones_5, twos_5}), threes_5));
     return addition_tests;
 }
