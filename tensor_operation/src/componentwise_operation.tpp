@@ -1,3 +1,5 @@
+namespace tinytorch{
+
 template <typename T, ScalarOperation<T> ScalarOperation>
 ComponentwiseOperation<T, ScalarOperation>::ComponentwiseOperation(){}
 
@@ -34,3 +36,5 @@ Tensor<T> ComponentwiseOperation<T, ScalarOperation>::backward(const size_t inpu
     }
     return jacobi;
 }
+
+}  // namespace tinytorch

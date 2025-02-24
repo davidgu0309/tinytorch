@@ -10,12 +10,13 @@
  */
 #pragma once   
 
-#include "tensor_operation.hpp"
+#include "componentwise_operation.hpp"
+#include "scalar_operation.hpp"
 
 namespace tinytorch{
     
     /**
-     * @struct TensorAddition
+     * @struct Addition
      * 
      * @brief Template for tensor addition operation.
      * 
@@ -25,7 +26,9 @@ namespace tinytorch{
      * 
      **/
     template <typename T>
-    struct Addition : TensorOperation<T> {
+    struct Addition : ComponentwiseOperation<T, ScalarAddition<T>> {
+
+        Addition();
 
         /**
          * 
@@ -38,7 +41,7 @@ namespace tinytorch{
          * @pre The operand vector must contain at least one operand. All operand tensors must have identical shape.
          * 
          **/
-        Tensor<T> operator()(const std::vector<Tensor<T>> operands) const override;
+        using ComponentwiseOperation<T, ScalarAddition<T>>::operator ();
 
         /**
          * 
@@ -50,7 +53,7 @@ namespace tinytorch{
          * @return Gradient of tensor addition with respect to input input_idx.
          * 
          **/
-        Tensor<T> backward(const size_t input_idx, const std::vector<Tensor<T>> operands) const override;
+        using ComponentwiseOperation<T, ScalarAddition<T>>::backward;
 
     };
 

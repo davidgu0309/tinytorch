@@ -1,3 +1,5 @@
+namespace tinytorch{
+
 template<typename T>
 ScalarAddition<T>::ScalarAddition(){}
 
@@ -35,3 +37,5 @@ T ScalarMultiplication<T>::backward(const size_t input_idx, const std::vector<T>
     }
     return derivative;
 }
+
+}  // namespace tinytorch

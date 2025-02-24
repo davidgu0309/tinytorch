@@ -1,7 +1,7 @@
 /**
  * @file tensor_operation.hpp
  * 
- * @brief Templates for common tensor operations.
+ * @brief Template for tensor operations.
  * 
  * @author David Gu
  * @author Mirco Paul
