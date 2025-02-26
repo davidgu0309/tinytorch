@@ -14,9 +14,9 @@ double relu(const std::vector<double> operands){
 
 TestSuite<relu> reluUnitTests(){
     TestSuite<relu> relu_tests;
-    relu_tests.addTest(UnitTest<relu>(std::vector<double>({-3.7}), 0.0));
-    relu_tests.addTest(UnitTest<relu>(std::vector<double>({0.0}), 0.0));
-    relu_tests.addTest(UnitTest<relu>(std::vector<double>({1e9}), 1e9));
+    relu_tests.addTest(ComparativeUnitTest<relu>(std::vector<double>({-3.7}), 0.0));
+    relu_tests.addTest(ComparativeUnitTest<relu>(std::vector<double>({0.0}), 0.0));
+    relu_tests.addTest(ComparativeUnitTest<relu>(std::vector<double>({1e9}), 1e9));
     return relu_tests;
 }
 
@@ -26,9 +26,9 @@ double reluBackward(const size_t input_idx, const std::vector<double> operands){
 
 TestSuite<reluBackward> reluBackwardUnitTests(){
     TestSuite<reluBackward> relu_backward_tests;
-    relu_backward_tests.addTest(UnitTest<reluBackward>({0, std::vector<double>({-3.7})}, 0.0));
-    relu_backward_tests.addTest(UnitTest<reluBackward>({0, std::vector<double>({0.0})}, 0.0));
-    relu_backward_tests.addTest(UnitTest<reluBackward>({0, std::vector<double>({1e9})}, 1.0));
+    relu_backward_tests.addTest(ComparativeUnitTest<reluBackward>({0, std::vector<double>({-3.7})}, 0.0));
+    relu_backward_tests.addTest(ComparativeUnitTest<reluBackward>({0, std::vector<double>({0.0})}, 0.0));
+    relu_backward_tests.addTest(ComparativeUnitTest<reluBackward>({0, std::vector<double>({1e9})}, 1.0));
     return relu_backward_tests;
 }
 

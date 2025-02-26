@@ -16,8 +16,8 @@ Tensor<int> hadamard(const std::vector<Tensor<int>> operands){
 
 TestSuite<hadamard> hadamardUnitTests(){
     TestSuite<hadamard> hadamard_tests;
-    hadamard_tests.addTest(UnitTest<hadamard>(std::vector<Tensor<int>>({scalar_10}), scalar_10));
-    hadamard_tests.addTest(UnitTest<hadamard>(std::vector<Tensor<int>>({ones_5, twos_5}), twos_5));
+    hadamard_tests.addTest(ComparativeUnitTest<hadamard>(std::vector<Tensor<int>>({scalar_10}), scalar_10));
+    hadamard_tests.addTest(ComparativeUnitTest<hadamard>(std::vector<Tensor<int>>({ones_5, twos_5}), twos_5));
     return hadamard_tests;
 }
 
@@ -27,8 +27,8 @@ Tensor<int> backward(const size_t input_idx, const std::vector<Tensor<int>> oper
 
 TestSuite<backward> backwardUnitTests(){
     TestSuite<backward> backward_tests;
-    backward_tests.addTest(UnitTest<backward>({0, std::vector<Tensor<int>>({scalar_10, scalar_15})}, scalar_15));
-    backward_tests.addTest(UnitTest<backward>({0, std::vector<Tensor<int>>({iota_5, ones_5})}, id_5x5));
+    backward_tests.addTest(ComparativeUnitTest<backward>({0, std::vector<Tensor<int>>({scalar_10, scalar_15})}, scalar_15));
+    backward_tests.addTest(ComparativeUnitTest<backward>({0, std::vector<Tensor<int>>({iota_5, ones_5})}, id_5x5));
     // TODO: build result tensor for this one (zeros with iota on the diag)
     // backward_tests.addTest(UnitTest<backward>({1, std::vector<Tensor<int>>({iota_5, ones_5})}, id_5x5));
 

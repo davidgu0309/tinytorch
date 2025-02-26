@@ -16,9 +16,9 @@ Tensor<int> addition(const std::vector<Tensor<int>> operands){
 
 TestSuite<addition> additionUnitTests(){
     TestSuite<addition> addition_tests;
-    addition_tests.addTest(UnitTest<addition>(std::vector<Tensor<int>>({scalar_10}), scalar_10));
-    addition_tests.addTest(UnitTest<addition>(std::vector<Tensor<int>>({scalar_15, scalar_15, scalar_10, scalar_15}), scalar_55));
-    addition_tests.addTest(UnitTest<addition>(std::vector<Tensor<int>>({ones_5, twos_5}), threes_5));
+    addition_tests.addTest(ComparativeUnitTest<addition>(std::vector<Tensor<int>>({scalar_10}), scalar_10));
+    addition_tests.addTest(ComparativeUnitTest<addition>(std::vector<Tensor<int>>({scalar_15, scalar_15, scalar_10, scalar_15}), scalar_55));
+    addition_tests.addTest(ComparativeUnitTest<addition>(std::vector<Tensor<int>>({ones_5, twos_5}), threes_5));
     return addition_tests;
 }
 
@@ -28,8 +28,8 @@ Tensor<int> backward(const size_t input_idx, const std::vector<Tensor<int>> oper
 
 TestSuite<backward> backwardUnitTests(){
     TestSuite<backward> backward_tests;
-    backward_tests.addTest(UnitTest<backward>({0, std::vector<Tensor<int>>({scalar_10, scalar_15})}, scalar_1));
-    backward_tests.addTest(UnitTest<backward>({0, std::vector<Tensor<int>>({ones_5, ones_5})}, id_5x5));
+    backward_tests.addTest(ComparativeUnitTest<backward>({0, std::vector<Tensor<int>>({scalar_10, scalar_15})}, scalar_1));
+    backward_tests.addTest(ComparativeUnitTest<backward>({0, std::vector<Tensor<int>>({ones_5, ones_5})}, id_5x5));
 
     /*
         _ _ _ _

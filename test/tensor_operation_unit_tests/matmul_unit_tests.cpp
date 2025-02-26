@@ -16,7 +16,7 @@ Tensor<int> operation(const std::vector<Tensor<int>> operands){
 
 TestSuite<operation> matmulUnitTests(){
     TestSuite<operation> matmul_tests;
-    matmul_tests.addTest(UnitTest<operation>(std::vector<Tensor<int>>({ones_5, twos_5}), scalar_10));
+    matmul_tests.addTest(ComparativeUnitTest<operation>(std::vector<Tensor<int>>({ones_5, twos_5}), scalar_10));
     return matmul_tests;
 }
 
@@ -29,8 +29,8 @@ TestSuite<backward> backwardUnitTests(){
     /*
         x1 x2 x3 x4 x5 @ y1 y2 y3 y4 y5 = sum_i xi * yi
     */
-    backward_tests.addTest(UnitTest<backward>({0, std::vector<Tensor<int>>({ones_5, twos_5})}, twos_5));
-    backward_tests.addTest(UnitTest<backward>({1, std::vector<Tensor<int>>({ones_5, twos_5})}, ones_5));
+    backward_tests.addTest(ComparativeUnitTest<backward>({0, std::vector<Tensor<int>>({ones_5, twos_5})}, twos_5));
+    backward_tests.addTest(ComparativeUnitTest<backward>({1, std::vector<Tensor<int>>({ones_5, twos_5})}, ones_5));
     /*
 
         x11 x12 x13     y11 y12 y13     _ _ _
