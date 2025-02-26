@@ -12,6 +12,8 @@
 
 #include "concept.hpp"
 
+#include <cmath>
+
 namespace tinytorch {
 
     /**

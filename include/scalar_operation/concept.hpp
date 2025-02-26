@@ -18,6 +18,7 @@
  */
 namespace tinytorch{
     // TODO: Doxygen document this concept for scalar ops
+    // TODO: Is it possible to create specializations for unary and binary ops to optimize?
     template <typename scalarOp, typename T>
     concept ScalarOperation = requires(scalarOp op, const std::vector<T> operands, size_t idx) {
         { op(operands) } -> std::same_as<T>;                    /** () operator: vector<T> -> T */
