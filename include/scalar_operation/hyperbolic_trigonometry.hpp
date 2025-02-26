@@ -154,3 +154,5 @@ namespace tinytorch{
     // TODO: inverse hyperbolic trig
 
 } // namespace tinytorch
+
+#include "../../src/scalar_operation/hyperbolic_trigonometry.tpp"

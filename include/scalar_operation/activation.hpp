@@ -101,3 +101,5 @@ namespace tinytorch {
     };
 
 } // namespace tinytorch
+
+#include "../../src/scalar_operation/activation.tpp"

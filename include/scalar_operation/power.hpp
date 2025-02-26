@@ -66,3 +66,5 @@ namespace tinytorch{
     };
 
 } // namespace tinytorch
+
+#include "../../src/scalar_operation/power.tpp"

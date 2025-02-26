@@ -61,3 +61,5 @@ namespace tinytorch {
     };
     
 } // namespace tinytorch
+
+#include "../../src/scalar_operation/loss.tpp"

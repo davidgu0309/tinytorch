@@ -154,3 +154,5 @@ namespace tinytorch{
     // TODO: inverse trig
 
 } // namespace tinytorch
+
+#include "../../src/scalar_operation/trigonometry.tpp"

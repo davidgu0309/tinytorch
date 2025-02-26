@@ -58,3 +58,5 @@ namespace tinytorch {
     };
     
 } // namespace tinytorch
+
+#include "../../src/scalar_operation/cobb_douglas.tpp"
