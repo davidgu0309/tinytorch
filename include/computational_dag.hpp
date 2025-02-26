@@ -13,7 +13,7 @@
 #include "../DAG/dag.hpp"
 #include "../tensor/include/functional.hpp"
 #include "../tensor/include/tensor.hpp"
-#include "../tensor_operation/include/tensor_operation.hpp"
+#include "tensor_operation/tensor_operation.hpp"
 
 #include <algorithm>
 #include <functional>

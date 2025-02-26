@@ -11,7 +11,7 @@
 #pragma once   
 
 #include "componentwise_operation.hpp"
-#include "scalar_operation.hpp"
+#include "../scalar_operation/scalar_operation.hpp"
 
 namespace tinytorch{
     
@@ -59,4 +59,4 @@ namespace tinytorch{
 
 } // namespace tinytorch
 
-#include "../src/addition.tpp"
+#include "../../src/tensor_operation/addition.tpp"

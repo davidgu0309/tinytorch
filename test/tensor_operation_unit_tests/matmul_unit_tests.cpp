@@ -1,5 +1,5 @@
 #include "../framework/test.hpp"
-#include "../../tensor_operation/include/matmul.hpp"
+#include "../../include/tensor_operation/matmul.hpp"
 #include "../../tensor/test/test_tensors.hpp"
 
 using namespace tensor;

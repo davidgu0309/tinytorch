@@ -46,4 +46,4 @@ struct Matmul : TensorOperation<T> {
 
 } // namepsace tinytorch
 
-#include "../src/matmul.tpp"
+#include "../../src/tensor_operation/matmul.tpp"

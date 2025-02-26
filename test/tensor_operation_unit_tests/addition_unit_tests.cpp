@@ -1,5 +1,5 @@
 #include "../framework/test.hpp"
-#include "../../tensor_operation/include/addition.hpp"
+#include "../../include/tensor_operation/addition.hpp"
 #include "../../tensor/test/test_tensors.hpp"
 
 using namespace tensor;

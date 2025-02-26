@@ -10,7 +10,7 @@
  */
 #pragma once
 
-#include "scalar_operation.hpp"
+#include "../scalar_operation/scalar_operation.hpp"
 #include "../../tensor/include/tensor.hpp"
 
 using namespace tensor;
@@ -68,4 +68,4 @@ namespace tinytorch{
 
 }  // namespace tinytorch
 
-#include "../src/componentwise_operation.tpp"
+#include "../../src/tensor_operation/componentwise_operation.tpp"

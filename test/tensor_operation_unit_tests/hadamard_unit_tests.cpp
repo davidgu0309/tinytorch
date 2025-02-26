@@ -1,5 +1,5 @@
 #include "../framework/test.hpp"
-#include "../../tensor_operation/include/hadamard.hpp"
+#include "../../include/tensor_operation/hadamard.hpp"
 #include "../../tensor/test/test_tensors.hpp"
 
 using namespace tensor;

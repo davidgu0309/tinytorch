@@ -1,5 +1,5 @@
 #include "../include/computational_dag.hpp"
-#include "../tensor_operation/include/all.hpp"
+#include "../include/tensor_operation/all.hpp"
 #include "../tensor/test/test_tensors.hpp"
 
 using namespace tinytorch;

@@ -64,4 +64,4 @@ namespace tinytorch{
 
 }  // namespace tinytorch
 
-#include "../src/tensor_operation.tpp"
+#include "../../src/tensor_operation/tensor_operation.tpp"
