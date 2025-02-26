@@ -11,7 +11,7 @@
 #pragma once   
 
 #include "componentwise_operation.hpp"
-#include "../scalar_operation/scalar_operation.hpp"
+#include "../scalar_operation/aggregation.hpp"
 
 namespace tinytorch{
     

@@ -10,7 +10,7 @@
  */
 #pragma once
 
-#include "../scalar_operation/scalar_operation.hpp"
+#include "../scalar_operation/concept.hpp"
 #include "../../tensor/include/tensor.hpp"
 
 using namespace tensor;
