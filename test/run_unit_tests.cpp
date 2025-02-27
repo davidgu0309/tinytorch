@@ -7,16 +7,23 @@
 
 int main() {
 
-    std::cout << "Running graph unit tests." << std::endl;
+    // TODO: move to graph
+    std::cout << "Graph unit tests" << std::endl;
     graphUnitTests();
 
-    std::cout << "Running scalar operation unit tests." << std::endl;
+    std::cout << std::endl;
+
+    std::cout << "         SCALAR OPERATION UNIT TESTS" << std::endl << std::endl;
     scalarOperationUnitTests();
+
+    std::cout << std::endl;
     
-    std::cout << "Running tensor operation unit tests." << std::endl;
+    std::cout << "         TENSOR OPERATION UNIT TESTS" << std::endl << std::endl;
     tensorOperationUnitTests();
+
+    std::cout << std::endl;
     
-    std::cout << "Running computational DAG unit tests." << std::endl;
+    std::cout << "         COMPUTATIONAL DAG UNIT TESTS" << std::endl << std::endl;
     computationalDAGUnitTests();
     
     return 0;
