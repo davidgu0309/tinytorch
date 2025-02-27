@@ -36,7 +36,7 @@ namespace tinytorch{
     
     template<typename T>
     T ScalarTanH<T>::backward(const size_t input_idx, const std::vector<T> operands) const {
-        T tanh_x = tanh(x);
+        T tanh_x = tanh(operands[0]);
         return 1 - tanh_x * tanh_x;
     }
     
