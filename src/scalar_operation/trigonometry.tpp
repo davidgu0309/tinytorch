@@ -36,7 +36,7 @@ namespace tinytorch{
     
     template<typename T>
     T ScalarTan<T>::backward(const size_t input_idx, const std::vector<T> operands) const {
-        T cos_x = cos(x);
+        T cos_x = cos(operands[0]);
         return 1 / cos_x / cos_x;
     }
     
