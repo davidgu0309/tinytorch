@@ -1,9 +1,11 @@
+#include "activation_unit_tests.cpp"
 #include "addition_unit_tests.cpp"
 #include "hadamard_unit_tests.cpp"
 #include "matmul_unit_tests.cpp"
 
 void tensorOperationUnitTests() {
-    addition_tests::runUnitTests();
+    tensor_activation_tests::runUnitTests();
+    tensor_addition_tests::runUnitTests();
     hadamard_tests::runUnitTests();
     matmul_tests::runUnitTests();
 }
