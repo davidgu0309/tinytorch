@@ -4,9 +4,9 @@
 using namespace test;
 using namespace tinytorch;
 
-double INF = std::numeric_limits<double>::infinity();
-
 namespace activation_tests {
+
+    double INF = std::numeric_limits<double>::infinity();
 
 ScalarReLU<double> relu_op;
 
