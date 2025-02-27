@@ -14,7 +14,7 @@ T ScalarAddition<T>::operator()(const std::vector<T> operands) const {
 
 template<typename T>
 T ScalarAddition<T>::backward(const size_t input_idx, const std::vector<T> operands) const {
-    return 1;
+    return (T)1;
 }
 
 template<typename T>
