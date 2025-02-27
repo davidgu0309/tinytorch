@@ -18,7 +18,7 @@ namespace tinytorch{
     
     template<typename T>
     T ScalarSigmoid<T>::operator()(const std::vector<T> operands) const {
-        return (T)1 / (1 + std::exp(operands[0]));
+        return (T)1 / (1 + std::exp(-operands[0]));
     }
     
     template<typename T>
