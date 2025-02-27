@@ -15,7 +15,7 @@ Tensor<int> addition(const std::vector<Tensor<int>> operands){
 }
 
 TestSuite<addition> additionUnitTests(){
-    TestSuite<addition> addition_tests;
+    TestSuite<addition> addition_tests("Addition operator tests");
     addition_tests.addTest(ComparativeUnitTest<addition>(std::vector<Tensor<int>>({scalar_10}), scalar_10));
     addition_tests.addTest(ComparativeUnitTest<addition>(std::vector<Tensor<int>>({scalar_15, scalar_15, scalar_10, scalar_15}), scalar_55));
     addition_tests.addTest(ComparativeUnitTest<addition>(std::vector<Tensor<int>>({ones_5, twos_5}), threes_5));
@@ -27,7 +27,7 @@ Tensor<int> backward(const size_t input_idx, const std::vector<Tensor<int>> oper
 }
 
 TestSuite<backward> backwardUnitTests(){
-    TestSuite<backward> backward_tests;
+    TestSuite<backward> backward_tests("Addition backward tests");
     backward_tests.addTest(ComparativeUnitTest<backward>({0, std::vector<Tensor<int>>({scalar_10, scalar_15})}, scalar_1));
     backward_tests.addTest(ComparativeUnitTest<backward>({0, std::vector<Tensor<int>>({ones_5, ones_5})}, id_5x5));
 
@@ -43,9 +43,7 @@ TestSuite<backward> backwardUnitTests(){
 
 void runUnitTests() {
 
-    std::cout << "----- Addition operator tests -----" << std::endl;
     additionUnitTests().run();
-    std::cout << "----- Addition backward tests -----" << std::endl;
     backwardUnitTests().run();
 
     // TODO: manual tests
