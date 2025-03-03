@@ -16,8 +16,6 @@ Scalar operation:
   - implement and test means
   - test logarithm
   - test power
-  - implement and test loss
-  - implement and test unary
   - implement and test Cobb-Douglas
 
 Tensors:
