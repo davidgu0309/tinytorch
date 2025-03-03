@@ -13,6 +13,7 @@ Optimizations:
   - maybe define MultiIndexes as queues
 
 Scalar operation:
+  - implement Lp instead of L2
   - implement and test means
   - test logarithm
   - test power
