@@ -4,12 +4,13 @@
 
 using namespace tinytorch;
 
-#define TYPE int
+#define TYPE double
 Shape SHAPE = {};
 
 // Instantiate tensor operations
 Addition<TYPE> addition;
 Hadamard<TYPE> hadamard;
+Power<TYPE> power;
 // Matmul<TYPE> matmul;
 
 void computationalDAGUnitTests(){
@@ -23,36 +24,63 @@ void computationalDAGUnitTests(){
 
     // Allocate parameter tensors
     ParameterId w_1 = computational_dag.addParameter(SHAPE);
+    ParameterId b = computational_dag.addParameter(SHAPE);
+    ParameterId p = computational_dag.addParameter(SHAPE);  // exponent of power
+
+    /*
+        f = (b + w_1 * (x_1 + x_2)) ^ p
+
+        x_3 = x_1 + x2
+        x_4 = w_1 * x_3
+        x_5 = b + x_4
+        x_6 = x_5 ^ p
+
+        d/dp(f) = ...
+        d/dx_1(f) = d/dx_2(f) = p * (b + w_1 * (x_1 + x_2)) ^ (p - 1) * w_1
+
+    */
 
     // Define nodes (CYCLIC DEPENDENCIES ARE NOT SUPPORTED!)
     ComputationalDAGNode<TYPE> addition_node(addition, {{input_1, INPUT}, {input_2, INPUT}});
     graph::NodeId add_node = computational_dag.addNode(addition_node);
     ComputationalDAGNode<TYPE> multiplication_node(hadamard, {{w_1, PARAMETER}, {add_node, NODE}});
     graph::NodeId mul_node = computational_dag.addNode(multiplication_node);
+    ComputationalDAGNode<TYPE> offset_node(addition, {{b, PARAMETER}, {mul_node, NODE}});
+    graph::NodeId off_node = computational_dag.addNode(offset_node);
+    ComputationalDAGNode<TYPE> power_node(power, {{off_node, NODE}, {p, PARAMETER}});
+    graph::NodeId pow_node = computational_dag.addNode(power_node);
 
     // Add edges TODO: do this automatically
     computational_dag.addEdge(add_node, mul_node);
+    computational_dag.addEdge(mul_node, off_node);
+    computational_dag.addEdge(off_node, pow_node);
 
     // Set entry point and exit point
     computational_dag.getEntryPoint() = add_node;
-    computational_dag.getExitPoint() = mul_node;
+    computational_dag.getExitPoint() = pow_node;
 
     // Set inputs
     computational_dag.getInput(input_1) = ones<TYPE>(SHAPE);
     computational_dag.getInput(input_2) = iota<TYPE>(SHAPE);
 
     // Set parameters
-    computational_dag.getParameter(w_1) = scalar_55;
+    computational_dag.getParameter(w_1) = Tensor<TYPE>(3);
+    computational_dag.getParameter(b) = Tensor<TYPE>(5);
+    computational_dag.getParameter(p) = Tensor<TYPE>(2);
 
     std::cout << "Forward test" << std::endl;
-    std::cout << computational_dag.forward() << std::endl;
+    std::cout << computational_dag.forward() << std::endl;  /* ((1 + 1) * 3 + 5) ^ 2 = 121 */
 
     std::cout << "Backward test" << std::endl;
     computational_dag.backward();
+    std::cout << "pow_node.jacobi_[0] (input): " << computational_dag.get(pow_node).jacobi_[0] << std::endl;
+    std::cout << "pow_node.jacobi_[1] (param): " << computational_dag.get(pow_node).jacobi_[1] << std::endl;
+    std::cout << "off_node.jacobi_[0] (param): " << computational_dag.get(off_node).jacobi_[0] << std::endl;
+    std::cout << "off_node.jacobi_[1] (input): " << computational_dag.get(off_node).jacobi_[1] << std::endl;
     std::cout << "mul_node.jacobi_[0] (param): " << computational_dag.get(mul_node).jacobi_[0] << std::endl;
     std::cout << "mul_node.jacobi_[1] (input): " << computational_dag.get(mul_node).jacobi_[1] << std::endl;
-    std::cout << "add_node.jacobi_[0]: " << computational_dag.get(add_node).jacobi_[0] << std::endl;
-    std::cout << "add_node.jacobi_[1]: " << computational_dag.get(add_node).jacobi_[1] << std::endl;
+    std::cout << "add_node.jacobi_[0]: " << computational_dag.get(add_node).jacobi_[0] << std::endl; /* 2 * (5 + 3 * (1 + 1)) ^ (2 - 1) * 3 = 66 */
+    std::cout << "add_node.jacobi_[1]: " << computational_dag.get(add_node).jacobi_[1] << std::endl; /* 2 * (5 + 3 * (1 + 1)) ^ (2 - 1) * 3 = 66 */
 }
 
 /*
