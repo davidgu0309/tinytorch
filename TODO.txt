@@ -1,5 +1,6 @@
 
 Features:
+  - remove using namespace ... from header files
   - concept for numerical type with zero, one and equality comparison
   - implement softmax and cross-entropy
   - make struct for tensor operations without parameters
