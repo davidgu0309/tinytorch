@@ -5,3 +5,4 @@
 #include "hadamard.hpp"
 #include "loss.hpp"
 #include "matmul.hpp"
+#include "power.hpp"
