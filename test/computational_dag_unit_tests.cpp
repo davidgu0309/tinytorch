@@ -50,11 +50,6 @@ void computationalDAGUnitTests(){
     ComputationalDAGNode<TYPE> power_node(power, {{off_node, NODE}, {p, PARAMETER}});
     graph::NodeId pow_node = computational_dag.addNode(power_node);
 
-    // Add edges TODO: do this automatically
-    computational_dag.addEdge(add_node, mul_node);
-    computational_dag.addEdge(mul_node, off_node);
-    computational_dag.addEdge(off_node, pow_node);
-
     // Set entry point and exit point
     computational_dag.getEntryPoint() = add_node;
     computational_dag.getExitPoint() = pow_node;

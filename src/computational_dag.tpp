@@ -44,6 +44,17 @@ const graph::NodeId& ComputationalDAG<T>::getExitPoint() const {
 }
 
 template<typename T>
+graph::NodeId ComputationalDAG<T>::addNode(ComputationalDAGNode<T> dag_node){
+    graph::NodeId dag_node_id = dag::DAG<ComputationalDAGNode<T>>::addNode(dag_node);
+    for(const OperandDescriptor& descriptor : dag_node.operand_descriptor_){
+        if(descriptor.operand_type_ == NODE){
+            addEdge(descriptor.id_.node_id_, dag_node_id);
+        }
+    }
+    return dag_node_id;
+}
+
+template<typename T>
 InputId ComputationalDAG<T>::addInput(Shape shape){
     inputs_.push_back(zeros<T>(shape));
     return inputs_.size() - 1;

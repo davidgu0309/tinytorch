@@ -193,14 +193,14 @@ namespace tinytorch {
 
             /**
              * 
-             * Adds a node with data node_data to the graph.
+             * Adds a node with data node_data to the graph. Adds edges to the graph based on operand descriptors.
              * 
-             * @param node_data Node data.
+             * @param dag_node Node to add.
              * 
              * @return Identifier of the new node.
              * 
              **/
-            using dag::DAG<ComputationalDAGNode<T>>::addNode;
+            graph::NodeId addNode(ComputationalDAGNode<T> dag_node);
 
             /**
              * 
