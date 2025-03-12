@@ -25,7 +25,7 @@ namespace tinytorch{
      * 
      **/
     template<typename T>
-    void gradient_descent_iteration<T>(ComputationalDAG<T>& model, const Tensor<T>& data, const T learning_rate);
+    void gradient_descent_iteration(ComputationalDAG<T>& model, const Tensor<T>& data, const T learning_rate);
 
     /**
      * 
@@ -39,7 +39,7 @@ namespace tinytorch{
      * 
      **/
     template<typename T>
-    void gradient_descent<T>(ComputationalDAG<T>& model, const Tensor<T>& data, const T learning_rate, const size_t epochs);
+    void gradient_descent(ComputationalDAG<T>& model, const Tensor<T>& data, const T learning_rate, const size_t epochs);
 
 } // namespace tinytorch
 

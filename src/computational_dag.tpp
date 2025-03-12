@@ -128,7 +128,10 @@ void ComputationalDAG<T>::backward() {
             for(const graph::NodeId successor_id : getSuccessors(id)){
                 ComputationalDAGNode<T>& successor = get(successor_id);
                 for(size_t i = 0; i < operands.size(); i++){ 
-                    node.jacobi_[i] = add<T>(node.jacobi_[i], evaluateDifferential<T>(node.tensorOperation_.backward(i, operands), successor.jacobi_[successor.operand_idx_[id]])); 
+                    Tensor<T> differential = node.tensorOperation_.backward(i, operands);
+                    Tensor<T> successor_differential = successor.jacobi_[successor.operand_idx_[id]];
+                    Tensor<T> result = evaluateDifferential<T>(differential, successor_differential);
+                    node.jacobi_[i] = add<T>(node.jacobi_[i], result); 
                 }
             }
         }
