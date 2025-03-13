@@ -56,15 +56,38 @@ int main() {
     model.getEntryPoint() = d_node;
     model.getExitPoint() = l_node;
 
-    model.forward();
-    model.backward();
-    std::cout << model.get(d_node).result_ << "\n";
-    std::cout << model.get(l_node).result_ << "\n";
-
     Tensor<TYPE> train_X = generateX(NUM_DATA_POINTS);
     Tensor<TYPE> train_y = testFunction(train_X);
 
-    //gradient_descent(model, train_X, train_y, LEARNING_RATE, NUM_EPOCHS);
+    /*
+    std::cout << "X" << std::endl;
+    std::cout << train_X << std::endl;
+
+    std::cout << "y" << std::endl;
+    std::cout << train_y << std::endl;
+    */
+
+    // model.getInput(0) = ones<TYPE>({NUM_DATA_POINTS, 5});
+    // model.getInput(1) = ones<TYPE>({NUM_DATA_POINTS});
+
+    model.getInput(0) = ones<TYPE>(INPUT_SHAPE);
+    model.getInput(1) = Tensor<TYPE>(0);
+
+    model.getParameter(0) = iota<TYPE>(INPUT_SHAPE);
+
+    model.forward();
+    std::cout << model.get(d_node).result_ << "\n";
+    std::cout << model.get(l_node).result_ << "\n";
+
+    model.backward();
+    std::cout << model.get(l_node).jacobi_[0] << "\n";
+    std::cout << model.get(l_node).jacobi_[1] << "\n";
+
+    std::cout << model.get(d_node).jacobi_[0] << "\n";
+    std::cout << model.get(d_node).jacobi_[1] << "\n";
+
+
+    // gradient_descent(model, train_X, train_y, LEARNING_RATE, NUM_EPOCHS);
 
     return 0;
 }

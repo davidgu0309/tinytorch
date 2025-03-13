@@ -5,9 +5,10 @@ namespace tinytorch{
         model.getInput(0) = data;
         model.getInput(1) = targets;
         model.forward();  
-        std::cout << "Loss: " << model.get(model.getExitPoint()).result_ << "\n";
         model.backward();
         std::cout << "Backward completed \n";
+
+        std::cout << "Loss: " << aggregate<T, aggregator::mean<T>>(model.get(model.getExitPoint()).result_, 0) << "\n";
 
         std::vector<graph::NodeId> topo_order = model.topoOrder();
         for(graph::NodeId node_id : topo_order){
@@ -16,13 +17,17 @@ namespace tinytorch{
                 if(operand_descriptor.operand_type_ == PARAMETER){
                     ParameterId operand_parameter_id = operand_descriptor.id_.parameter_id_;
                     Tensor<T> gradient = model.get(node_id).jacobi_[i]; 
-                    //std::cout << "Model parameters: " << model.getParameter(operand_parameter_id) << "\n";
-                    gradient = aggregate<T, aggregator::mean<T>>(gradient, 0);    // TODO maybe fix memory leak
+                    std::cout << "Gradient: \n" << gradient << std::endl;
+                    gradient = aggregate<T, aggregator::mean<T>>(gradient, gradient.shape().size() - 1);    // TODO maybe fix memory leak
                     model.getParameter(operand_parameter_id) = add<T>(neg<T>(mul<T>(constant(gradient.shape(), learning_rate), gradient)), 
                                                                     model.getParameter(operand_parameter_id));  //TODO replace with scalar learning_rate 
+                    std::cout << "Model parameters: " << model.getParameter(operand_parameter_id) << "\n";
                 }
             }
         }
+
+        
+        
     }
 
     template <typename T>

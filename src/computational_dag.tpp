@@ -130,7 +130,8 @@ void ComputationalDAG<T>::backward() {
                 for(size_t i = 0; i < operands.size(); i++){ 
                     Tensor<T> differential = node.tensorOperation_.backward(i, operands);
                     Tensor<T> successor_differential = successor.jacobi_[successor.operand_idx_[id]];
-                    Tensor<T> result = evaluateDifferential<T>(differential, successor_differential);
+                    size_t gradient_dim = differential.shape().size() - operands[i].shape().size(); // TODO: check non-negativity
+                    Tensor<T> result = evaluateDifferential<T>(differential, successor_differential, gradient_dim);
                     node.jacobi_[i] = add<T>(node.jacobi_[i], result); 
                 }
             }
