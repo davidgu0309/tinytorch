@@ -5,9 +5,9 @@
 #define TYPE double
 #define INPUT_SHAPE {5}
 #define OUTPUT_SHAPE {}
-#define NUM_EPOCHS 5
-#define NUM_DATA_POINTS 1
-#define LEARNING_RATE 0.1
+#define NUM_EPOCHS 100
+#define NUM_DATA_POINTS 100
+#define LEARNING_RATE 0.2
 
 using namespace tinytorch;
 using namespace tensor;
@@ -26,7 +26,7 @@ Tensor<TYPE> testFunction(Tensor<TYPE> input) {
 Tensor<TYPE> generateX(size_t num_data_points) {
     Shape data_shape = INPUT_SHAPE;
     data_shape.insert(data_shape.begin(), num_data_points);
-    return realUniform<TYPE>(data_shape, -100, 100);
+    return realUniform<TYPE>(data_shape, -1, 1);
 }
 
 // Tensor<TYPE> generateY(Tensor<TYPE> input_data) {
@@ -46,11 +46,15 @@ int main() {
     InputId x = model.addInput(INPUT_SHAPE);
     InputId y = model.addInput(OUTPUT_SHAPE);
     ParameterId w = model.addParameter(INPUT_SHAPE);
+    ParameterId b = model.addParameter(OUTPUT_SHAPE);
 
     ComputationalDAGNode<TYPE> dot_node(matmul_op, {{x, INPUT}, {w, PARAMETER}});
     graph::NodeId d_node = model.addNode(dot_node);  
 
-    ComputationalDAGNode<TYPE> loss_node(lp_op, {{d_node, NODE}, {y, INPUT}});
+    ComputationalDAGNode<TYPE> add_node(addition, {{d_node, NODE}, {b, PARAMETER}});
+    graph::NodeId a_node = model.addNode(add_node);  
+
+    ComputationalDAGNode<TYPE> loss_node(lp_op, {{a_node, NODE}, {y, INPUT}});
     graph::NodeId l_node = model.addNode(loss_node);  
 
     model.getEntryPoint() = d_node;
@@ -68,12 +72,14 @@ int main() {
     */
 
     // model.getInput(0) = ones<TYPE>({NUM_DATA_POINTS, 5});
-    // model.getInput(1) = ones<TYPE>({NUM_DATA_POINTS});
+    // model.getInput(1) = zeros<TYPE>({NUM_DATA_POINTS});
 
     model.getInput(0) = ones<TYPE>(INPUT_SHAPE);
     model.getInput(1) = Tensor<TYPE>(0);
 
     model.getParameter(0) = iota<TYPE>(INPUT_SHAPE);
+    model.getParameter(b) = Tensor<TYPE>(5);
+
 
     model.forward();
     std::cout << model.get(d_node).result_ << "\n";
@@ -87,7 +93,7 @@ int main() {
     std::cout << model.get(d_node).jacobi_[1] << "\n";
 
 
-    // gradient_descent(model, train_X, train_y, LEARNING_RATE, NUM_EPOCHS);
+    gradient_descent(model, train_X.unstack(0), train_y.unstack(0), LEARNING_RATE, NUM_EPOCHS);
 
     return 0;
 }

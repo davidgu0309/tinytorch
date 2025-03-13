@@ -45,11 +45,23 @@ const graph::NodeId& ComputationalDAG<T>::getExitPoint() const {
 
 template<typename T>
 graph::NodeId ComputationalDAG<T>::addNode(ComputationalDAGNode<T> dag_node){
+    // static int x = 0;
     graph::NodeId dag_node_id = dag::DAG<ComputationalDAGNode<T>>::addNode(dag_node);
     for(const OperandDescriptor& descriptor : dag_node.operand_descriptor_){
         if(descriptor.operand_type_ == NODE){
             addEdge(descriptor.id_.node_id_, dag_node_id);
         }
+    }
+    std::vector<Tensor<T>> operands = collectOperands(dag_node_id);
+    // for (Tensor<T> operand : operands) {
+    //     std::cout << operand << "\n";
+    // }
+
+    get(dag_node_id).result_ = dag_node.tensorOperation_(operands);
+    for(const Tensor<T>& operand : operands){ 
+        Shape jacobi_shape = concatIndexes(operand.shape(), get(dag_node_id).result_.shape());
+        get(dag_node_id).jacobi_.push_back(zeros<T>(jacobi_shape));         //TODO think about only initializing when backward is called
+        get(dag_node_id).jacobi_accumulator_.push_back(zeros<T>(jacobi_shape));       //we dont need this unless we train
     }
     return dag_node_id;
 }
@@ -104,9 +116,16 @@ Tensor<T> ComputationalDAG<T>::forward() {
     for(const graph::NodeId id : node_ids){
         ComputationalDAGNode<T>& node = get(id);
         std::vector<Tensor<T>> operands = collectOperands(id);
+        // for (Tensor<T> operand : operands) {
+        //     std::cout << operand << "\n";
+        // }
+        
         node.result_ = node.tensorOperation_(operands);
     }
-    return get(exit_point_).result_;
+    auto exit = get(exit_point_).result_;
+    //std::cout << "Checkpoint 2 \n";
+    //std::cout << exit << "\n";
+    return exit;
 }
 
 template<typename T>
@@ -116,8 +135,8 @@ void ComputationalDAG<T>::backward() {
     for(const graph::NodeId id : node_ids){
         ComputationalDAGNode<T>& node = get(id);
         std::vector<Tensor<T>> operands = collectOperands(id);
-        for(const Tensor<T>& operand : operands){ 
-            node.jacobi_.push_back(zeros<T>(concatIndexes(operand.shape(), node.result_.shape())));
+        for (Tensor<T>& jacobi : node.jacobi_) {
+            jacobi.clear();
         }
         std::vector<graph::NodeId> successor_ids = getSuccessors(id);
         if(!successor_ids.size()){

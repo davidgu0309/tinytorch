@@ -76,6 +76,8 @@ namespace tinytorch {
         TensorOperation<T>& tensorOperation_; /** Forward tensor operation. */
         Tensor<T> result_;  /** Result of forward computation. */
         std::vector<Tensor<T>> jacobi_; /** jacobi_[i] is used to store the Jacobi tensor wrt to the i-th input.  */
+        std::vector<Tensor<T>> jacobi_accumulator_; /** jacobi_accumulator_[i] stores the accumulated jacobi i over the data points of a batch  */
+
         std::vector<OperandDescriptor> operand_descriptor_; /** Stores the operand descriptor for each operand. */
         std::map<graph::NodeId, size_t> operand_idx_; /** Indexes of NODE operands in operand_descriptor_. */
 
