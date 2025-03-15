@@ -1,13 +1,14 @@
 #include "../include/computational_dag.hpp"
+#include "../include/data_pipeline/data_loader.hpp"
 #include "../include/optimizer/gd.hpp"
 #include "../include/tensor_operation/all.hpp"
 
 #define TYPE double
 #define INPUT_SHAPE {5}
 #define OUTPUT_SHAPE {}
-#define NUM_EPOCHS 100
+#define NUM_EPOCHS 10
 #define NUM_DATA_POINTS 100
-#define LEARNING_RATE 0.2
+#define LEARNING_RATE 0.5
 
 using namespace tinytorch;
 using namespace tensor;
@@ -17,7 +18,6 @@ Hadamard<TYPE> hadamard;
 Matmul<TYPE> matmul_op;
 Power<TYPE> power;
 Lp<TYPE> lp_op;
-
 
 Tensor<TYPE> testFunction(Tensor<TYPE> input) {
     return aggregate<TYPE, aggregator::sum<TYPE>>(input, 1);
@@ -42,6 +42,7 @@ Tensor<TYPE> generateX(size_t num_data_points) {
 
 
 int main() {
+
     ComputationalDAG<TYPE> model;
     InputId x = model.addInput(INPUT_SHAPE);
     InputId y = model.addInput(OUTPUT_SHAPE);
@@ -94,6 +95,10 @@ int main() {
 
 
     gradient_descent(model, train_X.unstack(0), train_y.unstack(0), LEARNING_RATE, NUM_EPOCHS);
+
+    std::vector<Tensor<int>> data = load_csv<int>("data/test.csv", 2);
+
+    for(auto t : data) std::cout << t << std::endl;
 
     return 0;
 }
