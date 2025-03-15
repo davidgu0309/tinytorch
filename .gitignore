@@ -4,5 +4,9 @@
 main_binary
 test_binary
 
-# *.csv
 documentation
+
+# Ignore all .csv files except data/test.csv
+
+*.csv
+!data/test.csv
