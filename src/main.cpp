@@ -96,7 +96,7 @@ int main() {
 
     gradient_descent(model, train_X.unstack(0), train_y.unstack(0), LEARNING_RATE, NUM_EPOCHS);
 
-    std::vector<Tensor<int>> data = load_csv<int>("data/test.csv", 2);
+    std::vector<Tensor<int>> data = load_csv<int>("data/preprocessed_data.csv", 2);
 
     for(auto t : data) std::cout << t << std::endl;
 
