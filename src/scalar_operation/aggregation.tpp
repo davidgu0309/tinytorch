@@ -38,4 +38,21 @@ T ScalarMultiplication<T>::backward(const size_t input_idx, const std::vector<T>
     return derivative;
 }
 
+template<typename T>
+ScalarArithmeticMean<T>::ScalarArithmeticMean(){}
+
+template<typename T>
+T ScalarArithmeticMean<T>::operator()(const std::vector<T> operands) const {
+    T sum = 0;
+    for(const T operand : operands){
+        sum += operand;
+    }
+    return sum / operands.size();
+}
+
+template<typename T>
+T ScalarArithmeticMean<T>::backward(const size_t input_idx, const std::vector<T> operands) const {
+    return (T)1 / operands.size();
+}
+
 }  // namespace tinytorch
