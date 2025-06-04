@@ -58,11 +58,6 @@ graph::NodeId ComputationalDAG<T>::addNode(ComputationalDAGNode<T> dag_node){
     // }
 
     get(dag_node_id).result_ = dag_node.tensorOperation_(operands);
-    for(const Tensor<T>& operand : operands){ 
-        Shape jacobi_shape = concatIndexes(operand.shape(), get(dag_node_id).result_.shape());
-        get(dag_node_id).jacobi_.push_back(zeros<T>(jacobi_shape));         //TODO think about only initializing when backward is called
-        get(dag_node_id).jacobi_accumulator_.push_back(zeros<T>(jacobi_shape));       //we dont need this unless we train
-    }
     return dag_node_id;
 }
 
@@ -135,6 +130,13 @@ void ComputationalDAG<T>::backward() {
     for(const graph::NodeId id : node_ids){
         ComputationalDAGNode<T>& node = get(id);
         std::vector<Tensor<T>> operands = collectOperands(id);
+        if(!node.jacobi_.size()){
+            for(const Tensor<T>& operand : operands){ 
+                Shape jacobi_shape = concatIndexes(operand.shape(), get(exit_point_).result_.shape());
+                node.jacobi_.push_back(zeros<T>(jacobi_shape));    
+                node.jacobi_accumulator_.push_back(zeros<T>(jacobi_shape));       // we dont need this unless we train
+            }
+        }
         for (Tensor<T>& jacobi : node.jacobi_) {
             jacobi.clear();
         }

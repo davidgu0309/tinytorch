@@ -58,6 +58,7 @@ namespace tinytorch{
                              const std::vector<Tensor<T>>& targets, const T learning_rate, const size_t epochs)
     {
         for (int i=0; i<epochs; i++) {
+            std::cout << "----------------- EPOCH " << i << " -------------------" << std::endl;
             T current_learning_rate = learning_rate_schedule<T>(learning_rate, i, epochs);
             gradient_descent_iteration<T>(model, data, targets, current_learning_rate);
         }
